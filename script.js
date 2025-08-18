@@ -2,14 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =========================================================================
-    // MÓDULO DE SEGURIDAD BÁSICA (ELIMINADO)
-    // =========================================================================
-    // NOTA: Se ha eliminado el módulo de "seguridad" que bloqueaba el clic derecho 
-    // y los atajos de teclado. Estas medidas no son efectivas contra usuarios
-    // experimentados y perjudican la experiencia de desarrolladores y usuarios
-    // curiosos que desean aprender del código. Es una mejor práctica no incluirlas.
-
-    // =========================================================================
     // MÓDULO DE NAVEGACIÓN (MENÚ MÓVIL Y HEADER)
     // =========================================================================
     const mobileMenuPanel = document.getElementById('mobile-menu-panel');
@@ -441,22 +433,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const rateSlider = document.getElementById('rate-slider');
     const pauseResumeButton = document.getElementById('pause-resume-button');
     const muteToggleButton = document.getElementById('mute-toggle-button');
-    let helenaVoice;
+    let preferredVoice; // Cambiamos el nombre de la variable para que sea más genérico
     const welcomeModal = document.getElementById('welcome-modal-overlay');
     const startExperienceButton = document.getElementById('start-experience-button');
 
+    // ** MEJORA: Lógica de selección de voz más robusta **
     function loadVoices() {
         const voices = synth.getVoices();
-        helenaVoice = voices.find(voice => voice.name === 'Microsoft Helena - Spanish (Spain)');
-        if (!helenaVoice) {
-            helenaVoice = voices.find(voice => voice.lang.startsWith('es-ES'));
+        // 1. Prioridad: Voces en español de España ('es-ES').
+        preferredVoice = voices.find(voice => voice.lang === 'es-ES');
+
+        // 2. Si no hay, busca cualquier voz en español ('es-').
+        if (!preferredVoice) {
+            preferredVoice = voices.find(voice => voice.lang.startsWith('es-'));
         }
+        
+        // 3. Si no encuentra ninguna, 'preferredVoice' quedará como 'undefined' 
+        // y el navegador usará su voz por defecto para el idioma 'es-ES'.
     }
 
+    // El evento 'onvoiceschanged' se dispara cuando la lista de voces está lista.
     if (synth.onvoiceschanged !== undefined) {
         synth.onvoiceschanged = loadVoices;
     }
-    loadVoices();
+    loadVoices(); // Llama una vez por si las voces ya están cargadas.
 
 
     function speak(text) {
@@ -467,15 +467,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const utterance = new SpeechSynthesisUtterance(text);
-        if (helenaVoice) {
-            utterance.voice = helenaVoice;
+        
+        // Asigna la voz preferida si se encontró una
+        if (preferredVoice) {
+            utterance.voice = preferredVoice;
         }
-        utterance.lang = 'es-ES';
+        
+        utterance.lang = 'es-ES'; // Especifica el idioma deseado
         utterance.rate = parseFloat(rateSlider.value);
         utterance.pitch = 0.9;
         utterance.volume = parseFloat(volumeSlider.value);
 
-        // MEJORA: Controla la animación del botón de voz
+        // Controla la animación del botón de voz
         utterance.onstart = () => {
             // Activa la animación
             if (voiceSettingsToggle) voiceSettingsToggle.classList.add('is-speaking');
@@ -497,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
         synth.speak(utterance);
     }
 
-    // MEJORA: Lógica para el botón de Pausar/Reanudar
+    // Lógica para el botón de Pausar/Reanudar
     if (pauseResumeButton) {
         pauseResumeButton.addEventListener('click', () => {
             if (synth.speaking && !synth.paused) {
@@ -516,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // MEJORA: Lógica para el botón de Silenciar/Activar
+    // Lógica para el botón de Silenciar/Activar
     if (muteToggleButton) {
         muteToggleButton.addEventListener('click', () => {
             isMuted = !isMuted;
