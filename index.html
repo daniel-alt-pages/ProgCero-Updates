@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<!-- El atributo lang ayuda a los motores de búsqueda y navegadores -->
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <!-- Configuración de metadatos esenciales -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProgCero</title>
+
+    <!-- ========================================================================== -->
+    <!-- ========= INICIO: ETIQUETAS PARA PREVISUALIZACIÓN DE URL (SEO y Redes Sociales) ========= -->
+    <!-- ========================================================================== -->
+
+    <!-- Descripción general para los motores de búsqueda (Google, etc.) -->
+    <meta name="description"
+        content="El curso definitivo para dominar los fundamentos de la programación y construir tus primeros proyectos reales. ¡Inicia tu carrera en tecnología!">
+
+    <!-- Open Graph Tags (para Facebook, WhatsApp, LinkedIn, etc.) -->
+    <meta property="og:title" content="ProgCero: Aprende a Programar desde Cero">
+    <meta property="og:description"
+        content="El curso definitivo para dominar los fundamentos de la programación y construir tus primeros proyectos reales.">
+    <!-- IMAGEN DE PREVISUALIZACIÓN ACTUALIZADA -->
+    <meta property="og:image"
+        content="https://images.prismic.io/scopegenius/aKJk96Tt2nPbaZbI_curso.png?auto=format,compress&v=1.0">
+    <!-- URL de tu página web cuando esté en línea -->
+    <meta property="og:url" content="https://progcero.pro">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Tags (para que se vea bien en Twitter) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ProgCero: Aprende a Programar desde Cero">
+    <meta name="twitter:description"
+        content="El curso definitivo para dominar los fundamentos de la programación y construir tus primeros proyectos reales.">
+    <!-- IMAGEN DE PREVISUALIZACIÓN ACTUALIZADA -->
+    <meta name="twitter:image"
+        content="https://images.prismic.io/scopegenius/aKJk96Tt2nPbaZbI_curso.png?auto=format,compress&v=1.0">
+
+    <!-- ========================================================================== -->
+    <!-- ========= FIN: ETIQUETAS PARA PREVISUALIZACIÓN DE URL ========= -->
+    <!-- ========================================================================== -->
+
+
+    <!-- Favicon para la pestaña del navegador -->
+    <link rel="icon" type="image/png"
+        href="https://images.prismic.io/scopegenius/aKEKhKTt2nPbaYez_icon.png?auto=format,compress">
+
+    <!-- Dependencias Externas (Frameworks y Librerías) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Hoja de Estilos Personalizada -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- MEJORA: Canvas para el borde animado de voz -->
+    <canvas id="voice-border-canvas"></canvas>
+
+    <!-- ========= HEADER PRINCIPAL ========= -->
+    <header id="main-header" class="shadow-sm sticky top-0">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                <span class="text-blue-500">&lt;/&gt;</span>
+                <span class="logo-prog">Prog</span><span class="text-blue-500">Cero</span>
+            </a>
+            <!-- Navegación para Escritorio -->
+            <div class="hidden md:flex space-x-4 lg:space-x-6 items-center text-sm lg:text-base">
+                <a href="#inicio" class="nav-link hover:text-blue-500 transition">Inicio</a>
+                <a href="#detalles-curso" class="nav-link hover:text-blue-500 transition">Detalles</a>
+                <a href="#modulos" class="nav-link hover:text-blue-500 transition">Módulos</a>
+                <a href="#tutor" class="nav-link hover:text-blue-500 transition whitespace-nowrap">Sobre el Tutor</a>
+                <a href="#contacto" class="nav-link hover:text-blue-500 transition">Contacto</a>
+                <!-- Botón para cambiar tema (claro/oscuro) -->
+                <button
+                    class="theme-toggle nav-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-transform duration-200 hover:scale-110">
+                    <svg class="sun-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <svg class="moon-icon h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                        </path>
+                    </svg>
+                </button>
+                <!-- Botón de llamada a la acción -->
+                <a href="https://wa.link/3pq3ox" target="_blank"
+                    class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md hover:shadow-lg hover:-translate-y-0.5 transform text-sm lg:text-base">Inscribirse</a>
+            </div>
+            <!-- Botón de menú para móviles -->
+            <button data-action="open-menu" class="md:hidden nav-button">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ========= HEADER FLOTANTE (APARECE AL HACER SCROLL) ========= -->
+    <div id="scrolled-header">
+        <div class="flex items-center gap-2">
+            <button data-action="open-menu" data-tooltip="Abrir Menú"
+                class="nav-button w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========= PANEL DE CONTROL DE VOZ FLOTANTE ========= -->
+    <div id="voice-controls-container">
+        <button id="voice-settings-toggle" data-tooltip="Ajustes de Voz"
+            class="nav-button w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+            <!-- Icono estático que se mostrará cuando la animación no esté activa -->
+            <i id="voice-icon-static" class="fas fa-sliders-h"></i>
+        </button>
+        <div id="voice-settings-panel">
+            <div class="mb-2">
+                <label for="rate-slider">Velocidad</label>
+                <input type="range" id="rate-slider" min="0.5" max="2" value="1.4" step="0.1" class="w-full">
+            </div>
+            <div>
+                <label for="volume-slider">Volumen</label>
+                <input type="range" id="volume-slider" min="0" max="1" value="1" step="0.1" class="w-full">
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-2">
+                <button id="pause-resume-button" class="voice-control-button" title="Pausar/Reanudar">
+                    <i class="fas fa-pause"></i>
+                    <span class="text-sm">Pausar</span>
+                </button>
+                <button id="mute-toggle-button" class="voice-control-button" title="Silenciar/Activar">
+                    <i class="fas fa-volume-up"></i>
+                    <span class="text-sm">Silenciar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= MENÚ LATERAL MÓVIL Y OVERLAY ========= -->
+    <div id="menu-overlay" data-action="close-menu"></div>
+    <div id="mobile-menu-panel">
+        <button data-action="close-menu" class="absolute top-6 right-6 nav-button p-1">
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="flex flex-col space-y-6 mt-12">
+            <a href="#inicio" class="nav-link text-xl hover:text-blue-500 transition">Inicio</a>
+            <a href="#detalles-curso" class="nav-link text-xl hover:text-blue-500 transition">Detalles</a>
+            <a href="#modulos" class="nav-link text-xl hover:text-blue-500 transition">Módulos</a>
+            <a href="#tutor" class="nav-link text-xl hover:text-blue-500 transition">Sobre el Tutor</a>
+            <a href="#contacto" class="nav-link text-xl hover:text-blue-500 transition">Contacto</a>
+            <hr class="border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <span class="nav-link text-xl">Tema</span>
+                <button class="theme-toggle nav-button p-2 rounded-full">
+                    <svg class="sun-icon h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <svg class="moon-icon h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= CONTENIDO PRINCIPAL DE LA PÁGINA ========= -->
+    <main class="pt-10">
+        <!-- SECCIÓN DE INICIO (HERO) -->
+        <section id="inicio" class="container mx-auto px-4 sm:px-6 py-10 md:py-20">
+            <div class="card animate-on-scroll slide-in-up">
+                <div class="card-content p-6 sm:p-8 md:p-16 text-center">
+                    <h1 id="typing-title"
+                        class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 min-h-[9rem] sm:min-h-[7rem] md:min-h-[8rem] flex items-center justify-center">
+                    </h1>
+                    <p class="text-base sm:text-lg md:text-xl mb-8 max-w-3xl mx-auto">
+                        El curso definitivo para dominar los fundamentos de la programación y construir tus primeros
+                        proyectos reales.
+                    </p>
+                    <div
+                        class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#modulos"
+                            class="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-blue-700 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">Ver
+                            Módulos</a>
+                        <a href="https://wa.link/3pq3ox" target="_blank"
+                            class="w-full sm:w-auto bg-gray-200 dark:bg-neutral-800 text-gray-800 dark:text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-gray-300 dark:hover:bg-neutral-700 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform border border-gray-300 dark:border-neutral-700">Empezar
+                            Ahora</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE DETALLES DEL CURSO -->
+        <section id="detalles-curso" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 animate-on-scroll slide-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Fechas y Metodología</h2>
+                    <p class="text-lg mt-2">Todo lo que necesitas saber para empezar.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                    <div class="flex items-start space-x-4 animate-on-scroll slide-in-left">
+                        <div
+                            class="icon-wrapper flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full text-xl">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 11V7a4 4 0 118 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Inscripciones Abiertas</h3>
+                            <p>Asegura tu cupo desde este 16 de Agosto y prepárate para el futuro.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 animate-on-scroll slide-in-right"
+                        style="transition-delay: 100ms;">
+                        <div
+                            class="icon-wrapper flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full text-xl">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Inicio de Clases: Lunes 01 de Septiembre</h3>
+                            <p>Comenzamos un viaje intensivo para convertirte en desarrollador.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 animate-on-scroll slide-in-left"
+                        style="transition-delay: 200ms;">
+                        <div
+                            class="icon-wrapper flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full text-xl">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">50 Horas de Aprendizaje Total</h3>
+                            <p>25 horas de clases en vivo y 25 horas de talleres prácticos para un aprendizaje completo.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 animate-on-scroll slide-in-right"
+                        style="transition-delay: 300ms;">
+                        <div
+                            class="icon-wrapper flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full text-xl">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Taller de Instalación Incluido</h3>
+                            <p>Te guiaremos en un mini-curso de 2 horas para configurar tus herramientas en PC y móvil.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE MÓDULOS -->
+        <section id="modulos" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 animate-on-scroll slide-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Contenido del Curso</h2>
+                    <p class="text-lg mt-2">Un viaje completo desde los fundamentos hasta tu primer proyecto.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Módulo 1 -->
+                    <div class="card animate-on-scroll slide-in-up">
+                        <div class="card-content p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div
+                                    class="icon-wrapper flex items-center justify-center h-16 w-16 rounded-full text-2xl">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <button class="speech-button"
+                                    data-speech="Aquí comienza tu aventura. Aprenderás a pensar como un programador, dándole instrucciones a la computadora para resolver problemas y crear cosas asombrosas.">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Módulo 1: Fundamentos</h3>
+                            <p>Introducción a la programación, lógica, algoritmos, variables y herramientas esenciales.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Módulo 2 -->
+                    <div class="card animate-on-scroll slide-in-up" style="transition-delay: 100ms;">
+                        <div class="card-content p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div
+                                    class="icon-wrapper flex items-center justify-center h-16 w-16 rounded-full text-2xl">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <button class="speech-button"
+                                    data-speech="Imagina que le enseñas a tu programa a tomar decisiones. Con el control de flujo, le darás el poder de reaccionar a diferentes situaciones y repetir tareas, ¡haciéndolo mucho más inteligente!">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Módulo 2: Control de Flujo</h3>
+                            <p>Domina las estructuras de decisión (if/else) y los bucles (for/while).</p>
+                        </div>
+                    </div>
+                    <!-- Módulo 3 -->
+                    <div class="card animate-on-scroll slide-in-up" style="transition-delay: 200ms;">
+                        <div class="card-content p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div
+                                    class="icon-wrapper flex items-center justify-center h-16 w-16 rounded-full text-2xl">
+                                    <i class="fas fa-boxes-stacked"></i>
+                                </div>
+                                <button class="speech-button"
+                                    data-speech="Todo programador necesita organizar información. Aquí aprenderás a usar 'cajas' especiales, como listas y diccionarios, para guardar y manejar datos de forma ordenada y súper eficiente.">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Módulo 3: Colecciones</h3>
+                            <p>Aprende a manejar listas, tuplas y diccionarios para organizar datos.</p>
+                        </div>
+                    </div>
+                    <!-- Módulo 4 -->
+                    <div class="card animate-on-scroll slide-in-up" style="transition-delay: 300ms;">
+                        <div class="card-content p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div
+                                    class="icon-wrapper flex items-center justify-center h-16 w-16 rounded-full text-2xl">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <button class="speech-button"
+                                    data-speech="Las funciones son como recetas de cocina que puedes usar una y otra vez. Aprenderás a crear estos bloques de código reutilizables para que tus programas sean más limpios, organizados y fáciles de entender.">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Módulo 4: Funciones</h3>
+                            <p>Organiza tu código en bloques reutilizables. Aprende sobre parámetros y librerías.</p>
+                        </div>
+                    </div>
+                    <!-- Módulo 5 -->
+                    <div class="card animate-on-scroll slide-in-up" style="transition-delay: 400ms;">
+                        <div class="card-content p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div
+                                    class="icon-wrapper flex items-center justify-center h-16 w-16 rounded-full text-2xl">
+                                    <i class="fas fa-cubes"></i>
+                                </div>
+                                <button class="speech-button"
+                                    data-speech="Daremos un gran paso hacia la programación profesional. Aprenderás a crear 'moldes' para objetos del mundo real, como un carro o un personaje de videojuego, haciendo tu código más intuitivo y poderoso.">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Módulo 5: POO</h3>
+                            <p>Introducción a la Programación Orientada a Objetos: clases, objetos y herencia.</p>
+                        </div>
+                    </div>
+                    <!-- Módulo 6 -->
+                    <div class="card animate-on-scroll slide-in-up" style="transition-delay: 500ms;">
+                        <div class="card-content p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div
+                                    class="icon-wrapper flex items-center justify-center h-16 w-16 rounded-full text-2xl">
+                                    <i class="fas fa-file-code"></i>
+                                </div>
+                                <button class="speech-button"
+                                    data-speech="¿Quieres que tu programa recuerde cosas incluso después de cerrarlo? Aquí aprenderás a guardar y leer información en archivos, y a prepararte para los errores que puedan surgir en el camino.">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Módulo 6: Archivos</h3>
+                            <p>Lee y escribe archivos de texto. Aprende a manejar excepciones y a depurar tu código.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN SOBRE EL TUTOR -->
+        <section id="tutor" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="card animate-on-scroll slide-in-up">
+                    <div class="card-content p-6 sm:p-8 md:p-12">
+                        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                            <div class="md:w-1/3 flex-shrink-0">
+                                <!-- MEJORA: Lazy loading y dimensiones para optimización -->
+                                <img src="https://images.prismic.io/scopegenius/aJ-F1KTt2nPbaXoT_imagen1.jpeg?auto=format,compress"
+                                    class="rounded-lg shadow-lg w-full max-w-xs mx-auto tutor-photo"
+                                    alt="Foto de Andrés Hincapié" loading="lazy" width="320" height="320">
+                            </div>
+                            <div class="md:w-2/3 text-center md:text-left">
+                                <h2 class="text-3xl md:text-4xl font-bold mb-4">Conoce a tu Tutor: Andrés Hincapié</h2>
+                                <p class="mb-6">Profesional en Tecnología y Desarrollo de Software en formación, con
+                                    experiencia en Infraestructura TIC, Desarrollo de Software e Interfaces de Usuario.
+                                    Conozco diversos lenguajes de programación, metodologías y herramientas para
+                                    gestionar y desarrollar sistemas de manera eficiente.</p>
+                            </div>
+                        </div>
+
+                        <div class="emprendedor-card mt-12 animate-on-scroll slide-in-up">
+                            <h3 class="text-2xl font-bold text-center mb-2">Fundador a los 20 Años</h3>
+                            <p class="text-center text-sm mb-6">Dos empresas que reflejan su pasión por la tecnología.
+                            </p>
+                            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-16">
+                                <div class="empresa-logo text-center">
+                                    <!-- MEJORA: Lazy loading -->
+                                    <img src="https://images.prismic.io/scopegenius/aJ_rzaTt2nPbaX_w_2.png?auto=format,compress"
+                                        alt="Logo ScopeGenius" class="h-12 mx-auto logo-scopegenius" loading="lazy">
+                                </div>
+                                <div class="empresa-logo text-center">
+                                    <!-- MEJORA: Lazy loading -->
+                                    <img src="https://digiart1.github.io/Web_DigiArt/Galeria/img/LOGO%20PRINCIPAL.png"
+                                        alt="Logo DigiArt" class="h-16 mx-auto logo-digiart" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slider-container mt-8 animate-on-scroll slide-in-up">
+                            <div class="logo-slider">
+                                <div class="logo-slider-track">
+                                    <div class="logo-slide"><i class="devicon-html5-plain colored" title="HTML5"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-css3-plain colored" title="CSS3"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-javascript-plain colored"
+                                            title="JavaScript"></i></div>
+                                    <div class="logo-slide"><i class="devicon-react-original colored" title="React"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-nodejs-plain colored" title="Node.js"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-docker-plain colored" title="Docker"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-python-plain colored" title="Python"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-java-plain colored" title="Java"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-cplusplus-plain colored" title="C++"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-flutter-plain colored"
+                                            title="Flutter"></i></div>
+                                    <div class="logo-slide"><i class="devicon-html5-plain colored" title="HTML5"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-css3-plain colored" title="CSS3"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-javascript-plain colored"
+                                            title="JavaScript"></i></div>
+                                    <div class="logo-slide"><i class="devicon-react-original colored" title="React"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-nodejs-plain colored" title="Node.js"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-docker-plain colored" title="Docker"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-python-plain colored" title="Python"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-java-plain colored" title="Java"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-cplusplus-plain colored" title="C++"></i>
+                                    </div>
+                                    <div class="logo-slide"><i class="devicon-flutter-plain colored"
+                                            title="Flutter"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE PROYECTO FINAL -->
+        <section id="proyecto-final" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="card animate-on-scroll slide-in-up">
+                    <div
+                        class="card-content p-6 sm:p-8 md:p-16 flex flex-col lg:flex-row lg:items-center lg:space-x-12">
+                        <div class="lg:w-1/2">
+                            <div class="flex justify-between items-start">
+                                <h2 id="project-title" class="text-3xl md:text-4xl font-bold min-h-[5rem] lg:min-h-0">
+                                </h2>
+                                <button class="speech-button"
+                                    data-speech="¡Es hora de crear! En este módulo final, combinamos todo lo que has aprendido. Usaremos la lógica de Python para manejar las tareas y la magia de HTML y CSS para que se vea increíble. ¡Así es como se construyen las aplicaciones en el mundo real!">
+                                    <i class="fas fa-volume-up text-2xl"></i>
+                                </button>
+                            </div>
+                            <p class="mt-4 text-lg">
+                                Es hora de aplicar todo lo aprendido. En el último módulo, te guiaremos para que
+                                construyas una aplicación completa desde cero.
+                            </p>
+                            <ul class="mt-8 space-y-4">
+                                <li class="flex items-start">
+                                    <svg class="h-6 w-6 text-blue-500 mr-3 flex-shrink-0 mt-0.5" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span><strong>Conceptos de front-end y back-end.</strong></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="h-6 w-6 text-blue-500 mr-3 flex-shrink-0 mt-0.5" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span><strong>Proyectos finales:</strong> Introducción a la programación web
+                                        (opcional):</span>
+                                </li>
+                                <li class="flex items-start ml-9">
+                                    <span class="mr-3 mt-0.5">○</span>
+                                    <span>Crear una aplicación web básica con un framework como Flask (Python) o Express
+                                        (JavaScript).</span>
+                                </li>
+                                <li class="flex items-start ml-9">
+                                    <span class="mr-3 mt-0.5">○</span>
+                                    <span>Crear una aplicación de consola como una calculadora o un juego de
+                                        adivinanzas.</span>
+                                </li>
+                                <li class="flex items-start ml-9">
+                                    <span class="mr-3 mt-0.5">○</span>
+                                    <span>Diseñar una pequeña aplicación para gestionar tareas (lista de tareas).</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="lg:w-1/2 mt-10 lg:mt-0">
+                            <div id="code-simulation-container" class="bg-black rounded-xl p-4 shadow-2xl">
+                                <div class="flex justify-start items-center space-x-2 mb-3">
+                                    <span class="h-3 w-3 rounded-full bg-red-500"></span>
+                                    <span class="h-3 w-3 rounded-full bg-yellow-500"></span>
+                                    <span class="h-3 w-3 rounded-full bg-green-500"></span>
+                                </div>
+                                <pre
+                                    class="overflow-x-auto min-h-[250px]"><code id="code-editor" class="language-python text-sm text-white"></code></pre>
+                                <div id="code-output" class="hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE TESTIMONIOS -->
+        <section id="testimonials" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 animate-on-scroll slide-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Lo que Dicen Nuestros Estudiantes</h2>
+                    <p class="text-lg mt-2">Historias reales de personas que transformaron su futuro con nosotros.</p>
+                </div>
+                <div class="max-w-2xl mx-auto animate-on-scroll slide-in-up">
+                    <div class="relative">
+                        <div id="testimonials-container" class="testimonials-container">
+                            <div class="testimonial-card p-2">
+                                <div class="card h-full">
+                                    <div class="card-content p-8 flex flex-col justify-between h-full">
+                                        <div>
+                                            <svg class="h-10 w-10 text-blue-500 mb-4" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            <p class="mb-6">"Este curso cambió mi carrera. Pasé de no saber nada a
+                                                conseguir mi primer trabajo como desarrollador en 6 meses. La
+                                                metodología es increíble."</p>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <!-- MEJORA: Lazy loading y dimensiones para optimización -->
+                                            <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                                                class="w-12 h-12 rounded-full mr-4" alt="Foto de Carlos" loading="lazy"
+                                                width="48" height="48">
+                                            <div>
+                                                <h4 class="font-bold text-primary">Carlos G.</h4>
+                                                <p class="text-sm">Desarrollador Frontend</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-card p-2">
+                                <div class="card h-full">
+                                    <div class="card-content p-8 flex flex-col justify-between h-full">
+                                        <div>
+                                            <svg class="h-10 w-10 text-blue-500 mb-4" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            <p class="mb-6">"Siempre pensé que programar era demasiado difícil para mí.
+                                                ProgCero lo hizo accesible y divertido. ¡Ahora estoy creando mis propias
+                                                aplicaciones!"</p>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <!-- MEJORA: Lazy loading y dimensiones para optimización -->
+                                            <img src="https://randomuser.me/api/portraits/women/44.jpg"
+                                                class="w-12 h-12 rounded-full mr-4" alt="Foto de Ana" loading="lazy"
+                                                width="48" height="48">
+                                            <div>
+                                                <h4 class="font-bold text-primary">Ana M.</h4>
+                                                <p class="text-sm">Diseñadora UX/UI</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-card p-2">
+                                <div class="card h-full">
+                                    <div class="card-content p-8 flex flex-col justify-between h-full">
+                                        <div>
+                                            <svg class="h-10 w-10 text-blue-500 mb-4" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            <p class="mb-6">"La mejor inversión que he hecho. El soporte de los tutores
+                                                es excepcional y la comunidad es muy activa. Lo recomiendo al 100%."</p>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <!-- MEJORA: Lazy loading y dimensiones para optimización -->
+                                            <img src="https://randomuser.me/api/portraits/men/75.jpg"
+                                                class="w-12 h-12 rounded-full mr-4" alt="Foto de Javier" loading="lazy"
+                                                width="48" height="48">
+                                            <div>
+                                                <h4 class="font-bold text-primary">Javier R.</h4>
+                                                <p class="text-sm">Emprendedor</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="prev-testimonial"
+                            class="absolute top-1/2 -left-3 sm:-left-5 transform -translate-y-1/2 bg-white/80 dark:bg-black/80 backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-white dark:hover:bg-black transition text-primary z-10 hover:scale-110">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <button id="next-testimonial"
+                            class="absolute top-1/2 -right-3 sm:-right-5 transform -translate-y-1/2 bg-white/80 dark:bg-black/80 backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-white dark:hover:bg-black transition text-primary z-10 hover:scale-110">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CONTACTO (LLAMADA A LA ACCIÓN FINAL) -->
+        <section id="contacto" class="py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6 text-center animate-on-scroll slide-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold">¿Listo para empezar a programar?</h2>
+                <p class="text-lg mt-3 mb-8 max-w-2xl mx-auto">
+                    Únete a cientos de estudiantes y da el primer paso hacia una nueva carrera en el mundo de la
+                    tecnología.
+                </p>
+                <a href="https://wa.link/3pq3ox" target="_blank"
+                    class="bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition shadow-xl hover:shadow-2xl hover:-translate-y-1 transform">
+                    Inscríbete Ahora
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========= FOOTER (PIE DE PÁGINA) ========= -->
+    <footer>
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+                <div class="md:col-span-1 mb-6 md:mb-0 flex flex-col items-center md:items-start">
+                    <a href="#" class="text-xl md:text-2xl font-bold flex items-center gap-2 mx-auto md:mx-0">
+                        <span class="text-blue-500">&lt;/&gt;</span>
+                        <span class="logo-prog">Prog</span><span class="text-blue-500">Cero</span>
+                    </a>
+                    <div class="mt-2">
+                        <p class="font-bold logo-prog text-lg">SEAMOSGENIOS</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title font-bold mb-4">Curso</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#modulos" class="hover:text-blue-500 transition">Módulos</a></li>
+                        <li><a href="#proyecto-final" class="hover:text-blue-500 transition">Proyecto Final</a></li>
+                        <li><a href="#testimonials" class="hover:text-blue-500 transition">Testimonios</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <!-- MEJORA: Se añaden clases para indicar que los enlaces están deshabilitados -->
+                        <li><a href="#!" class="hover:text-blue-500 transition opacity-60 cursor-not-allowed">Política
+                                de
+                                Privacidad</a></li>
+                        <li><a href="#!" class="hover:text-blue-500 transition opacity-60 cursor-not-allowed">Términos y
+                                Condiciones</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title font-bold mb-4">Síguenos</h4>
+                    <div class="flex space-x-5 text-xl justify-center md:justify-start">
+                        <!-- MEJORA: Se añade aria-label para accesibilidad -->
+                        <a href="https://www.instagram.com/seamosgenios/" target="_blank"
+                            aria-label="Visita nuestro Instagram"
+                            class="hover:text-blue-500 transition-transform duration-200 hover:scale-125"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@seamosgenios" target="_blank"
+                            aria-label="Visita nuestro TikTok"
+                            class="hover:text-blue-500 transition-transform duration-200 hover:scale-125"><i
+                                class="fab fa-tiktok"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Va4PUxRFHWpywWL6Tw3F" target="_blank"
+                            aria-label="Visita nuestro canal de WhatsApp"
+                            class="hover:text-blue-500 transition-transform duration-200 hover:scale-125"><i
+                                class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+            <div class="sm:flex sm:items-center sm:justify-between text-center">
+                <span class="text-sm">© 2025 <a href="#" class="hover:underline">ProgCero™</a>. Todos los Derechos
+                    Reservados. Programado por SeamosGenios Colombia</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========= MODAL DE BIENVENIDA ========= -->
+    <div id="welcome-modal-overlay">
+        <div id="welcome-modal-content" class="p-8 rounded-lg shadow-2xl text-center max-w-sm mx-4">
+            <h2 class="text-2xl font-bold text-primary mb-4">¡Te damos la bienvenida!</h2>
+            <p class="text-secondary mb-6">Para una experiencia más inmersiva, hemos preparado una bienvenida con voz.
+                Presiona el botón para comenzar.</p>
+            <button id="start-experience-button"
+                class="w-full bg-blue-600 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-blue-700 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">
+                Entrar y Escuchar
+            </button>
+        </div>
+    </div>
+
+    <!-- ========= WIDGET DE WHATSAPP FLOTANTE ========= -->
+    <div id="whatsapp-chat-widget" class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+        <div id="chat-preview"
+            class="w-80 md:w-96 rounded-lg shadow-2xl mb-4 transition-all duration-300 transform scale-95 opacity-0 pointer-events-none -translate-y-2 overflow-hidden origin-bottom-right">
+            <div class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-3 flex items-center">
+                <!-- MEJORA: Lazy loading y dimensiones para optimización -->
+                <img src="https://images.prismic.io/scopegenius/aJ_1tqTt2nPbaYB2_juliana.png?auto=format,compress"
+                    class="w-10 h-10 rounded-full mr-3" alt="Juliana" loading="lazy" width="40" height="40">
+                <div>
+                    <div class="flex items-center">
+                        <p class="font-bold">Juliana Gómez</p>
+                        <svg viewBox="0 0 18 18" class="w-4 h-4 text-green-500 ml-1.5" fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18ZM13.2165 6.53325L7.88325 11.8665L4.7835 8.76675L3.71625 9.83325L7.88325 14L14.2838 7.6L13.2165 6.53325Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Asesora oficial de SeamosGenios</p>
+                </div>
+                <button id="close-chat-preview"
+                    class="ml-auto text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-4 h-80 overflow-y-auto whatsapp-bg flex flex-col space-y-2">
+                <div id="first-message" class="chat-bubble incoming self-start">
+                    <p class="text-sm"></p>
+                    <div class="text-xs text-right text-gray-400 mt-1 flex items-center justify-end">
+                        <span class="message-time"></span>
+                        <svg class="w-4 h-4 ml-1 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd"
+                                d="M11.293 5.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L12 7.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div id="second-message" class="chat-bubble incoming self-start hidden">
+                    <p class="text-sm"></p>
+                    <div class="text-xs text-right text-gray-400 mt-1 flex items-center justify-end">
+                        <span class="message-time"></span>
+                        <svg class="w-4 h-4 ml-1 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd"
+                                d="M11.293 5.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L12 7.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div id="typing-indicator" class="hidden">
+                    <div class="chat-bubble incoming self-start flex items-center space-x-1.5">
+                        <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                        <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                        <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 bg-gray-100 dark:bg-gray-800">
+                <a href="https://wa.link/3pq3ox" target="_blank"
+                    class="w-full bg-green-500 text-white text-center py-2.5 px-4 rounded-full font-bold hover:bg-green-600 transition-all duration-300 block transform hover:-translate-y-0.5 hover:shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp text-lg"></i>
+                    <span>Iniciar Chat</span>
+                </a>
+            </div>
+        </div>
+        <div id="whatsapp-card" class="card">
+            <div class="card-content rounded-full">
+                <button id="whatsapp-button"
+                    class="bg-transparent w-16 h-16 rounded-full flex items-center justify-center transition transform hover:scale-110 active:scale-100">
+                    <!-- MEJORA: Lazy loading y dimensiones para optimización -->
+                    <img src="https://images.prismic.io/scopegenius/aJ_53KTt2nPbaYCg_wpp.png?auto=format,compress"
+                        alt="WhatsApp" class="w-full h-full" loading="lazy" width="64" height="64">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= SCRIPT PRINCIPAL DE LA APLICACIÓN ========= -->
+    <!-- Se carga al final para no bloquear el renderizado del contenido -->
+    <script src="script.js"></script>
+</body>
+
+</html>
