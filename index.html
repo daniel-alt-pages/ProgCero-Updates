@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantilla de Plataforma Educativa</title>
+    <title>Plataforma Educativa</title>
     <!-- Dependencias externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         :root {
-            --color-bg: #0a192f;
-            --color-surface: #112240;
-            --color-primary-start: #a259ff;
-            --color-primary-end: #6c12e5;
-            --color-secondary-start: #00aaff;
-            --color-secondary-end: #0077cc;
-            --color-text: #ccd6f6;
-            --color-text-muted: #8892b0;
-            --color-border: rgba(172, 126, 255, 0.2);
-            --color-glass-surface: rgba(17, 34, 64, 0.7);
+            --color-bg: #121212;
+            --color-surface: #1e1e1e;
+            --color-primary-start: #e53e3e;
+            --color-primary-end: #b82727;
+            --color-secondary-start: #d69e2e;
+            --color-secondary-end: #b7791f;
+            --color-text: #e2e8f0;
+            --color-text-muted: #a0aec0;
+            --color-border: rgba(229, 62, 62, 0.2);
+            --color-glass-surface: rgba(30, 30, 30, 0.7);
+            --color-success: #38a169;
         }
 
         .light-theme {
-            --color-bg: #f0f2f5;
+            --color-bg: #f7fafc;
             --color-surface: #ffffff;
-            --color-text: #1c1e21;
-            --color-text-muted: #606770;
+            --color-primary-start: #e53e3e;
+            --color-primary-end: #c53030;
+            --color-text: #1a202c;
+            --color-text-muted: #4a5568;
             --color-border: rgba(0, 0, 0, 0.1);
             --color-glass-surface: rgba(255, 255, 255, 0.8);
+            --color-success: #2f855a;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--color-bg);
@@ -41,7 +47,8 @@
             overflow-x: hidden;
         }
 
-        .cursor-dot, .cursor-trail {
+        .cursor-dot,
+        .cursor-trail {
             position: fixed;
             top: 0;
             left: 0;
@@ -50,20 +57,30 @@
             z-index: 9999;
             transform: translate(-50%, -50%);
         }
+
         .cursor-dot {
             width: 8px;
             height: 8px;
             background-color: var(--color-primary-start);
             transition: transform 0.1s ease-out;
         }
+
         .cursor-trail {
             background-color: var(--color-primary-start);
             opacity: 1;
             animation: trailAnim 0.5s linear forwards;
         }
+
         @keyframes trailAnim {
-            from { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-            to { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            from {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
         }
 
         .glassmorphism {
@@ -73,56 +90,181 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-bg); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--color-secondary-start), var(--color-secondary-end)); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(var(--color-primary-start), var(--color-primary-end)); }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--color-secondary-start), var(--color-secondary-end));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--color-primary-start), var(--color-primary-end));
+        }
 
         .form-input {
-            background-color: var(--color-bg);
+            background-color: var(--color-surface);
             border: 1px solid var(--color-border);
             color: var(--color-text);
             transition: all 0.3s ease;
         }
+
         .form-input:focus {
             outline: none;
             border-color: var(--color-primary-start);
-            box-shadow: 0 0 0 3px rgba(162, 89, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.3);
         }
 
-        .btn { @apply font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105; }
-        .btn-primary { background-image: linear-gradient(to right, var(--color-primary-start), var(--color-primary-end)); @apply text-white shadow-lg; }
-        .btn-danger { @apply bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/20; }
-        .btn-secondary { @apply bg-slate-600 hover:bg-slate-500 text-white; }
-        
-        .bg-surface { background-color: var(--color-surface); }
-        .text-main { color: var(--color-text); }
-        .text-muted { color: var(--color-text-muted); }
-        .border-main { border-color: var(--color-border); }
+        .btn {
+            @apply font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .main-view-enter { animation: fadeIn 500ms ease-out forwards; }
-        
-        .progress-bar-container { background-color: var(--color-bg); border-radius: 9999px; height: 8px; width: 100%; overflow: hidden; }
-        .progress-bar { background-image: linear-gradient(to right, var(--color-primary-start), var(--color-secondary-start)); height: 100%; border-radius: 9999px; transition: width 0.5s ease-in-out; }
-        
-        .table-wrapper { overflow-x: auto; }
-        .users-table .sticky-col { position: sticky; z-index: 10; }
-        .users-table .first-col { left: 0; border-right: 2px solid var(--color-border); }
-        .users-table .last-col { right: 0; border-left: 2px solid var(--color-border); }
-        .users-table th.sticky-col, .users-table td.sticky-col { background-color: var(--color-surface); }
-        
-        .lesson-card {
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
+        .btn-lg {
+            @apply py-3 px-6 text-base;
         }
-        .lesson-card.selected {
-            border-color: var(--color-primary-start);
-            background-color: rgba(162, 89, 255, 0.1);
+
+        .btn-primary {
+            background-image: linear-gradient(to right, var(--color-primary-start), var(--color-primary-end));
+            @apply text-white shadow-lg;
         }
-        .lesson-card.completed {
-            opacity: 0.6;
+
+        .btn-danger {
+            @apply bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/20;
         }
+
+        .btn-secondary {
+            @apply bg-slate-600 hover:bg-slate-500 text-white;
+        }
+
+        .bg-surface {
+            background-color: var(--color-surface);
+        }
+
+        .text-main {
+            color: var(--color-text);
+        }
+
+        .text-muted {
+            color: var(--color-text-muted);
+        }
+
+        .border-main {
+            border-color: var(--color-border);
+        }
+
+        .bg-success {
+            background-color: var(--color-success);
+        }
+
+        .text-success {
+            color: var(--color-success);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-view-enter {
+            animation: fadeIn 500ms ease-out forwards;
+        }
+
+        @keyframes toast-enter {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes toast-exit {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .toast-enter {
+            animation: toast-enter 0.3s ease-out forwards;
+        }
+
+        .toast-exit {
+            animation: toast-exit 0.3s ease-in forwards;
+        }
+
+        .progress-bar-container {
+            background-color: var(--color-bg);
+            border-radius: 9999px;
+            height: 8px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-image: linear-gradient(to right, var(--color-primary-start), var(--color-secondary-start));
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .users-table .sticky-col {
+            position: sticky;
+            z-index: 10;
+        }
+
+        .users-table .first-col {
+            left: 0;
+            border-right: 2px solid var(--color-border);
+        }
+
+        .users-table .last-col {
+            right: 0;
+            border-left: 2px solid var(--color-border);
+        }
+
+        .users-table th.sticky-col,
+        .users-table td.sticky-col {
+            background-color: var(--color-surface);
+        }
+
+        .light-theme .users-table th.sticky-col,
+        .light-theme .users-table td.sticky-col,
+        .light-theme .bg-gray-800 {
+            background-color: #edf2f7;
+        }
+
+        /* Light theme adjustment */
+
+        .lesson-link.selected {
+            background-color: rgba(229, 62, 62, 0.1);
+        }
+
         .tab-btn {
             padding-bottom: 8px;
             border-bottom: 2px solid transparent;
@@ -130,26 +272,37 @@
             font-weight: 600;
             transition: all 0.2s ease;
         }
+
         .tab-btn:hover {
             color: var(--color-text);
         }
+
         .tab-btn.active-tab {
             color: var(--color-primary-start);
             border-bottom-color: var(--color-primary-start);
         }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
     </style>
 </head>
+
 <body class="antialiased">
     <div id="app-container" class="relative z-10">
-        <div id="loader" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-[100]">
+        <div id="loader" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100]">
             <div class="flex flex-col items-center">
                 <i class="fas fa-graduation-cap text-6xl text-[var(--color-primary-start)] animate-pulse"></i>
                 <p class="text-white mt-4 text-lg">Cargando plataforma...</p>
             </div>
         </div>
         <div id="toast-container" class="fixed top-5 right-5 z-[90] space-y-3"></div>
-        <div id="login-view" class="min-h-screen flex items-center justify-center p-4 bg-cover bg-center hidden" style="background-image: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), url('https://placehold.co/1920x1080/0a192f/66b3ff?text=Code');">
-            <div class="w-full max-w-md p-8 space-y-8 rounded-xl shadow-2xl glassmorphism transition-all duration-500 hover:shadow-[var(--color-primary-start)]/20">
+        <div id="login-view" class="min-h-screen flex items-center justify-center p-4 bg-cover bg-center hidden"
+            style="background-image: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9)), url('https://placehold.co/1920x1080/121212/e53e3e?text=Education');">
+            <div
+                class="w-full max-w-md p-8 space-y-8 rounded-xl shadow-2xl glassmorphism transition-all duration-500 hover:shadow-[var(--color-primary-start)]/20">
                 <div class="text-center">
                     <i class="fas fa-graduation-cap text-6xl text-[var(--color-primary-start)]"></i>
                     <h1 class="text-4xl font-bold text-main mt-4">Portal Educativo</h1>
@@ -159,25 +312,34 @@
                     <div>
                         <label for="usuario" class="text-sm font-bold text-muted">Usuario</label>
                         <div class="relative mt-2">
-                            <span class="absolute left-3.5 top-3.5 text-muted"><i class="fas fa-user-astronaut"></i></span>
-                            <input type="text" id="usuario" placeholder="tu@email.com" class="w-full pl-10 p-3 rounded-lg form-input" required>
+                            <span class="absolute left-3.5 top-3.5 text-muted"><i
+                                    class="fas fa-user-astronaut"></i></span>
+                            <input type="text" id="usuario" placeholder="tu@email.com"
+                                class="w-full pl-10 p-3 rounded-lg form-input" required>
                         </div>
                     </div>
                     <div>
                         <label for="contrasena" class="text-sm font-bold text-muted">Contraseña</label>
                         <div class="relative mt-2">
                             <span class="absolute left-3.5 top-3.5 text-muted"><i class="fas fa-key"></i></span>
-                            <input type="password" id="contrasena" placeholder="••••••••" class="w-full pl-10 p-3 rounded-lg form-input" required>
+                            <input type="password" id="contrasena" placeholder="••••••••"
+                                class="w-full pl-10 p-3 rounded-lg form-input" required>
                         </div>
-                         <div class="text-right mt-2">
-                            <a href="#" id="forgot-password-link" class="text-sm text-cyan-400 hover:underline">¿Olvidaste tu contraseña?</a>
+                        <div class="text-right mt-2">
+                            <a href="#" id="forgot-password-link"
+                                class="text-sm text-red-400 hover:underline">¿Olvidaste tu contraseña?</a>
                         </div>
                     </div>
-                    <button type="submit" id="login-button" class="w-full flex justify-center items-center py-3 px-4 btn btn-primary">
+                    <button type="submit" id="login-button"
+                        class="w-full flex justify-center items-center py-3 px-4 btn btn-primary">
                         <span class="button-text">Acceder</span>
-                        <svg class="animate-spin h-5 w-5 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg class="animate-spin h-5 w-5 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
                         </svg>
                     </button>
                 </form>
@@ -186,73 +348,42 @@
 
         <div id="main-view" class="hidden">
             <header class="p-4 flex justify-between items-center sticky top-0 z-50 glassmorphism">
-                <h1 class="text-xl font-bold text-main"><i class="fas fa-graduation-cap text-[var(--color-primary-start)]"></i> Portal Educativo</h1>
+                <h1 class="text-xl font-bold text-main"><i
+                        class="fas fa-graduation-cap text-[var(--color-primary-start)]"></i> Portal Educativo</h1>
                 <div class="flex items-center gap-4">
-                    <button id="theme-toggle" class="btn btn-secondary text-lg w-10 h-10 flex items-center justify-center"><i class="fas"></i></button>
+                    <button id="theme-toggle"
+                        class="btn btn-secondary text-lg w-10 h-10 flex items-center justify-center"><i
+                            class="fas"></i></button>
                     <span id="user-greeting" class="font-semibold text-main hidden md:block"></span>
-                    <button id="home-button" class="btn btn-secondary hidden"><i class="fas fa-home"></i><span class="ml-2 hidden md:inline">Inicio</span></button>
+                    <button id="home-button" class="btn btn-secondary hidden"><i class="fas fa-home"></i><span
+                            class="ml-2 hidden md:inline">Inicio</span></button>
                     <div id="profile-menu-button" class="relative cursor-pointer">
-                        <img id="user-avatar" src="https://placehold.co/40x40/0a192f/FFFFFF?text=U" class="w-10 h-10 rounded-full border-2 border-[var(--color-primary-start)]">
+                        <img id="user-avatar" src="https://placehold.co/40x40/0a192f/FFFFFF?text=U"
+                            class="w-10 h-10 rounded-full border-2 border-[var(--color-primary-start)]">
                     </div>
                     <button id="logout-button" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
                 </div>
             </header>
             <main class="p-4 md:p-8">
-                
+
                 <div id="student-view" class="hidden">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Columna Izquierda: Syllabus -->
                         <div class="lg:col-span-4 space-y-6">
-                            <div class="bg-surface p-6 rounded-xl shadow-lg">
-                                <h2 class="text-xl font-bold text-main mb-4">Tu Progreso</h2>
-                                <div class="flex items-center justify-center gap-6">
-                                    <div id="progress-ring-container" class="relative w-32 h-32"></div>
-                                    <div>
-                                        <p class="text-3xl font-bold text-main" id="total-progress-percentage">0%</p>
-                                        <p class="text-muted" id="total-progress-lessons">0 de 0 clases</p>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="bg-surface p-4 rounded-xl shadow-lg">
+                                <button id="student-dashboard-btn"
+                                    class="w-full text-left p-3 mb-4 bg-surface rounded-md font-semibold text-main flex items-center hover:bg-gray-700/50 light:hover:bg-gray-100">
+                                    <i
+                                        class="fas fa-tachometer-alt w-6 text-center mr-2 text-[var(--color-primary-start)]"></i>
+                                    <span>Vista General</span>
+                                </button>
                                 <h2 class="text-xl font-bold text-main mb-3 px-2">Contenido del Curso</h2>
-                                <div id="lessons-container" class="space-y-2 max-h-[60vh] overflow-y-auto pr-2"></div>
+                                <div id="course-syllabus" class="space-y-2 max-h-[70vh] overflow-y-auto pr-2"></div>
                             </div>
                         </div>
-                        <div class="lg:col-span-8 space-y-6">
-                            <h2 id="video-title" class="text-3xl font-bold text-main">Selecciona una clase para comenzar</h2>
-                            <div class="bg-surface rounded-xl shadow-lg overflow-hidden">
-                                <div class="aspect-video relative">
-                                    <iframe id="video-player" class="w-full h-full" src="about:blank" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            <div id="lesson-details-tabs" class="bg-surface p-6 rounded-xl shadow-lg">
-                                <div class="border-b border-main flex space-x-6 mb-4">
-                                    <button class="tab-btn active-tab" data-tab="details">Detalles</button>
-                                    <button class="tab-btn" data-tab="comments">Comentarios (Simulado)</button>
-                                </div>
-                                <div id="tab-content-details">
-                                    <div id="lesson-details-content" class="text-muted grid grid-cols-2 md:grid-cols-3 gap-4 text-sm mb-4"></div>
-                                    <p id="lesson-description" class="text-muted text-sm mb-4"></p>
-                                    <div id="lesson-actions-container" class="flex flex-col sm:flex-row gap-4"></div>
-                                </div>
-                                <div id="tab-content-comments" class="hidden">
-                                    <div class="space-y-4">
-                                        <div class="flex gap-3">
-                                            <img src="https://placehold.co/40x40/112240/a259ff?text=S" class="w-10 h-10 rounded-full" alt="Avatar de usuario">
-                                            <div>
-                                                <p class="font-semibold text-main text-sm">Sofia Vergara</p>
-                                                <p class="text-muted text-xs">¡Excelente explicación sobre las herramientas! Muy útil.</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex gap-3">
-                                            <img src="https://placehold.co/40x40/112240/00aaff?text=C" class="w-10 h-10 rounded-full" alt="Avatar de usuario">
-                                            <div>
-                                                <p class="font-semibold text-main text-sm">Carlos Vives</p>
-                                                <p class="text-muted text-xs">Tenía una duda sobre el tema, pero el material complementario la resolvió. ¡Gracias!</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Columna Derecha: Contenido Principal (Dashboard o Video) -->
+                        <div class="lg:col-span-8 space-y-6" id="student-main-content">
+                            <!-- El contenido se renderizará aquí con JS -->
                         </div>
                     </div>
                 </div>
@@ -260,68 +391,90 @@
                 <div id="admin-view" class="hidden">
                     <div class="border-b border-main mb-6">
                         <nav id="admin-tabs" class="flex flex-wrap gap-4">
-                           <button data-tab="dashboard" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Dashboard</button>
-                           <button data-tab="tracking" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Seguimiento</button>
-                           <button data-tab="users" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Gestión de Usuarios</button>
-                           <button data-tab="course" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Gestión de Cursos</button>
-                           <button data-tab="settings" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Configuración</button>
+                            <button data-tab="dashboard"
+                                class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Dashboard</button>
+                            <button data-tab="tracking"
+                                class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Seguimiento</button>
+                            <button data-tab="users" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Gestión de
+                                Usuarios</button>
+                            <button data-tab="course" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Gestión
+                                de Cursos</button>
+                            <button data-tab="comments" class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Gestión
+                                de Comentarios</button>
+                            <button data-tab="settings"
+                                class="admin-tab-btn py-2 px-4 font-semibold border-b-2">Configuración</button>
                         </nav>
                     </div>
                     <div id="admin-content-area"></div>
                 </div>
                 <div id="profile-view" class="hidden max-w-2xl mx-auto">
-                     <h2 class="text-3xl font-bold text-main mb-6">Mi Perfil</h2>
-                     <div class="bg-surface p-8 rounded-lg space-y-6">
-                         <div class="text-center">
-                              <img id="profile-img-preview" src="https://placehold.co/128x128/0a192f/FFFFFF?text=U" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[var(--color-primary-start)]" alt="Vista previa del avatar">
-                              <p class="text-muted text-sm">Las imágenes deben ser URLs públicas.</p>
-                         </div>
-                         <form id="profile-form" class="space-y-4">
-                              <div><label for="profile-nombre" class="block mb-2 text-sm font-medium">Nombre Completo</label><input type="text" id="profile-nombre" class="w-full p-2.5 rounded-lg form-input" required></div>
-                              <div><label for="profile-usuario" class="block mb-2 text-sm font-medium">Usuario / Correo</label><input type="text" id="profile-usuario" class="w-full p-2.5 rounded-lg bg-slate-700 border-slate-600 text-slate-400" disabled></div>
-                              <div><label for="profile-img-url" class="block mb-2 text-sm font-medium">URL de Foto de Perfil</label><input type="url" id="profile-img-url" placeholder="https://ejemplo.com/imagen.png" class="w-full p-2.5 rounded-lg form-input"></div>
-                              <div><label for="profile-new-password" class="block mb-2 text-sm font-medium">Nueva Contraseña (dejar en blanco para no cambiar)</label><input type="password" id="profile-new-password" class="w-full p-2.5 rounded-lg form-input"></div>
-                              <button type="submit" class="w-full py-3 px-4 btn btn-primary">Guardar Cambios</button>
-                         </form>
-                     </div>
+                    <h2 class="text-3xl font-bold text-main mb-6">Mi Perfil</h2>
+                    <div class="bg-surface p-8 rounded-lg space-y-6">
+                        <div class="text-center">
+                            <img id="profile-img-preview" src="https://placehold.co/128x128/0a192f/FFFFFF?text=U"
+                                class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[var(--color-primary-start)]"
+                                alt="Vista previa del avatar">
+                            <p class="text-muted text-sm">Las imágenes deben ser URLs públicas.</p>
+                        </div>
+                        <form id="profile-form" class="space-y-4">
+                            <div><label for="profile-nombre" class="block mb-2 text-sm font-medium">Nombre
+                                    Completo</label><input type="text" id="profile-nombre"
+                                    class="w-full p-2.5 rounded-lg form-input" required></div>
+                            <div><label for="profile-usuario" class="block mb-2 text-sm font-medium">Usuario /
+                                    Correo</label><input type="text" id="profile-usuario"
+                                    class="w-full p-2.5 rounded-lg bg-slate-700 border-slate-600 text-slate-400"
+                                    disabled></div>
+                            <div><label for="profile-img-url" class="block mb-2 text-sm font-medium">URL de Foto de
+                                    Perfil</label><input type="url" id="profile-img-url"
+                                    placeholder="https://ejemplo.com/imagen.png"
+                                    class="w-full p-2.5 rounded-lg form-input"></div>
+                            <div><label for="profile-new-password" class="block mb-2 text-sm font-medium">Nueva
+                                    Contraseña (dejar en blanco para no cambiar)</label><input type="password"
+                                    id="profile-new-password" class="w-full p-2.5 rounded-lg form-input"></div>
+                            <button type="submit" class="w-full py-3 px-4 btn btn-primary">Guardar Cambios</button>
+                        </form>
+                    </div>
                 </div>
             </main>
         </div>
     </div>
-    
+
     <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-[60]"></div>
     <div id="modal-container" class="fixed inset-0 flex items-center justify-center hidden z-[70] p-4"></div>
-    
+
     <script>
         // ===================================================================================
         // --- SECCIÓN 1: DATOS INICIALES Y CONFIGURACIÓN ---
         // ===================================================================================
-        
+
         const initialData = {
             users: [
-                { id: "admin@seamosgenios.org", usuario:"admin@seamosgenios.org", contrasena:"admin1234", nombre:"Admin Genial", rol:"administrador", fotoUrl:"", telefono: "N/A", pais: "N/A", fechaCreacion: new Date().toISOString(), progreso: {}, status: 'activo', tipoDocumento: 'N/A', numeroDocumento: 'N/A', institucion: 'N/A', tipoPrueba: 'N/A', departamento: 'N/A', emailRecuperacion: 'admin@seamosgenios.org', codigoRecuperacion: 'ADMIN001' },
-                { id: "andres@seamosgenios.org", usuario:"andres@seamosgenios.org", contrasena:"1724", nombre:"Andrés el Estudiante", rol:"estudiante", fotoUrl:"", telefono: "3001234567", pais: "Colombia", fechaCreacion: new Date().toISOString(), progreso: {"1-1": true}, status: 'activo', tipoDocumento: 'CC', numeroDocumento: '123456789', institucion: 'Colegio Genios', tipoPrueba: 'SABER11', departamento: 'Antioquia', emailRecuperacion: 'andres.rec@email.com', codigoRecuperacion: 'USER001' }
+                { id: "admin@seamosgenios.org", usuario: "admin@seamosgenios.org", contrasena: "admin1234", nombre: "Admin Genial", rol: "administrador", fotoUrl: "", telefono: "N/A", pais: "N/A", fechaCreacion: new Date().toISOString(), progreso: {}, status: 'activo', tipoDocumento: 'N/A', numeroDocumento: 'N/A', institucion: 'N/A', tipoPrueba: 'N/A', departamento: 'N/A', emailRecuperacion: 'admin@seamosgenios.org', codigoRecuperacion: 'ADMIN001' },
+                { id: "andres@seamosgenios.org", usuario: "andres@seamosgenios.org", contrasena: "1724", nombre: "Andrés el Estudiante", rol: "estudiante", fotoUrl: "", telefono: "3001234567", pais: "Colombia", fechaCreacion: new Date().toISOString(), progreso: { "1-1": true }, status: 'activo', tipoDocumento: 'CC', numeroDocumento: '123456789', institucion: 'Colegio Genios', tipoPrueba: 'SABER11', departamento: 'Antioquia', emailRecuperacion: 'andres.rec@email.com', codigoRecuperacion: 'USER001' }
             ],
             course: {
                 semanas: [
-                    { 
-                        numero: 1, 
+                    {
+                        numero: 1,
                         grabaciones: [
-                            {id: "1-1", titulo:"Fundamentos del Aprendizaje", descripcion: "En esta clase exploramos las bases del aprendizaje efectivo y cómo aplicarlas en tu día a día.", link:"https://www.youtube.com/watch?v=rokGy0huYEA", materialLink: "https://www.ejemplo.com/material1.pdf", asignatura: "Metodología", tema: "Técnicas de Estudio", profesor: "Dr. Alexandro", fecha: "2024-08-01", expiracion: null}, 
-                            {id: "1-2", titulo:"Herramientas para el Éxito", descripcion: "Descubre las herramientas digitales y conceptuales esenciales que te ayudarán a tener éxito en este curso y más allá.", link:"https://www.youtube.com/watch?v=T5pRlIbr6gg", materialLink: "", asignatura: "Tecnología", tema: "Software Educativo", profesor: "Ing. Sofía", fecha: "2024-08-03", expiracion: "2025-12-31"}
-                        ] 
+                            { id: "1-1", titulo: "Fundamentos del Aprendizaje", descripcion: "En esta clase exploramos las bases del aprendizaje efectivo y cómo aplicarlas en tu día a día.", link: "https://www.youtube.com/watch?v=rokGy0huYEA", materialLink: "https://www.ejemplo.com/material1.pdf", asignatura: "Metodología", tema: "Técnicas de Estudio", profesor: "Dr. Alexandro", fecha: "2024-08-01", expiracion: null },
+                            { id: "1-2", titulo: "Herramientas para el Éxito", descripcion: "Descubre las herramientas digitales y conceptuales esenciales que te ayudarán a tener éxito en este curso y más allá.", link: "https://www.youtube.com/watch?v=T5pRlIbr6gg", materialLink: "", asignatura: "Tecnología", tema: "Software Educativo", profesor: "Ing. Sofía", fecha: "2024-08-03", expiracion: "2025-12-31" }
+                        ]
                     },
-                    { 
-                        numero: 2, 
+                    {
+                        numero: 2,
                         grabaciones: [
-                            {id: "2-1", titulo:"Introducción a la Programación", descripcion: "Comienza tu viaje en el mundo del código con los conceptos básicos de la programación.", link:"https://www.youtube.com/watch?v=zOjov-2OZ0E", materialLink: "https://www.ejemplo.com/material2.pdf", asignatura: "Programación", tema: "Algoritmos", profesor: "Ing. Sofía", fecha: "2024-08-08", expiracion: null},
-                        ] 
+                            { id: "2-1", titulo: "Introducción a la Programación", descripcion: "Comienza tu viaje en el mundo del código con los conceptos básicos de la programación.", link: "https://www.youtube.com/watch?v=zOjov-2OZ0E", materialLink: "https://www.ejemplo.com/material2.pdf", asignatura: "Programación", tema: "Algoritmos", profesor: "Ing. Sofía", fecha: "2024-08-08", expiracion: null },
+                        ]
                     }
                 ]
-            }
+            },
+            comments: [
+                { id: "c1", lessonId: "1-1", userId: "andres@seamosgenios.org", userName: "Andrés el Estudiante", userAvatar: "", text: "¡Muy buena clase, me sirvió mucho para empezar!", timestamp: new Date('2024-08-02T10:00:00Z').toISOString() }
+            ]
         };
 
-        const LOCAL_STORAGE_KEY = 'coursePlatformData_v12';
+        const LOCAL_STORAGE_KEY = 'coursePlatformData_v14';
         const TIPOS_PRUEBA = ["PRESABER", "REPITENTE", "VALIDANTE", "SABER11", "Otro"];
         const TIPOS_DOCUMENTO = ["CC", "TI", "CE", "PA", "NIT", "Otro"];
         const DEPARTAMENTOS_COLOMBIA = ["Amazonas", "Antioquia", "Arauca", "Atlántico", "Bolívar", "Boyacá", "Caldas", "Caquetá", "Casanare", "Cauca", "Cesar", "Chocó", "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño", "Norte de Santander", "Putumayo", "Quindío", "Risaralda", "San Andrés y Providencia", "Santander", "Sucre", "Tolima", "Valle del Cauca", "Vaupés", "Vichada", "Otro"];
@@ -329,15 +482,19 @@
         // ===================================================================================
         // --- SECCIÓN 2: LÓGICA PRINCIPAL DE LA APLICACIÓN ---
         // ===================================================================================
-        
+
         const App = {
-            state: { 
-                currentUser: null, 
-                courseContent: { semanas: [] }, 
-                users: [], 
+            // --- ESTADO DE LA APLICACIÓN ---
+            state: {
+                currentUser: null,
+                courseContent: { semanas: [] },
+                users: [],
+                comments: [],
                 filteredUsers: [],
+                currentLessonId: null,
             },
-            
+
+            // --- ELEMENTOS DEL DOM ---
             elements: {
                 loader: document.getElementById('loader'),
                 mainView: document.getElementById('main-view'),
@@ -356,26 +513,28 @@
                 themeToggle: document.getElementById('theme-toggle'),
             },
 
+            // --- INICIALIZACIÓN Y MANEJO DE DATOS ---
             init() {
                 this.showLoader();
                 this.initUI();
-                
+
                 queueMicrotask(() => {
                     const data = this.loadDataFromStorage();
                     this.state.users = data.users;
                     this.state.filteredUsers = data.users;
                     this.state.courseContent = data.course;
-                    
+                    this.state.comments = data.comments;
+
                     const savedUserJSON = localStorage.getItem('currentUser');
                     if (savedUserJSON) {
                         const savedUser = JSON.parse(savedUserJSON);
                         const fullUser = this.state.users.find(u => u.id === savedUser.id);
-                        if (fullUser) { 
-                            this.state.currentUser = fullUser; 
-                            this.initializeAppUI(); 
-                        } else { 
-                            localStorage.removeItem('currentUser'); 
-                            this.switchView('login-view'); 
+                        if (fullUser) {
+                            this.state.currentUser = fullUser;
+                            this.initializeAppUI();
+                        } else {
+                            localStorage.removeItem('currentUser');
+                            this.switchView('login-view');
                         }
                     } else {
                         this.switchView('login-view');
@@ -408,32 +567,35 @@
                                     if (g.materialLink === undefined) g.materialLink = "";
                                 });
                             });
+                            if (!parsedData.comments) parsedData.comments = [];
                             return parsedData;
                         }
                     }
-                } catch (error) { 
+                } catch (error) {
                     console.error("Error al cargar datos de localStorage:", error);
                 }
-                return JSON.parse(JSON.stringify(initialData)); 
+                return JSON.parse(JSON.stringify(initialData));
             },
 
             saveDataToStorage() {
                 try {
-                    const dataToStore = { 
-                        users: this.state.users, 
-                        course: this.state.courseContent 
+                    const dataToStore = {
+                        users: this.state.users,
+                        course: this.state.courseContent,
+                        comments: this.state.comments,
                     };
                     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
-                } catch (error) { 
+                } catch (error) {
                     this.showToast("No se pudieron guardar los cambios.", "error");
                     console.error("Error guardando en localStorage:", error);
                 }
             },
 
+            // --- MANEJO DE VISTAS Y UI GENERAL ---
             refreshCurrentView() {
-                if(this.state.currentUser) {
+                if (this.state.currentUser) {
                     const updatedCurrentUser = this.state.users.find(u => u.id === this.state.currentUser.id);
-                    if(updatedCurrentUser) {
+                    if (updatedCurrentUser) {
                         this.state.currentUser = updatedCurrentUser;
                         localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
                         this.initializeAppUI(false);
@@ -442,12 +604,12 @@
                         return;
                     }
                 }
-                
+
                 const adminView = document.getElementById('admin-view');
-                if(!adminView.classList.contains('hidden')) {
+                if (!adminView.classList.contains('hidden')) {
                     const activeTab = this.elements.adminTabs.querySelector('.admin-tab-btn.active-tab');
-                    if(activeTab) {
-                       this.handleAdminTabSwitch({target: activeTab}, true);
+                    if (activeTab) {
+                        this.handleAdminTabSwitch({ target: activeTab }, true);
                     }
                 }
             },
@@ -456,11 +618,11 @@
                 const dot = document.createElement('div');
                 dot.className = 'cursor-dot';
                 document.body.appendChild(dot);
-                
+
                 window.addEventListener('mousemove', e => {
                     dot.style.left = `${e.clientX}px`;
                     dot.style.top = `${e.clientY}px`;
-                    
+
                     const trail = document.createElement('div');
                     trail.className = 'cursor-trail';
                     trail.style.left = `${e.clientX}px`;
@@ -469,13 +631,13 @@
                     trail.style.height = '4px';
                     document.body.appendChild(trail);
                     setTimeout(() => {
-                        if(document.body.contains(trail)) {
+                        if (document.body.contains(trail)) {
                             document.body.removeChild(trail)
                         }
                     }, 500);
                 });
             },
-            
+
             initTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'dark';
                 document.body.classList.toggle('light-theme', savedTheme === 'light');
@@ -485,7 +647,13 @@
             attachEventListeners() {
                 this.elements.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
                 this.elements.logoutButton.addEventListener('click', () => this.handleLogout());
-                this.elements.homeButton.addEventListener('click', () => this.initializeAppUI());
+                this.elements.homeButton.addEventListener('click', () => {
+                    if (this.state.currentUser.rol === 'estudiante') {
+                        this.renderStudentDashboard();
+                    } else {
+                        this.initializeAppUI(true);
+                    }
+                });
                 this.elements.profileMenuButton.addEventListener('click', () => this.showProfileView());
                 this.elements.adminTabs.addEventListener('click', (e) => this.handleAdminTabSwitch(e));
                 this.elements.forgotPasswordLink.addEventListener('click', (e) => {
@@ -510,11 +678,15 @@
                 this.elements.mainView.classList.toggle('hidden', !isMainView);
                 if (isMainView) {
                     document.getElementById(viewId)?.classList.remove('hidden');
-                    if(!isRefresh) this.elements.mainView.classList.add('main-view-enter');
+                    if (!isRefresh) {
+                        this.elements.mainView.classList.remove('main-view-enter');
+                        void this.elements.mainView.offsetWidth; // Trigger reflow
+                        this.elements.mainView.classList.add('main-view-enter');
+                    }
                 } else {
                     this.elements.loginView.classList.remove('hidden');
                 }
-                this.elements.homeButton.classList.toggle('hidden', viewId !== 'profile-view');
+                this.elements.homeButton.classList.toggle('hidden', viewId === 'login-view' || (this.state.currentUser?.rol === 'administrador' && viewId === 'admin-view'));
             },
 
             initializeAppUI(doSwitchView = true) {
@@ -523,24 +695,27 @@
                 this.elements.userGreeting.textContent = `Hola, ${user.nombre.split(' ')[0]}`;
                 this.elements.userAvatar.src = user.fotoUrl || `https://placehold.co/40x40/0a192f/FFFFFF?text=${user.nombre.charAt(0)}`;
                 this.elements.userAvatar.onerror = () => { this.elements.userAvatar.src = `https://placehold.co/40x40/0a192f/FFFFFF?text=${user.nombre.charAt(0)}`; };
-                if (user.rol === 'administrador') { 
-                    if(doSwitchView) {
+                if (user.rol === 'administrador') {
+                    if (doSwitchView) {
                         this.switchView('admin-view');
                         const lastTab = localStorage.getItem('activeAdminTab') || 'dashboard';
                         const tabButton = this.elements.adminTabs.querySelector(`[data-tab="${lastTab}"]`);
                         this.handleAdminTabSwitch({ target: tabButton || this.elements.adminTabs.querySelector('[data-tab="dashboard"]') });
                     }
-                } else { 
-                    if(doSwitchView) this.switchView('student-view');
-                    this.renderStudentView(); 
+                } else {
+                    if (doSwitchView) this.switchView('student-view');
+                    this.renderStudentView();
                 }
             },
 
             showToast(message, type = 'info') {
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
-                const colors = { info: 'bg-blue-500', success: 'bg-green-500', error: 'bg-red-500' };
-                toast.className = `p-4 rounded-lg text-white shadow-lg ${colors[type]} toast-enter`;
+                let bgColor = 'bg-blue-500';
+                if (type === 'success') bgColor = 'bg-success';
+                if (type === 'error') bgColor = 'bg-danger';
+
+                toast.className = `p-4 rounded-lg text-white shadow-lg ${bgColor} toast-enter`;
                 toast.textContent = message;
                 container.appendChild(toast);
                 setTimeout(() => {
@@ -551,6 +726,7 @@
                 }, 3000);
             },
 
+            // --- AUTENTICACIÓN Y PERFIL ---
             handleLogin(e) {
                 e.preventDefault();
                 const button = this.elements.loginForm.querySelector('button[type="submit"]');
@@ -563,7 +739,7 @@
                 const usuario = this.elements.loginForm.usuario.value;
                 const contrasena = this.elements.loginForm.contrasena.value;
 
-                setTimeout(() => { 
+                setTimeout(() => {
                     const foundUser = this.state.users.find(u => u.usuario === usuario && u.contrasena === contrasena);
                     if (!foundUser) {
                         this.showToast("Usuario o contraseña incorrectos.", "error");
@@ -580,10 +756,10 @@
                     button.disabled = false;
                 }, 500);
             },
-            
+
             openForgotPasswordModal() {
                 this.openModal(`
-                    <h3 class="text-2xl font-bold mb-6">Recuperar Contraseña</h3>
+                    <h3 class="text-2xl font-bold mb-6 text-main">Recuperar Contraseña</h3>
                     <div id="recovery-step-1">
                         <p class="mb-4 text-muted">Ingresa tu email de recuperación para verificar tu cuenta.</p>
                         <form id="recovery-step1-form" class="space-y-4">
@@ -627,7 +803,7 @@
                 imgPreview.onerror = () => { imgPreview.src = `https://placehold.co/128x128/0a192f/FFFFFF?text=${user.nombre.charAt(0)}`; };
                 form.addEventListener('submit', (e) => this.handleUpdateProfile(e), { once: true });
             },
-            
+
             handleUpdateProfile(e) {
                 e.preventDefault();
                 const form = e.target;
@@ -649,7 +825,8 @@
                 this.showToast('Perfil actualizado con éxito', 'success');
                 this.initializeAppUI(false);
             },
-            
+
+            // --- VISTA DE ESTUDIANTE ---
             getYoutubeThumbnail(url) {
                 if (!url) return 'https://placehold.co/160x90/112240/ccd6f6?text=Video';
                 try {
@@ -671,13 +848,13 @@
                     if (match && match[1]) {
                         videoId = match[1];
                     }
-                    
+
                     if (videoId) {
                         const params = new URLSearchParams({
                             autoplay: 0,
                             controls: 1,
                             modestbranding: 1,
-                            rel: 0, 
+                            rel: 0,
                             showinfo: 0,
                         });
                         return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
@@ -686,68 +863,163 @@
                     if (link.includes("drive.google.com")) {
                         return link.replace("/view", "/preview");
                     }
-                } catch(e) {
+                } catch (e) {
                     console.error("Enlace de video inválido:", link, e);
                 }
                 return link;
             },
 
             renderStudentView() {
-                const lessonsContainer = document.getElementById('lessons-container');
-                if (!lessonsContainer) return;
-                lessonsContainer.innerHTML = '';
-                
-                const allLessons = this.state.courseContent.semanas.flatMap(semana => 
-                    semana.grabaciones.map(grabacion => ({...grabacion, semana: semana.numero}))
-                );
-        
-                const totalLessons = allLessons.length;
-                const completedLessons = allLessons.filter(lesson => this.state.currentUser.progreso && this.state.currentUser.progreso[lesson.id]).length;
-                const progressPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
-        
-                document.getElementById('total-progress-percentage').textContent = `${progressPercentage}%`;
-                document.getElementById('total-progress-lessons').textContent = `${completedLessons} de ${totalLessons} clases`;
-                
-                const progressRing = document.getElementById('progress-ring-container');
-                progressRing.innerHTML = `
-                    <svg class="w-full h-full" viewBox="0 0 36 36">
-                        <path class="stroke-current text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
-                        <path class="stroke-current text-[var(--color-primary-start)] transition-all duration-500" stroke-dasharray="${progressPercentage}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3" stroke-linecap="round" transform="rotate(-90 18 18)"></path>
-                    </svg>
-                    <div class="absolute inset-0 flex items-center justify-center text-main font-bold text-lg">${progressPercentage}%</div>
-                `;
-                
-                let currentWeek = 0;
-                allLessons.forEach(lesson => {
-                    if (lesson.semana !== currentWeek) {
-                        currentWeek = lesson.semana;
-                        lessonsContainer.innerHTML += `<h3 class="font-bold text-main pt-4 pb-2 px-2">Semana ${currentWeek}</h3>`;
-                    }
-        
-                    const isCompleted = this.state.currentUser.progreso && this.state.currentUser.progreso[lesson.id];
-                    const isExpired = lesson.expiracion && new Date(lesson.expiracion) < new Date();
-                    const lessonCard = document.createElement('div');
-                    lessonCard.className = `lesson-card flex items-center gap-4 p-2 rounded-lg transition cursor-pointer hover:bg-slate-800 ${isCompleted ? 'completed' : ''} ${isExpired ? 'opacity-40 cursor-not-allowed' : ''}`;
-                    lessonCard.dataset.lessonId = lesson.id;
-                    if (isExpired) lessonCard.setAttribute('disabled', 'true');
-        
-                    lessonCard.innerHTML = `
-                        <img src="${this.getYoutubeThumbnail(lesson.link)}" class="w-24 h-14 object-cover rounded-md flex-shrink-0" alt="Miniatura de ${lesson.titulo}">
-                        <div class="flex-grow overflow-hidden">
-                            <p class="font-semibold text-sm text-main truncate">${lesson.titulo}</p>
-                            <p class="text-xs text-muted">${lesson.profesor}</p>
-                        </div>
-                        <div class="flex-shrink-0 text-center w-6">
-                            ${isCompleted ? '<i class="fas fa-check-circle text-green-500 text-xl"></i>' : '<i class="far fa-circle text-muted text-xl"></i>'}
+                this.renderStudentSyllabus();
+                this.renderStudentDashboard();
+            },
+
+            renderStudentSyllabus() {
+                const syllabusContainer = document.getElementById('course-syllabus');
+                if (!syllabusContainer) return;
+                syllabusContainer.innerHTML = '';
+
+                this.state.courseContent.semanas.forEach(week => {
+                    const weekContainer = document.createElement('div');
+                    weekContainer.innerHTML = `
+                        <button class="w-full text-left p-3 bg-surface rounded-md font-semibold text-main flex justify-between items-center accordion-toggle">
+                            <span>Semana ${week.numero}</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="accordion-content pl-4 pt-2 space-y-1">
+                            ${week.grabaciones.map(lesson => {
+                        const isCompleted = this.state.currentUser.progreso && this.state.currentUser.progreso[lesson.id];
+                        return `
+                                    <div class="flex items-center gap-2 p-2 hover:bg-gray-700/50 rounded-md cursor-pointer lesson-link ${isCompleted ? 'opacity-60' : ''}" data-lesson-id="${lesson.id}">
+                                        <i class="fas ${isCompleted ? 'fa-check-circle text-success' : 'fa-play-circle text-muted'}"></i>
+                                        <span class="text-sm">${lesson.titulo}</span>
+                                    </div>`;
+                    }).join('')}
                         </div>
                     `;
-                    lessonsContainer.appendChild(lessonCard);
+                    syllabusContainer.appendChild(weekContainer);
                 });
-        
-                lessonsContainer.querySelectorAll('.lesson-card:not([disabled])').forEach(card => {
-                    card.addEventListener('click', (e) => this.selectClass(e.currentTarget.dataset.lessonId));
+
+                syllabusContainer.querySelectorAll('.accordion-toggle').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const content = button.nextElementSibling;
+                        const icon = button.querySelector('i');
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.classList.remove('rotate-180');
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.classList.add('rotate-180');
+                        }
+                    });
                 });
-                
+
+                syllabusContainer.querySelectorAll('.lesson-link').forEach(link => {
+                    link.addEventListener('click', (e) => this.renderStudentLessonView(e.currentTarget.dataset.lessonId));
+                });
+
+                document.getElementById('student-dashboard-btn').addEventListener('click', () => this.renderStudentDashboard());
+            },
+
+            renderStudentDashboard() {
+                const mainContent = document.getElementById('student-main-content');
+                if (!mainContent) return;
+
+                const allLessons = this.state.courseContent.semanas.flatMap(s => s.grabaciones);
+                const completedLessons = allLessons.filter(l => this.state.currentUser.progreso && this.state.currentUser.progreso[l.id]);
+                const nextLesson = allLessons.find(l => !completedLessons.find(cl => cl.id === l.id));
+                const points = completedLessons.length * 10;
+
+                mainContent.innerHTML = `
+                    <div class="space-y-6 main-view-enter">
+                        <div class="bg-surface p-6 rounded-xl shadow-lg">
+                            <h2 class="text-3xl font-bold text-main">Bienvenido de nuevo, ${this.state.currentUser.nombre.split(' ')[0]}</h2>
+                            <p class="text-muted mt-1">¡Sigue así, estás haciendo un gran progreso!</p>
+                        </div>
+
+                        ${nextLesson ? `
+                        <div class="bg-surface p-6 rounded-xl shadow-lg border-2 border-[var(--color-primary-start)]">
+                            <h3 class="text-xl font-bold text-main mb-2">Continuar Aprendiendo</h3>
+                            <p class="text-muted mb-4">Tu siguiente clase es: <strong>${nextLesson.titulo}</strong></p>
+                            <button class="btn btn-primary btn-lg w-full" id="continue-learning-btn" data-lesson-id="${nextLesson.id}">
+                                <i class="fas fa-play mr-2"></i> Empezar Clase
+                            </button>
+                        </div>` : `
+                        <div class="bg-surface p-6 rounded-xl shadow-lg border-2 border-green-500">
+                            <h3 class="text-xl font-bold text-success mb-2"><i class="fas fa-check-circle"></i> ¡Felicidades!</h3>
+                            <p class="text-muted">Has completado todas las clases del curso.</p>
+                        </div>
+                        `}
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-surface p-5 rounded-xl shadow-lg text-center">
+                                <i class="fas fa-check-double text-3xl text-success mb-2"></i>
+                                <p class="text-2xl font-bold text-main">${completedLessons.length}</p>
+                                <p class="text-muted text-sm">Clases Completadas</p>
+                            </div>
+                            <div class="bg-surface p-5 rounded-xl shadow-lg text-center">
+                                <i class="fas fa-star text-3xl text-yellow-400 mb-2"></i>
+                                <p class="text-2xl font-bold text-main">${points} XP</p>
+                                <p class="text-muted text-sm">Puntos Obtenidos</p>
+                            </div>
+                            <div class="bg-surface p-5 rounded-xl shadow-lg text-center">
+                                <i class="fas fa-percentage text-3xl text-cyan-400 mb-2"></i>
+                                <p class="text-2xl font-bold text-main">${allLessons.length > 0 ? Math.round((completedLessons.length / allLessons.length) * 100) : 0}%</p>
+                                <p class="text-muted text-sm">Curso Completado</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (nextLesson) {
+                    document.getElementById('continue-learning-btn').addEventListener('click', (e) => {
+                        this.renderStudentLessonView(e.currentTarget.dataset.lessonId);
+                    });
+                }
+            },
+
+            renderStudentLessonView(lessonId) {
+                this.state.currentLessonId = lessonId;
+                const mainContent = document.getElementById('student-main-content');
+                if (!mainContent) return;
+
+                let selectedLesson;
+                for (const week of this.state.courseContent.semanas) {
+                    const lesson = week.grabaciones.find(g => g.id === lessonId);
+                    if (lesson) { selectedLesson = lesson; break; }
+                }
+                if (!selectedLesson) return;
+
+                mainContent.innerHTML = `
+                    <div class="space-y-6 main-view-enter">
+                         <h2 class="text-3xl font-bold text-main">${selectedLesson.titulo}</h2>
+                        <div class="bg-surface rounded-xl shadow-lg overflow-hidden">
+                            <div class="aspect-video relative">
+                                <iframe id="video-player" class="w-full h-full" src="${this.formatVideoLink(selectedLesson.link)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div id="lesson-details-tabs" class="bg-surface p-6 rounded-xl shadow-lg">
+                            <div class="border-b border-main flex space-x-6 mb-4">
+                                <button class="tab-btn active-tab" data-tab="details">Detalles</button>
+                                <button class="tab-btn" data-tab="comments">Comentarios</button>
+                            </div>
+                            <div id="tab-content-details">
+                                <div id="lesson-details-content" class="text-muted grid grid-cols-2 md:grid-cols-3 gap-4 text-sm mb-4"></div>
+                                <p id="lesson-description" class="text-muted text-sm mb-4"></p>
+                                <div id="lesson-actions-container" class="flex flex-col sm:flex-row gap-4"></div>
+                            </div>
+                            <div id="tab-content-comments" class="hidden">
+                                <div id="comments-list" class="space-y-4 max-h-60 overflow-y-auto pr-2 mb-4"></div>
+                                <form id="comment-form" class="flex gap-3">
+                                    <input type="text" id="comment-input" placeholder="Escribe un comentario..." class="w-full p-3 rounded-lg form-input" required>
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>`;
+
+                this.selectClass(lessonId);
+
                 document.querySelectorAll('#lesson-details-tabs .tab-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('#lesson-details-tabs .tab-btn').forEach(b => b.classList.remove('active-tab'));
@@ -756,17 +1028,8 @@
                         document.getElementById('tab-content-comments').classList.toggle('hidden', btn.dataset.tab !== 'comments');
                     });
                 });
-        
-                const firstAvailableLesson = allLessons.find(g => !g.expiracion || new Date(g.expiracion) >= new Date());
-                if (firstAvailableLesson) {
-                    this.selectClass(firstAvailableLesson.id);
-                } else {
-                    document.getElementById('video-title').textContent = "No hay clases disponibles.";
-                    document.getElementById('lesson-details-content').innerHTML = '';
-                    document.getElementById('lesson-description').textContent = "";
-                }
             },
-            
+
             selectClass(lessonId) {
                 let selectedLesson;
                 for (const week of this.state.courseContent.semanas) {
@@ -774,57 +1037,106 @@
                     if (lesson) { selectedLesson = lesson; break; }
                 }
                 if (!selectedLesson) return;
-        
-                document.querySelectorAll('.lesson-card').forEach(card => {
+
+                document.querySelectorAll('.lesson-link').forEach(card => {
                     card.classList.toggle('selected', card.dataset.lessonId === lessonId);
                 });
-        
-                document.getElementById('video-player').src = this.formatVideoLink(selectedLesson.link);
-                document.getElementById('video-title').textContent = selectedLesson.titulo;
+
                 document.getElementById('lesson-details-content').innerHTML = `
                     <div><strong class="font-semibold text-main">Asignatura:</strong><br><span class="text-muted">${selectedLesson.asignatura}</span></div>
                     <div><strong class="font-semibold text-main">Profesor:</strong><br><span class="text-muted">${selectedLesson.profesor}</span></div>
                     <div><strong class="font-semibold text-main">Fecha:</strong><br><span class="text-muted">${new Date(selectedLesson.fecha).toLocaleDateString()}</span></div>
                 `;
                 document.getElementById('lesson-description').textContent = selectedLesson.descripcion || "Esta lección no tiene una descripción detallada.";
-        
+
                 const actionsContainer = document.getElementById('lesson-actions-container');
                 const isCompleted = this.state.currentUser.progreso && this.state.currentUser.progreso[selectedLesson.id];
                 actionsContainer.innerHTML = '';
-                
+
                 if (selectedLesson.materialLink) {
-                    actionsContainer.innerHTML += `<a href="${selectedLesson.materialLink}" target="_blank" class="btn btn-secondary flex-1 text-center"><i class="fas fa-book-open mr-2"></i>Ver Material</a>`;
+                    actionsContainer.innerHTML += `<a href="${selectedLesson.materialLink}" target="_blank" class="btn btn-lg btn-secondary flex-1 text-center"><i class="fas fa-book-open mr-2"></i>Ver Material</a>`;
                 }
-                
+
                 const completeBtn = document.createElement('button');
-                completeBtn.className = `btn ${isCompleted ? 'bg-green-600 hover:bg-green-500' : 'btn-primary'} flex-1 text-center`;
+                completeBtn.className = `btn btn-lg ${isCompleted ? 'bg-success hover:bg-green-700' : 'btn-primary'} flex-1 text-center`;
                 completeBtn.innerHTML = `<i class="fas ${isCompleted ? 'fa-check-double' : 'fa-check'} mr-2"></i> ${isCompleted ? 'Clase Completada' : 'Marcar como Completada'}`;
                 completeBtn.onclick = () => this.toggleLessonProgress(selectedLesson.id);
                 actionsContainer.appendChild(completeBtn);
+
+                this.renderCommentsForLesson(lessonId);
             },
-            
+
+            renderCommentsForLesson(lessonId) {
+                const commentsList = document.getElementById('comments-list');
+                if (!commentsList) return;
+                commentsList.innerHTML = '';
+                const lessonComments = this.state.comments.filter(c => c.lessonId === lessonId);
+
+                if (lessonComments.length === 0) {
+                    commentsList.innerHTML = `<p class="text-muted text-sm text-center">No hay comentarios aún. ¡Sé el primero!</p>`;
+                } else {
+                    lessonComments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(comment => {
+                        const commentEl = document.createElement('div');
+                        commentEl.className = 'flex gap-3';
+                        const user = this.state.users.find(u => u.id === comment.userId);
+                        const avatar = user?.fotoUrl || `https://placehold.co/40x40/112240/a259ff?text=${comment.userName.charAt(0)}`;
+                        commentEl.innerHTML = `
+                            <img src="${avatar}" class="w-10 h-10 rounded-full" alt="Avatar de ${comment.userName}">
+                            <div>
+                                <p class="font-semibold text-main text-sm">${comment.userName}</p>
+                                <p class="text-muted text-xs">${comment.text}</p>
+                            </div>
+                        `;
+                        commentsList.appendChild(commentEl);
+                    });
+                }
+
+                const commentForm = document.getElementById('comment-form');
+                if (commentForm) {
+                    commentForm.onsubmit = (e) => this.handleCommentSubmit(e);
+                }
+            },
+
+            handleCommentSubmit(e) {
+                e.preventDefault();
+                const input = document.getElementById('comment-input');
+                const text = input.value.trim();
+                if (!text || !this.state.currentLessonId) return;
+
+                const newComment = {
+                    id: `c${Date.now()}`,
+                    lessonId: this.state.currentLessonId,
+                    userId: this.state.currentUser.id,
+                    userName: this.state.currentUser.nombre,
+                    text: text,
+                    timestamp: new Date().toISOString()
+                };
+
+                this.state.comments.push(newComment);
+                this.saveDataToStorage();
+                this.renderCommentsForLesson(this.state.currentLessonId);
+                input.value = '';
+            },
+
             toggleLessonProgress(lessonId) {
                 const userIndex = this.state.users.findIndex(u => u.id === this.state.currentUser.id);
-                if(userIndex === -1) return;
-                
+                if (userIndex === -1) return;
+
                 if (!this.state.users[userIndex].progreso) {
                     this.state.users[userIndex].progreso = {};
                 }
-                
+
                 this.state.users[userIndex].progreso[lessonId] = !this.state.users[userIndex].progreso[lessonId];
                 this.state.currentUser = this.state.users[userIndex];
-                
+
                 this.saveDataToStorage();
-                
-                if (this.state.currentUser.rol === 'administrador') {
-                    this.refreshCurrentView();
-                } else {
-                    this.renderStudentView();
-                    this.selectClass(lessonId);
-                }
+
+                this.renderStudentSyllabus();
+                this.renderStudentLessonView(lessonId);
                 this.showToast("Progreso actualizado", "success");
             },
 
+            // --- VISTA DE ADMINISTRADOR ---
             handleAdminTabSwitch(e, isRefresh = false) {
                 const tabButton = e.target.closest('.admin-tab-btn');
                 if (!tabButton) return;
@@ -837,22 +1149,23 @@
                 });
                 tabButton.classList.add('text-[var(--color-primary-start)]', 'border-[var(--color-primary-start)]');
                 tabButton.classList.remove('text-muted', 'border-transparent');
-                
-                if(!isRefresh) this.elements.adminContentArea.innerHTML = ''; 
+
+                if (!isRefresh) this.elements.adminContentArea.innerHTML = '';
 
                 if (tabName === 'dashboard') this.renderDashboard();
                 else if (tabName === 'tracking') this.renderStudentTrackingView();
                 else if (tabName === 'users') this.renderUserManagement();
                 else if (tabName === 'course') this.renderCourseEditor();
+                else if (tabName === 'comments') this.renderCommentManagement();
                 else if (tabName === 'settings') this.renderSettingsView();
             },
-            
+
             renderDashboard() {
                 const totalUsers = this.state.users.length;
                 const adminCount = this.state.users.filter(u => u.rol === 'administrador').length;
                 const studentCount = totalUsers - adminCount;
                 const activeUsers = this.state.users.filter(u => u.status === 'activo').length;
-                const recentUsers = [...this.state.users].sort((a,b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion)).slice(0, 5);
+                const recentUsers = [...this.state.users].sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion)).slice(0, 5);
                 this.elements.adminContentArea.innerHTML = `
                     <div id="dashboard-content" class="main-view-enter">
                         <h2 class="text-2xl font-bold mb-4 text-main">Dashboard</h2>
@@ -870,89 +1183,114 @@
             },
 
             renderStudentTrackingView() {
-                const adminContentArea = document.getElementById('admin-content-area');
-                adminContentArea.innerHTML = `
+                this.elements.adminContentArea.innerHTML = `
                     <div id="tracking-content" class="main-view-enter">
-                        <h2 class="text-2xl font-bold mb-6 text-main">Seguimiento de Estudiantes</h2>
-                        <div id="student-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        </div>
-                    </div>
-                `;
+                        <h2 class="text-2xl font-bold mb-6 text-main">Seguimiento de Clases</h2>
+                         <div class="bg-surface p-4 rounded-lg"><div class="table-wrapper">
+                            <table class="w-full text-sm text-left text-main"><thead class="text-xs text-[var(--color-primary-start)] uppercase"><tr>
+                                <th scope="col" class="px-6 py-3">Clase</th>
+                                <th scope="col" class="px-6 py-3 text-center">Completados</th>
+                                <th scope="col" class="px-6 py-3 text-center">Comentarios</th>
+                                <th scope="col" class="px-6 py-3">Progreso General</th>
+                            </tr></thead><tbody id="tracking-table-body"></tbody></table>
+                        </div></div>
+                    </div>`;
 
-                const container = document.getElementById('student-cards-container');
-                const students = this.state.users.filter(u => u.rol === 'estudiante');
+                const tableBody = document.getElementById('tracking-table-body');
                 const allLessons = this.state.courseContent.semanas.flatMap(s => s.grabaciones);
-                const totalLessons = allLessons.length;
+                const students = this.state.users.filter(u => u.rol === 'estudiante');
+                const studentCount = students.length > 0 ? students.length : 1;
 
-                if (students.length === 0) {
-                    container.innerHTML = `<p class="text-muted md:col-span-2 lg:col-span-3">No hay estudiantes para mostrar.</p>`;
-                    return;
-                }
+                allLessons.forEach(lesson => {
+                    const completers = students.filter(s => s.progreso && s.progreso[lesson.id]);
+                    const completions = completers.length;
+                    const commentCount = this.state.comments.filter(c => c.lessonId === lesson.id).length;
+                    const progressPercentage = Math.round((completions / studentCount) * 100);
 
-                students.forEach(student => {
-                    const completedCount = Object.keys(student.progreso || {}).filter(key => student.progreso[key]).length;
-                    const progressPercentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
-
-                    const studentCard = document.createElement('div');
-                    studentCard.className = 'bg-surface p-5 rounded-xl shadow-lg flex flex-col';
-                    studentCard.innerHTML = `
-                        <div class="flex items-center mb-4">
-                            <img src="${student.fotoUrl || `https://placehold.co/48x48/0a192f/FFFFFF?text=${student.nombre.charAt(0)}`}" class="w-12 h-12 rounded-full mr-4 border-2 border-main" alt="Avatar de ${student.nombre}">
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-main">${student.nombre}</h3>
-                                <p class="text-xs text-muted">${student.usuario}</p>
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-main';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 font-medium">${lesson.titulo}</td>
+                        <td class="px-6 py-4 text-center">
+                            <button class="font-medium text-cyan-400 hover:underline view-completers-btn" data-lesson-id="${lesson.id}" data-lesson-title="${lesson.titulo}">${completions} / ${studentCount}</button>
+                        </td>
+                        <td class="px-6 py-4 text-center">${commentCount}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="progress-bar-container flex-grow"><div class="progress-bar" style="width: ${progressPercentage}%"></div></div>
+                                <span class="font-semibold text-xs w-10 text-right">${progressPercentage}%</span>
                             </div>
-                        </div>
-                        <div class="flex-grow space-y-2">
-                             <div class="flex justify-between items-center text-sm">
-                                <span class="font-semibold text-muted">Progreso</span>
-                                <span class="font-bold text-main">${progressPercentage}%</span>
-                            </div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar" style="width: ${progressPercentage}%"></div>
-                            </div>
-                            <p class="text-xs text-muted text-right">${completedCount} de ${totalLessons} clases completadas</p>
-                        </div>
-                        <div class="mt-4">
-                            <button class="btn btn-secondary w-full view-student-details-btn" data-id="${student.id}">Ver Detalles</button>
-                        </div>
+                        </td>
                     `;
-                    container.appendChild(studentCard);
+                    tableBody.appendChild(row);
                 });
 
-                container.querySelectorAll('.view-student-details-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => this.openStudentProgressModal(e.currentTarget.dataset.id));
-                });
-            },
-
-            openStudentProgressModal(userId) {
-                const student = this.state.users.find(u => u.id === userId);
-                if (!student) return;
-
-                let modalContent = `<h3 class="text-2xl font-bold mb-6 text-main">Progreso de ${student.nombre}</h3>`;
-                let detailsHtml = '<div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">';
-
-                this.state.courseContent.semanas.forEach(semana => {
-                    detailsHtml += `<div><h4 class="font-bold text-main mb-2">Semana ${semana.numero}</h4><ul class="space-y-2 pl-4">`;
-                    semana.grabaciones.forEach(lesson => {
-                        const isCompleted = student.progreso && student.progreso[lesson.id];
-                        detailsHtml += `
-                            <li class="flex items-center text-sm">
-                                <i class="fas ${isCompleted ? 'fa-check-circle text-green-500' : 'fa-circle text-muted'} w-5 mr-3"></i>
-                                <span>${lesson.titulo}</span>
-                            </li>
-                        `;
+                tableBody.querySelectorAll('.view-completers-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const lessonId = e.currentTarget.dataset.lessonId;
+                        const lessonTitle = e.currentTarget.dataset.lessonTitle;
+                        const completers = students.filter(s => s.progreso && s.progreso[lessonId]);
+                        let modalContent = `<h3 class="text-xl font-bold mb-4 text-main">Estudiantes que completaron "${lessonTitle}"</h3>`;
+                        if (completers.length > 0) {
+                            modalContent += `<ul class="list-disc pl-5 text-muted">${completers.map(s => `<li>${s.nombre}</li>`).join('')}</ul>`;
+                        } else {
+                            modalContent += `<p class="text-muted">Aún nadie ha completado esta clase.</p>`;
+                        }
+                        this.openModal(modalContent);
                     });
-                    detailsHtml += `</ul></div>`;
+                });
+            },
+
+            renderCommentManagement() {
+                this.elements.adminContentArea.innerHTML = `
+                    <div id="comments-management-content" class="main-view-enter">
+                        <h2 class="text-2xl font-bold mb-6 text-main">Gestión de Comentarios</h2>
+                        <div class="bg-surface p-4 rounded-lg"><div class="table-wrapper">
+                            <table class="w-full text-sm text-left text-main"><thead class="text-xs text-[var(--color-primary-start)] uppercase"><tr>
+                                <th scope="col" class="px-6 py-3">Usuario</th>
+                                <th scope="col" class="px-6 py-3">Comentario</th>
+                                <th scope="col" class="px-6 py-3">Clase</th>
+                                <th scope="col" class="px-6 py-3">Fecha</th>
+                                <th scope="col" class="px-6 py-3 text-center">Acción</th>
+                            </tr></thead><tbody id="comments-table-body"></tbody></table>
+                        </div></div>
+                    </div>`;
+                this.renderCommentsTable();
+            },
+
+            renderCommentsTable() {
+                const tableBody = document.getElementById('comments-table-body');
+                if (!tableBody) return;
+                tableBody.innerHTML = '';
+                const allLessons = this.state.courseContent.semanas.flatMap(s => s.grabaciones);
+                this.state.comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(comment => {
+                    const lesson = allLessons.find(l => l.id === comment.lessonId);
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-main';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 font-medium">${comment.userName}</td>
+                        <td class="px-6 py-4 max-w-sm truncate">${comment.text}</td>
+                        <td class="px-6 py-4">${lesson ? lesson.titulo : 'Clase eliminada'}</td>
+                        <td class="px-6 py-4">${new Date(comment.timestamp).toLocaleString()}</td>
+                        <td class="px-6 py-4 text-center">
+                            <button class="font-medium text-red-400 hover:underline delete-comment-btn" data-id="${comment.id}"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
                 });
 
-                detailsHtml += '</div>';
-                modalContent += detailsHtml;
-                modalContent += `<div class="flex justify-end mt-6"><button class="btn btn-primary cancel-btn">Cerrar</button></div>`;
-                
-                this.openModal(modalContent);
+                tableBody.querySelectorAll('.delete-comment-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleDeleteComment(e.currentTarget.dataset.id));
+                });
             },
-            
+
+            handleDeleteComment(commentId) {
+                this.state.comments = this.state.comments.filter(c => c.id !== commentId);
+                this.saveDataToStorage();
+                this.showToast('Comentario eliminado.', 'success');
+                this.renderCommentsTable();
+            },
+
             renderUserManagement() {
                 this.elements.adminContentArea.innerHTML = `
                     <div id="users-content" class="main-view-enter">
@@ -985,7 +1323,7 @@
                             </tr></thead><tbody id="user-list-body" class="text-main"></tbody></table>
                         </div></div>
                     </div>`;
-                
+
                 document.getElementById('open-add-user-modal-btn').addEventListener('click', () => this.openAddUserModal());
                 document.getElementById('export-excel-btn').addEventListener('click', () => this.exportUsersToExcel());
                 ['user-search-input', 'role-filter', 'status-filter'].forEach(id => {
@@ -993,7 +1331,7 @@
                 });
                 this.applyUserFilters();
             },
-            
+
             applyUserFilters() {
                 const searchTerm = document.getElementById('user-search-input').value.toLowerCase();
                 const role = document.getElementById('role-filter').value;
@@ -1009,6 +1347,7 @@
 
             renderUserTable() {
                 const userListBody = document.getElementById('user-list-body');
+                if (!userListBody) return;
                 userListBody.innerHTML = '';
                 this.state.filteredUsers.forEach(user => {
                     const row = document.createElement('tr');
@@ -1030,11 +1369,11 @@
                             <button class="font-medium text-yellow-400 hover:underline toggle-status-btn" data-id="${user.id}"><i class="fas ${user.status === 'activo' ? 'fa-user-slash' : 'fa-user-check'}"></i></button>
                             <button class="font-medium text-red-400 hover:underline delete-user-btn" data-id="${user.id}" data-name="${user.nombre}"><i class="fas fa-trash"></i></button>
                         </td>`;
-                    
+
                     const toggleBtn = row.querySelector('.toggle-password-btn');
                     const passwordField = row.querySelector('.password-field');
                     toggleBtn.addEventListener('click', () => {
-                        if (passwordField.textContent === '••••••••') { passwordField.textContent = user.contrasena; toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>'; } 
+                        if (passwordField.textContent === '••••••••') { passwordField.textContent = user.contrasena; toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>'; }
                         else { passwordField.textContent = '••••••••'; toggleBtn.innerHTML = '<i class="fas fa-eye"></i>'; }
                     });
 
@@ -1045,7 +1384,7 @@
                 userListBody.querySelectorAll('.toggle-status-btn').forEach(btn => btn.addEventListener('click', (e) => this.toggleUserStatus(e.currentTarget.dataset.id)));
                 userListBody.querySelectorAll('.delete-user-btn').forEach(btn => btn.addEventListener('click', (e) => this.confirmDeleteUser(e.currentTarget.dataset.id, e.currentTarget.dataset.name)));
             },
-            
+
             openAddUserModal() {
                 this.openModal(`
                     <h3 class="text-2xl font-bold mb-6 text-main">Crear Nuevo Usuario</h3>
@@ -1070,7 +1409,7 @@
                 `);
                 document.getElementById('add-user-form').addEventListener('submit', (e) => this.handleCreateUser(e));
             },
-            
+
             handleCreateUser(e) {
                 e.preventDefault();
                 const form = e.target;
@@ -1079,23 +1418,23 @@
                     this.showToast('Error: El usuario ya existe.', 'error');
                     return;
                 }
-                const newUser = { 
-                    id: usuario, 
-                    usuario, 
-                    rol: form['add-rol'].value, 
-                    nombre: form['add-nombre'].value, 
-                    contrasena: form['add-contrasena'].value, 
-                    telefono: form['add-telefono'].value || 'N/A', 
+                const newUser = {
+                    id: usuario,
+                    usuario,
+                    rol: form['add-rol'].value,
+                    nombre: form['add-nombre'].value,
+                    contrasena: form['add-contrasena'].value,
+                    telefono: form['add-telefono'].value || 'N/A',
                     emailRecuperacion: form['add-emailRecuperacion'].value || usuario,
-                    tipoDocumento: form['add-tipoDocumento'].value || 'N/A', 
+                    tipoDocumento: form['add-tipoDocumento'].value || 'N/A',
                     numeroDocumento: form['add-numeroDocumento'].value || 'N/A',
-                    institucion: form['add-institucion'].value || 'N/A', 
-                    tipoPrueba: form['add-tipoPrueba'].value || 'N/A', 
+                    institucion: form['add-institucion'].value || 'N/A',
+                    tipoPrueba: form['add-tipoPrueba'].value || 'N/A',
                     departamento: form['add-departamento'].value || 'N/A',
-                    fotoUrl: '', 
-                    status: 'activo', 
-                    progreso: {}, 
-                    fechaCreacion: new Date().toISOString(), 
+                    fotoUrl: '',
+                    status: 'activo',
+                    progreso: {},
+                    fechaCreacion: new Date().toISOString(),
                     codigoRecuperacion: this.generateRecoveryCode()
                 };
                 this.state.users.push(newUser);
@@ -1138,14 +1477,14 @@
                     const form = e.target;
                     const updatedUser = {
                         ...this.state.users[userIndex],
-                        rol: form['edit-rol'].value, 
-                        nombre: form['edit-nombre'].value, 
+                        rol: form['edit-rol'].value,
+                        nombre: form['edit-nombre'].value,
                         telefono: form['edit-telefono'].value || 'N/A',
-                        emailRecuperacion: form['edit-emailRecuperacion'].value || 'N/A', 
+                        emailRecuperacion: form['edit-emailRecuperacion'].value || 'N/A',
                         tipoDocumento: form['edit-tipoDocumento'].value || 'N/A',
-                        numeroDocumento: form['edit-numeroDocumento'].value || 'N/A', 
+                        numeroDocumento: form['edit-numeroDocumento'].value || 'N/A',
                         institucion: form['edit-institucion'].value || 'N/A',
-                        tipoPrueba: form['edit-tipoPrueba'].value || 'N/A', 
+                        tipoPrueba: form['edit-tipoPrueba'].value || 'N/A',
                         departamento: form['edit-departamento'].value || 'N/A',
                     };
                     const newPassword = form['edit-new-password'].value;
@@ -1157,7 +1496,7 @@
                     this.applyUserFilters();
                 }
             },
-            
+
             toggleUserStatus(userId) {
                 const userIndex = this.state.users.findIndex(u => u.id === userId);
                 if (userIndex !== -1) {
@@ -1197,7 +1536,7 @@
                 XLSX.writeFile(workbook, "usuarios_plataforma.xlsx");
                 this.showToast('Exportación a Excel completada.', 'success');
             },
-            
+
             openModal(content) {
                 this.elements.modalContainer.innerHTML = `<div class="bg-surface p-6 md:p-8 rounded-lg w-full max-w-2xl">${content}</div>`;
                 this.elements.modalContainer.classList.remove('hidden');
@@ -1205,7 +1544,7 @@
                 this.elements.modalBackdrop.onclick = () => this.closeModal();
                 this.elements.modalContainer.querySelector('.cancel-btn')?.addEventListener('click', () => this.closeModal());
             },
-            
+
             closeModal() {
                 this.elements.modalContainer.classList.add('hidden');
                 this.elements.modalBackdrop.classList.add('hidden');
@@ -1241,9 +1580,9 @@
                         </div>
                         <div class="space-y-2">
                             ${semana.grabaciones.map((lesson, lessonIndex) => {
-                                const isExpired = lesson.expiracion && new Date(lesson.expiracion) < new Date();
-                                return `
-                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-3 bg-slate-800 rounded">
+                        const isExpired = lesson.expiracion && new Date(lesson.expiracion) < new Date();
+                        return `
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-3 bg-gray-800 rounded">
                                     <div class="flex-grow">
                                         <p class="font-semibold text-main">${lesson.titulo} ${isExpired ? `<span class="text-red-500 text-xs">(Expirado)</span>` : ''}</p>
                                         <p class="text-xs text-muted">${lesson.asignatura} | ${lesson.profesor} | ${new Date(lesson.fecha).toLocaleDateString()}</p>
@@ -1262,7 +1601,7 @@
                 editorList.querySelectorAll('.delete-lesson-btn').forEach(btn => btn.addEventListener('click', e => { const d = e.currentTarget.dataset; this.handleDeleteLesson(d.weekIndex, d.lessonIndex); }));
                 editorList.querySelectorAll('.delete-week-btn').forEach(btn => btn.addEventListener('click', e => this.handleDeleteWeek(e.currentTarget.dataset.index)));
             },
-            
+
             openLessonModal(weekIndex, lessonIndex = null) {
                 const isEditing = lessonIndex !== null;
                 const lesson = isEditing ? this.state.courseContent.semanas[weekIndex].grabaciones[lessonIndex] : {};
@@ -1285,7 +1624,7 @@
                         <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Guardar Clase</button></div>
                     </form>
                 `);
-                
+
                 const linkInput = document.getElementById('lesson-link');
                 const previewFrame = document.getElementById('lesson-preview');
                 const updatePreview = () => { previewFrame.src = this.formatVideoLink(linkInput.value); };
@@ -1299,7 +1638,7 @@
                 e.preventDefault();
                 const form = e.target;
                 const isEditing = lessonIndex !== null;
-                const lessonData = { 
+                const lessonData = {
                     id: isEditing ? this.state.courseContent.semanas[weekIndex].grabaciones[lessonIndex].id : `${Date.now()}`,
                     titulo: form['lesson-titulo'].value,
                     descripcion: form['lesson-descripcion'].value,
@@ -1320,7 +1659,7 @@
                 this.closeModal();
                 this.renderCourseEditorList();
             },
-            
+
             renderSettingsView() {
                 this.elements.adminContentArea.innerHTML = `<div id="settings-content" class="main-view-enter"><h2 class="text-2xl font-bold mb-4 text-main">Configuración</h2><div class="bg-surface p-6 rounded-lg border border-red-500/50"><h3 class="text-xl font-bold text-red-400">Zona de Peligro</h3><p class="text-muted mt-2 mb-4">Esta acción es irreversible. Se borrarán todos los usuarios y cambios del curso guardados en este navegador, restaurando la plataforma a su estado original.</p><button id="reset-data-btn" class="btn btn-danger">Restaurar Datos de Fábrica</button></div></div>`;
                 document.getElementById('reset-data-btn').addEventListener('click', () => this.confirmResetData());
@@ -1332,32 +1671,32 @@
             },
 
             handleResetData() {
-                try { 
-                    localStorage.removeItem(LOCAL_STORAGE_KEY); 
-                    localStorage.removeItem('currentUser'); 
-                    this.showToast('Datos restaurados. Reiniciando...', 'success'); 
-                    setTimeout(() => window.location.reload(), 1500); 
-                } catch (error) { 
-                    this.showToast("No se pudieron restaurar los datos.", "error"); 
+                try {
+                    localStorage.removeItem(LOCAL_STORAGE_KEY);
+                    localStorage.removeItem('currentUser');
+                    this.showToast('Datos restaurados. Reiniciando...', 'success');
+                    setTimeout(() => window.location.reload(), 1500);
+                } catch (error) {
+                    this.showToast("No se pudieron restaurar los datos.", "error");
                 }
             },
 
             handleAddWeek() {
                 const nextWeekNumber = this.state.courseContent.semanas.length > 0 ? Math.max(...this.state.courseContent.semanas.map(s => s.numero)) + 1 : 1;
                 this.state.courseContent.semanas.push({ numero: nextWeekNumber, grabaciones: [] });
-                this.saveDataToStorage(); 
+                this.saveDataToStorage();
                 this.renderCourseEditorList();
             },
 
             handleDeleteWeek(weekIndex) {
                 this.state.courseContent.semanas.splice(weekIndex, 1);
-                this.saveDataToStorage(); 
+                this.saveDataToStorage();
                 this.renderCourseEditorList();
             },
 
             handleDeleteLesson(weekIndex, lessonIndex) {
                 this.state.courseContent.semanas[weekIndex].grabaciones.splice(lessonIndex, 1);
-                this.saveDataToStorage(); 
+                this.saveDataToStorage();
                 this.renderCourseEditorList();
             },
 
@@ -1375,5 +1714,5 @@
         });
     </script>
 </body>
-</html>
 
+</html>
