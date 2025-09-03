@@ -582,7 +582,27 @@
             },
             
             openForgotPasswordModal() {
-                // ... (código sin cambios)
+                this.openModal(`
+                    <h3 class="text-2xl font-bold mb-6">Recuperar Contraseña</h3>
+                    <div id="recovery-step-1">
+                        <p class="mb-4 text-muted">Ingresa tu email de recuperación para verificar tu cuenta.</p>
+                        <form id="recovery-step1-form" class="space-y-4">
+                            <div><label class="block text-sm mb-1 text-muted">Email de Recuperación</label><input type="email" id="recovery-email" class="w-full p-2 rounded-md form-input" required></div>
+                            <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Verificar</button></div>
+                        </form>
+                    </div>
+                    <div id="recovery-step-2" class="hidden">
+                         <p class="mb-4 text-muted">Ingresa el código de recuperación que te fue proporcionado y tu nueva contraseña.</p>
+                         <form id="recovery-step2-form" class="space-y-4">
+                            <input type="hidden" id="recovery-user-id">
+                            <div><label class="block text-sm mb-1 text-muted">Código de Recuperación</label><input type="text" id="recovery-code" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1 text-muted">Nueva Contraseña</label><input type="password" id="recovery-new-password" class="w-full p-2 rounded-md form-input" required></div>
+                            <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Cambiar Contraseña</button></div>
+                         </form>
+                    </div>
+                `);
+                document.getElementById('recovery-step1-form').addEventListener('submit', (e) => { e.preventDefault(); const email = document.getElementById('recovery-email').value; const user = this.state.users.find(u => u.emailRecuperacion === email); if (user) { this.showToast('Usuario verificado.', 'success'); document.getElementById('recovery-step-1').classList.add('hidden'); document.getElementById('recovery-step-2').classList.remove('hidden'); document.getElementById('recovery-user-id').value = user.id; } else { this.showToast('Email no encontrado.', 'error'); } });
+                document.getElementById('recovery-step2-form').addEventListener('submit', (e) => { e.preventDefault(); const userId = document.getElementById('recovery-user-id').value; const code = document.getElementById('recovery-code').value; const newPassword = document.getElementById('recovery-new-password').value; const userIndex = this.state.users.findIndex(u => u.id === userId && u.codigoRecuperacion === code); if (userIndex !== -1) { this.state.users[userIndex].contrasena = newPassword; this.saveDataToStorage(); this.showToast('Contraseña actualizada.', 'success'); this.closeModal(); } else { this.showToast('Código incorrecto.', 'error'); } });
             },
 
             handleLogout() {
@@ -796,12 +816,11 @@
                 
                 this.saveDataToStorage();
                 
-                // For local "real-time" effect, we refresh the admin view if it's active
                 if (this.state.currentUser.rol === 'administrador') {
                     this.refreshCurrentView();
                 } else {
-                    this.renderStudentView(); // Re-render student view
-                    this.selectClass(lessonId); // Keep the current class selected
+                    this.renderStudentView();
+                    this.selectClass(lessonId);
                 }
                 this.showToast("Progreso actualizado", "success");
             },
@@ -1028,7 +1047,28 @@
             },
             
             openAddUserModal() {
-                this.openModal(`...`); // Modal HTML sin cambios
+                this.openModal(`
+                    <h3 class="text-2xl font-bold mb-6 text-main">Crear Nuevo Usuario</h3>
+                    <form id="add-user-form" class="space-y-4 max-h-[70vh] overflow-y-auto pr-4 text-muted">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-sm mb-1">Rol*</label><select id="add-rol" class="w-full p-2 rounded-md form-input"><option value="estudiante">Estudiante</option><option value="administrador">Administrador</option></select></div>
+                            <div><label class="block text-sm mb-1">Nombre Completo*</label><input type="text" id="add-nombre" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Usuario (Email)*</label><input type="email" id="add-usuario" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Contraseña*</label><input type="password" id="add-contrasena" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Teléfono</label><input type="tel" id="add-telefono" class="w-full p-2 rounded-md form-input"></div>
+                            <div><label class="block text-sm mb-1">Email de Recuperación</label><input type="email" id="add-emailRecuperacion" class="w-full p-2 rounded-md form-input"></div>
+                            <div class="md:col-span-2"><hr class="border-main my-2"></div>
+                            <div class="md:col-span-2 text-center text-sm">Campos específicos para estudiantes</div>
+                            <div><label class="block text-sm mb-1">Tipo de Documento</label><select id="add-tipoDocumento" class="w-full p-2 rounded-md form-input">${TIPOS_DOCUMENTO.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>
+                            <div><label class="block text-sm mb-1">Número de Documento</label><input type="text" id="add-numeroDocumento" class="w-full p-2 rounded-md form-input"></div>
+                            <div><label class="block text-sm mb-1">Institución</label><input type="text" id="add-institucion" class="w-full p-2 rounded-md form-input"></div>
+                            <div><label class="block text-sm mb-1">Tipo de Prueba</label><select id="add-tipoPrueba" class="w-full p-2 rounded-md form-input">${TIPOS_PRUEBA.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>
+                            <div class="md:col-span-2"><label class="block text-sm mb-1">Departamento</label><select id="add-departamento" class="w-full p-2 rounded-md form-input">${DEPARTAMENTOS_COLOMBIA.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>
+                        </div>
+                        <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Crear Usuario</button></div>
+                    </form>
+                `);
+                document.getElementById('add-user-form').addEventListener('submit', (e) => this.handleCreateUser(e));
             },
             
             handleCreateUser(e) {
@@ -1066,7 +1106,29 @@
             },
 
             openEditUserModal(userId) {
-                // ... (código sin cambios)
+                const user = this.state.users.find(u => u.id === userId);
+                if (user) {
+                    this.openModal(`
+                        <h3 class="text-2xl font-bold mb-6 text-main">Editar Usuario</h3>
+                        <form id="edit-user-form" class="space-y-4 max-h-[70vh] overflow-y-auto pr-4 text-muted">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label class="block text-sm mb-1">Rol</label><select id="edit-rol" class="w-full p-2 rounded-md form-input">${['estudiante', 'administrador'].map(o => `<option value="${o}" ${user.rol === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
+                                <div><label class="block text-sm mb-1">Nombre*</label><input type="text" id="edit-nombre" value="${user.nombre}" class="w-full p-2 rounded-md form-input" required></div>
+                                <div><label class="block text-sm mb-1">Teléfono</label><input type="tel" id="edit-telefono" value="${user.telefono}" class="w-full p-2 rounded-md form-input"></div>
+                                <div><label class="block text-sm mb-1">Email Recuperación</label><input type="email" id="edit-emailRecuperacion" value="${user.emailRecuperacion}" class="w-full p-2 rounded-md form-input"></div>
+                                <div class="md:col-span-2"><label class="block text-sm mb-1">Nueva Contraseña (opcional)</label><input type="password" id="edit-new-password" class="w-full p-2 rounded-md form-input"></div>
+                                <div class="md:col-span-2"><hr class="border-main my-2"></div>
+                                <div><label class="block text-sm mb-1">Tipo Documento</label><select id="edit-tipoDocumento" class="w-full p-2 rounded-md form-input">${TIPOS_DOCUMENTO.map(o => `<option value="${o}" ${user.tipoDocumento === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
+                                <div><label class="block text-sm mb-1"># Documento</label><input type="text" id="edit-numeroDocumento" value="${user.numeroDocumento || ''}" class="w-full p-2 rounded-md form-input"></div>
+                                <div><label class="block text-sm mb-1">Institución</label><input type="text" id="edit-institucion" value="${user.institucion || ''}" class="w-full p-2 rounded-md form-input"></div>
+                                <div><label class="block text-sm mb-1">Tipo Prueba</label><select id="edit-tipoPrueba" class="w-full p-2 rounded-md form-input">${TIPOS_PRUEBA.map(o => `<option value="${o}" ${user.tipoPrueba === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
+                                <div class="md:col-span-2"><label class="block text-sm mb-1">Departamento</label><select id="edit-departamento" class="w-full p-2 rounded-md form-input">${DEPARTAMENTOS_COLOMBIA.map(o => `<option value="${o}" ${user.departamento === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
+                            </div>
+                            <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Guardar Cambios</button></div>
+                        </form>
+                    `);
+                    document.getElementById('edit-user-form').addEventListener('submit', (e) => this.handleUpdateUser(e, userId));
+                }
             },
 
             handleUpdateUser(e, userId) {
@@ -1108,7 +1170,8 @@
             },
 
             confirmDeleteUser(userId, userName) {
-                // ... (código sin cambios)
+                this.openModal(`<h3 class="text-xl font-bold mb-4 text-main">Eliminar Usuario</h3><p class="mb-6 text-muted">¿Seguro que quieres eliminar a <b>${userName}</b>? Esta acción no se puede deshacer.</p><div class="flex justify-center gap-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button id="confirm-delete-btn" class="btn btn-danger">Eliminar</button></div>`);
+                document.getElementById('confirm-delete-btn').onclick = () => this.handleDeleteUser(userId);
             },
 
             handleDeleteUser(userId) {
@@ -1120,27 +1183,116 @@
             },
 
             exportUsersToExcel() {
-                // ... (código sin cambios)
+                const dataToExport = this.state.filteredUsers.map(user => {
+                    const { id, fotoUrl, progreso, ...userData } = user;
+                    return userData;
+                });
+                if (dataToExport.length === 0) {
+                    this.showToast('No hay usuarios para exportar.', 'info');
+                    return;
+                }
+                const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Usuarios");
+                XLSX.writeFile(workbook, "usuarios_plataforma.xlsx");
+                this.showToast('Exportación a Excel completada.', 'success');
             },
             
             openModal(content) {
-                // ... (código sin cambios)
+                this.elements.modalContainer.innerHTML = `<div class="bg-surface p-6 md:p-8 rounded-lg w-full max-w-2xl">${content}</div>`;
+                this.elements.modalContainer.classList.remove('hidden');
+                this.elements.modalBackdrop.classList.remove('hidden');
+                this.elements.modalBackdrop.onclick = () => this.closeModal();
+                this.elements.modalContainer.querySelector('.cancel-btn')?.addEventListener('click', () => this.closeModal());
             },
             
             closeModal() {
-                // ... (código sin cambios)
+                this.elements.modalContainer.classList.add('hidden');
+                this.elements.modalBackdrop.classList.add('hidden');
+                this.elements.modalContainer.innerHTML = '';
             },
 
             renderCourseEditor() {
-                // ... (código sin cambios)
+                this.elements.adminContentArea.innerHTML = `
+                    <div id="course-content" class="main-view-enter">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold text-main">Gestor de Clases</h2>
+                            <button id="add-week-btn" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Añadir Semana</button>
+                        </div>
+                        <div id="course-editor-list" class="space-y-6"></div>
+                    </div>`;
+                document.getElementById('add-week-btn').addEventListener('click', () => this.handleAddWeek());
+                this.renderCourseEditorList();
             },
 
             renderCourseEditorList() {
-                // ... (código sin cambios)
+                const editorList = document.getElementById('course-editor-list');
+                editorList.innerHTML = '';
+                this.state.courseContent.semanas.forEach((semana, weekIndex) => {
+                    const weekEl = document.createElement('div');
+                    weekEl.className = 'bg-surface p-4 rounded-lg';
+                    weekEl.innerHTML = `
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-main">Semana ${semana.numero}</h3>
+                            <div>
+                              <button class="text-cyan-400 hover:text-cyan-300 transition mr-4 add-lesson-btn" data-week-index="${weekIndex}"><i class="fas fa-plus"></i> Añadir Clase</button>
+                              <button class="text-red-400 hover:text-red-300 transition delete-week-btn" data-index="${weekIndex}"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            ${semana.grabaciones.map((lesson, lessonIndex) => {
+                                const isExpired = lesson.expiracion && new Date(lesson.expiracion) < new Date();
+                                return `
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-3 bg-slate-800 rounded">
+                                    <div class="flex-grow">
+                                        <p class="font-semibold text-main">${lesson.titulo} ${isExpired ? `<span class="text-red-500 text-xs">(Expirado)</span>` : ''}</p>
+                                        <p class="text-xs text-muted">${lesson.asignatura} | ${lesson.profesor} | ${new Date(lesson.fecha).toLocaleDateString()}</p>
+                                    </div>
+                                    <div class="space-x-3 mt-2 md:mt-0">
+                                        <button class="text-cyan-400 hover:text-cyan-300 edit-lesson-btn" data-week-index="${weekIndex}" data-lesson-index="${lessonIndex}"><i class="fas fa-pencil-alt"></i></button>
+                                        <button class="text-red-400 hover:text-red-300 delete-lesson-btn" data-week-index="${weekIndex}" data-lesson-index="${lessonIndex}"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>`}).join('') || '<p class="text-muted text-sm p-3">No hay clases en esta semana. ¡Añade una!</p>'}
+                        </div>`;
+                    editorList.appendChild(weekEl);
+                });
+
+                editorList.querySelectorAll('.add-lesson-btn').forEach(btn => btn.addEventListener('click', e => this.openLessonModal(e.currentTarget.dataset.weekIndex)));
+                editorList.querySelectorAll('.edit-lesson-btn').forEach(btn => btn.addEventListener('click', e => { const d = e.currentTarget.dataset; this.openLessonModal(d.weekIndex, d.lessonIndex); }));
+                editorList.querySelectorAll('.delete-lesson-btn').forEach(btn => btn.addEventListener('click', e => { const d = e.currentTarget.dataset; this.handleDeleteLesson(d.weekIndex, d.lessonIndex); }));
+                editorList.querySelectorAll('.delete-week-btn').forEach(btn => btn.addEventListener('click', e => this.handleDeleteWeek(e.currentTarget.dataset.index)));
             },
             
             openLessonModal(weekIndex, lessonIndex = null) {
-                // ... (código sin cambios)
+                const isEditing = lessonIndex !== null;
+                const lesson = isEditing ? this.state.courseContent.semanas[weekIndex].grabaciones[lessonIndex] : {};
+                const today = new Date().toISOString().split('T')[0];
+                this.openModal(`
+                    <h3 class="text-2xl font-bold mb-6 text-main">${isEditing ? 'Editar' : 'Añadir'} Clase</h3>
+                    <form id="lesson-form" class="space-y-4 max-h-[70vh] overflow-y-auto pr-4 text-muted">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-sm mb-1">Asignatura*</label><input type="text" id="lesson-asignatura" value="${lesson.asignatura || ''}" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Profesor*</label><input type="text" id="lesson-profesor" value="${lesson.profesor || ''}" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Tema de la Clase*</label><input type="text" id="lesson-tema" value="${lesson.tema || ''}" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Título del Video*</label><input type="text" id="lesson-titulo" value="${lesson.titulo || ''}" class="w-full p-2 rounded-md form-input" required></div>
+                            <div class="md:col-span-2"><label class="block text-sm mb-1">Descripción</label><textarea id="lesson-descripcion" class="w-full p-2 rounded-md form-input h-20">${lesson.descripcion || ''}</textarea></div>
+                            <div><label class="block text-sm mb-1">Fecha de la Clase*</label><input type="date" id="lesson-fecha" value="${lesson.fecha || today}" class="w-full p-2 rounded-md form-input" required></div>
+                            <div><label class="block text-sm mb-1">Fecha de Expiración (Opcional)</label><input type="date" id="lesson-expiracion" value="${lesson.expiracion || ''}" class="w-full p-2 rounded-md form-input"></div>
+                            <div class="md:col-span-2"><label class="block text-sm mb-1">Enlace del Video*</label><input type="url" id="lesson-link" value="${lesson.link || ''}" class="w-full p-2 rounded-md form-input" required placeholder="YouTube o G-Drive"></div>
+                            <div class="md:col-span-2"><label class="block text-sm mb-1">Enlace de Material Complementario (Opcional)</label><input type="url" id="lesson-material" value="${lesson.materialLink || ''}" class="w-full p-2 rounded-md form-input" placeholder="https://biblioteca.com/recurso.pdf"></div>
+                            <div class="md:col-span-2"><div class="aspect-video bg-black rounded-lg"><iframe id="lesson-preview" class="w-full h-full rounded-lg" src="about:blank"></iframe></div></div>
+                        </div>
+                        <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Guardar Clase</button></div>
+                    </form>
+                `);
+                
+                const linkInput = document.getElementById('lesson-link');
+                const previewFrame = document.getElementById('lesson-preview');
+                const updatePreview = () => { previewFrame.src = this.formatVideoLink(linkInput.value); };
+                linkInput.addEventListener('input', updatePreview);
+                if (lesson.link) updatePreview();
+
+                document.getElementById('lesson-form').addEventListener('submit', (e) => this.handleSaveLesson(e, weekIndex, lessonIndex));
             },
 
             handleSaveLesson(e, weekIndex, lessonIndex) {
@@ -1170,11 +1322,13 @@
             },
             
             renderSettingsView() {
-                // ... (código sin cambios)
+                this.elements.adminContentArea.innerHTML = `<div id="settings-content" class="main-view-enter"><h2 class="text-2xl font-bold mb-4 text-main">Configuración</h2><div class="bg-surface p-6 rounded-lg border border-red-500/50"><h3 class="text-xl font-bold text-red-400">Zona de Peligro</h3><p class="text-muted mt-2 mb-4">Esta acción es irreversible. Se borrarán todos los usuarios y cambios del curso guardados en este navegador, restaurando la plataforma a su estado original.</p><button id="reset-data-btn" class="btn btn-danger">Restaurar Datos de Fábrica</button></div></div>`;
+                document.getElementById('reset-data-btn').addEventListener('click', () => this.confirmResetData());
             },
 
             confirmResetData() {
-                // ... (código sin cambios)
+                this.openModal(`<h3 class="text-xl font-bold mb-4 text-main">¿Estás absolutamente seguro?</h3><p class="mb-6 text-muted">Todos los cambios locales se perderán para siempre. ¿Quieres continuar?</p><div class="flex justify-center gap-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button id="confirm-reset-btn" class="btn btn-danger">Sí, Restaurar Ahora</button></div>`);
+                document.getElementById('confirm-reset-btn').onclick = () => this.handleResetData();
             },
 
             handleResetData() {
@@ -1217,119 +1371,6 @@
 
         // --- INICIO DE LA APLICACIÓN ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Llenar los campos de los modales que se omitieron para brevedad
-            App.openForgotPasswordModal = function() {
-                this.openModal(`
-                    <h3 class="text-2xl font-bold mb-6">Recuperar Contraseña</h3>
-                    <div id="recovery-step-1">
-                        <p class="mb-4 text-muted">Ingresa tu email de recuperación para verificar tu cuenta.</p>
-                        <form id="recovery-step1-form" class="space-y-4">
-                            <div><label class="block text-sm mb-1 text-muted">Email de Recuperación</label><input type="email" id="recovery-email" class="w-full p-2 rounded-md form-input" required></div>
-                            <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Verificar</button></div>
-                        </form>
-                    </div>
-                    <div id="recovery-step-2" class="hidden">
-                         <p class="mb-4 text-muted">Ingresa el código de recuperación que te fue proporcionado y tu nueva contraseña.</p>
-                         <form id="recovery-step2-form" class="space-y-4">
-                            <input type="hidden" id="recovery-user-id">
-                            <div><label class="block text-sm mb-1 text-muted">Código de Recuperación</label><input type="text" id="recovery-code" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1 text-muted">Nueva Contraseña</label><input type="password" id="recovery-new-password" class="w-full p-2 rounded-md form-input" required></div>
-                            <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Cambiar Contraseña</button></div>
-                         </form>
-                    </div>
-                `);
-                document.getElementById('recovery-step1-form').addEventListener('submit', (e) => { e.preventDefault(); const email = document.getElementById('recovery-email').value; const user = this.state.users.find(u => u.emailRecuperacion === email); if (user) { this.showToast('Usuario verificado.', 'success'); document.getElementById('recovery-step-1').classList.add('hidden'); document.getElementById('recovery-step-2').classList.remove('hidden'); document.getElementById('recovery-user-id').value = user.id; } else { this.showToast('Email no encontrado.', 'error'); } });
-                document.getElementById('recovery-step2-form').addEventListener('submit', (e) => { e.preventDefault(); const userId = document.getElementById('recovery-user-id').value; const code = document.getElementById('recovery-code').value; const newPassword = document.getElementById('recovery-new-password').value; const userIndex = this.state.users.findIndex(u => u.id === userId && u.codigoRecuperacion === code); if (userIndex !== -1) { this.state.users[userIndex].contrasena = newPassword; this.saveDataToStorage(); this.showToast('Contraseña actualizada.', 'success'); this.closeModal(); } else { this.showToast('Código incorrecto.', 'error'); } });
-            };
-            App.openAddUserModal = function() {
-                this.openModal(`
-                    <h3 class="text-2xl font-bold mb-6 text-main">Crear Nuevo Usuario</h3>
-                    <form id="add-user-form" class="space-y-4 max-h-[70vh] overflow-y-auto pr-4 text-muted">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1">Rol*</label><select id="add-rol" class="w-full p-2 rounded-md form-input"><option value="estudiante">Estudiante</option><option value="administrador">Administrador</option></select></div>
-                            <div><label class="block text-sm mb-1">Nombre Completo*</label><input type="text" id="add-nombre" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Usuario (Email)*</label><input type="email" id="add-usuario" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Contraseña*</label><input type="password" id="add-contrasena" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Teléfono</label><input type="tel" id="add-telefono" class="w-full p-2 rounded-md form-input"></div>
-                            <div><label class="block text-sm mb-1">Email de Recuperación</label><input type="email" id="add-emailRecuperacion" class="w-full p-2 rounded-md form-input"></div>
-                            <div class="md:col-span-2"><hr class="border-main my-2"></div>
-                            <div class="md:col-span-2 text-center text-sm">Campos específicos para estudiantes</div>
-                            <div><label class="block text-sm mb-1">Tipo de Documento</label><select id="add-tipoDocumento" class="w-full p-2 rounded-md form-input">${TIPOS_DOCUMENTO.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>
-                            <div><label class="block text-sm mb-1">Número de Documento</label><input type="text" id="add-numeroDocumento" class="w-full p-2 rounded-md form-input"></div>
-                            <div><label class="block text-sm mb-1">Institución</label><input type="text" id="add-institucion" class="w-full p-2 rounded-md form-input"></div>
-                            <div><label class="block text-sm mb-1">Tipo de Prueba</label><select id="add-tipoPrueba" class="w-full p-2 rounded-md form-input">${TIPOS_PRUEBA.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>
-                            <div class="md:col-span-2"><label class="block text-sm mb-1">Departamento</label><select id="add-departamento" class="w-full p-2 rounded-md form-input">${DEPARTAMENTOS_COLOMBIA.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>
-                        </div>
-                        <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Crear Usuario</button></div>
-                    </form>
-                `);
-                document.getElementById('add-user-form').addEventListener('submit', (e) => this.handleCreateUser(e));
-            };
-            App.openEditUserModal = function(userId) {
-                const user = this.state.users.find(u => u.id === userId);
-                if (user) {
-                    this.openModal(`
-                        <h3 class="text-2xl font-bold mb-6 text-main">Editar Usuario</h3>
-                        <form id="edit-user-form" class="space-y-4 max-h-[70vh] overflow-y-auto pr-4 text-muted">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label class="block text-sm mb-1">Rol</label><select id="edit-rol" class="w-full p-2 rounded-md form-input">${['estudiante', 'administrador'].map(o => `<option value="${o}" ${user.rol === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
-                                <div><label class="block text-sm mb-1">Nombre*</label><input type="text" id="edit-nombre" value="${user.nombre}" class="w-full p-2 rounded-md form-input" required></div>
-                                <div><label class="block text-sm mb-1">Teléfono</label><input type="tel" id="edit-telefono" value="${user.telefono}" class="w-full p-2 rounded-md form-input"></div>
-                                <div><label class="block text-sm mb-1">Email Recuperación</label><input type="email" id="edit-emailRecuperacion" value="${user.emailRecuperacion}" class="w-full p-2 rounded-md form-input"></div>
-                                <div class="md:col-span-2"><label class="block text-sm mb-1">Nueva Contraseña (opcional)</label><input type="password" id="edit-new-password" class="w-full p-2 rounded-md form-input"></div>
-                                <div class="md:col-span-2"><hr class="border-main my-2"></div>
-                                <div><label class="block text-sm mb-1">Tipo Documento</label><select id="edit-tipoDocumento" class="w-full p-2 rounded-md form-input">${TIPOS_DOCUMENTO.map(o => `<option value="${o}" ${user.tipoDocumento === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
-                                <div><label class="block text-sm mb-1"># Documento</label><input type="text" id="edit-numeroDocumento" value="${user.numeroDocumento || ''}" class="w-full p-2 rounded-md form-input"></div>
-                                <div><label class="block text-sm mb-1">Institución</label><input type="text" id="edit-institucion" value="${user.institucion || ''}" class="w-full p-2 rounded-md form-input"></div>
-                                <div><label class="block text-sm mb-1">Tipo Prueba</label><select id="edit-tipoPrueba" class="w-full p-2 rounded-md form-input">${TIPOS_PRUEBA.map(o => `<option value="${o}" ${user.tipoPrueba === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
-                                <div class="md:col-span-2"><label class="block text-sm mb-1">Departamento</label><select id="edit-departamento" class="w-full p-2 rounded-md form-input">${DEPARTAMENTOS_COLOMBIA.map(o => `<option value="${o}" ${user.departamento === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
-                            </div>
-                            <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Guardar Cambios</button></div>
-                        </form>
-                    `);
-                    document.getElementById('edit-user-form').addEventListener('submit', (e) => this.handleUpdateUser(e, userId));
-                }
-            };
-            App.openLessonModal = function(weekIndex, lessonIndex = null) {
-                const isEditing = lessonIndex !== null;
-                const lesson = isEditing ? this.state.courseContent.semanas[weekIndex].grabaciones[lessonIndex] : {};
-                const today = new Date().toISOString().split('T')[0];
-                this.openModal(`
-                    <h3 class="text-2xl font-bold mb-6 text-main">${isEditing ? 'Editar' : 'Añadir'} Clase</h3>
-                    <form id="lesson-form" class="space-y-4 max-h-[70vh] overflow-y-auto pr-4 text-muted">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div><label class="block text-sm mb-1">Asignatura*</label><input type="text" id="lesson-asignatura" value="${lesson.asignatura || ''}" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Profesor*</label><input type="text" id="lesson-profesor" value="${lesson.profesor || ''}" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Tema de la Clase*</label><input type="text" id="lesson-tema" value="${lesson.tema || ''}" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Título del Video*</label><input type="text" id="lesson-titulo" value="${lesson.titulo || ''}" class="w-full p-2 rounded-md form-input" required></div>
-                            <div class="md:col-span-2"><label class="block text-sm mb-1">Descripción</label><textarea id="lesson-descripcion" class="w-full p-2 rounded-md form-input h-20">${lesson.descripcion || ''}</textarea></div>
-                            <div><label class="block text-sm mb-1">Fecha de la Clase*</label><input type="date" id="lesson-fecha" value="${lesson.fecha || today}" class="w-full p-2 rounded-md form-input" required></div>
-                            <div><label class="block text-sm mb-1">Fecha de Expiración (Opcional)</label><input type="date" id="lesson-expiracion" value="${lesson.expiracion || ''}" class="w-full p-2 rounded-md form-input"></div>
-                            <div class="md:col-span-2"><label class="block text-sm mb-1">Enlace del Video*</label><input type="url" id="lesson-link" value="${lesson.link || ''}" class="w-full p-2 rounded-md form-input" required placeholder="YouTube o G-Drive"></div>
-                            <div class="md:col-span-2"><label class="block text-sm mb-1">Enlace de Material Complementario (Opcional)</label><input type="url" id="lesson-material" value="${lesson.materialLink || ''}" class="w-full p-2 rounded-md form-input" placeholder="https://biblioteca.com/recurso.pdf"></div>
-                            <div class="md:col-span-2"><div class="aspect-video bg-black rounded-lg"><iframe id="lesson-preview" class="w-full h-full rounded-lg" src="about:blank"></iframe></div></div>
-                        </div>
-                        <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Guardar Clase</button></div>
-                    </form>
-                `);
-                
-                const linkInput = document.getElementById('lesson-link');
-                const previewFrame = document.getElementById('lesson-preview');
-                const updatePreview = () => { previewFrame.src = this.formatVideoLink(linkInput.value); };
-                linkInput.addEventListener('input', updatePreview);
-                if (lesson.link) updatePreview();
-
-                document.getElementById('lesson-form').addEventListener('submit', (e) => this.handleSaveLesson(e, weekIndex, lessonIndex));
-            };
-            App.confirmDeleteUser = function(userId, userName) {
-                this.openModal(`<h3 class="text-xl font-bold mb-4 text-main">Eliminar Usuario</h3><p class="mb-6 text-muted">¿Seguro que quieres eliminar a <b>${userName}</b>? Esta acción no se puede deshacer.</p><div class="flex justify-center gap-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button id="confirm-delete-btn" class="btn btn-danger">Eliminar</button></div>`);
-                document.getElementById('confirm-delete-btn').onclick = () => this.handleDeleteUser(userId);
-            };
-            App.confirmResetData = function() {
-                this.openModal(`<h3 class="text-xl font-bold mb-4 text-main">¿Estás absolutamente seguro?</h3><p class="mb-6 text-muted">Todos los cambios locales se perderán para siempre. ¿Quieres continuar?</p><div class="flex justify-center gap-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button id="confirm-reset-btn" class="btn btn-danger">Sí, Restaurar Ahora</button></div>`);
-                document.getElementById('confirm-reset-btn').onclick = () => this.handleResetData();
-            };
-
             App.init();
         });
     </script>
