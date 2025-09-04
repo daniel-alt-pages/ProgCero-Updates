@@ -1,60 +1,47 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma Educativa Pro</title>
     <!-- Dependencias externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         :root {
-            --color-bg: #0d1117;
-            /* GitHub Dark Background */
-            --color-surface: #161b22;
-            /* GitHub Dark Surface */
-            --color-primary-start: #8B5CF6;
-            /* Violet-500 */
-            --color-primary-end: #6D28D9;
-            /* Violet-700 */
+            --color-bg: #0d1117; /* GitHub Dark Background */
+            --color-surface: #161b22; /* GitHub Dark Surface */
+            --color-primary-start: #8B5CF6; /* Violet-500 */
+            --color-primary-end: #6D28D9;   /* Violet-700 */
             --color-secondary-start: #22d3ee;
             --color-secondary-end: #06b6d4;
-            --color-text: #e5e7eb;
-            /* Gray-200 */
-            --color-text-muted: #9ca3af;
-            /* Gray-400 */
+            --color-text: #e5e7eb;         /* Gray-200 */
+            --color-text-muted: #9ca3af;     /* Gray-400 */
             --color-border: rgba(139, 92, 246, 0.2);
             --color-glass-surface: rgba(22, 27, 34, 0.7);
             --color-success: #22c55e;
             --color-primary-rgb: 139, 92, 246;
             --color-nav-hover: rgba(139, 92, 246, 0.1);
-            --color-nav-active: rgba(139, 92, 246, 0.15);
+            --color-table-hover: rgba(255, 255, 255, 0.05);
         }
 
         .light-theme {
-            --color-bg: #f9fafb;
-            /* Gray-50 */
+            --color-bg: #f9fafb;         /* Gray-50 */
             --color-surface: #ffffff;
-            --color-primary-start: #8B5CF6;
-            /* Violet-500 */
-            --color-primary-end: #7C3AED;
-            /* Violet-600 */
-            --color-text: #1f2937;
-            /* Gray-800 */
-            --color-text-muted: #6b7280;
-            /* Gray-500 */
+            --color-primary-start: #8B5CF6; /* Violet-500 */
+            --color-primary-end: #7C3AED;   /* Violet-600 */
+            --color-text: #1f2937;         /* Gray-800 */
+            --color-text-muted: #6b7280;     /* Gray-500 */
             --color-border: rgba(0, 0, 0, 0.1);
             --color-glass-surface: rgba(249, 250, 251, 0.8);
             --color-success: #16a34a;
             --color-nav-hover: rgba(139, 92, 246, 0.1);
-            --color-nav-active: rgba(139, 92, 246, 0.15);
+            --color-table-hover: rgba(0, 0, 0, 0.04);
         }
-
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--color-bg);
@@ -70,23 +57,10 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--color-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--color-primary-start);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--color-primary-end);
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--color-primary-start); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-primary-end); }
 
         .form-input {
             background-color: var(--color-surface);
@@ -94,167 +68,121 @@
             color: var(--color-text);
             transition: all 0.3s ease;
         }
-
         .form-input:focus {
             outline: none;
             border-color: var(--color-primary-start);
             box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.3);
         }
-
-        .btn {
-            @apply font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out transform hover:scale-105 shadow-md flex items-center justify-center gap-2;
-        }
-
-        .btn-sm {
-            @apply py-2 px-5 text-sm;
-        }
-
-        .btn-primary {
-            background-image: linear-gradient(to right, var(--color-primary-start), var(--color-primary-end));
+        
+        .btn { @apply font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center gap-3; }
+        .btn-sm { @apply py-2 px-5 text-sm rounded-lg; }
+        .btn-primary { 
+            background-image: linear-gradient(to right, var(--color-primary-start), var(--color-primary-end)); 
             @apply text-white;
             box-shadow: 0 4px 14px 0 rgba(var(--color-primary-rgb), 0.30);
         }
+        .btn-danger { @apply bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/20; }
+        .btn-secondary { background-color: #374151; @apply text-gray-200 hover:bg-gray-700; }
+        .btn-success { background-color: var(--color-success); @apply text-white; }
+        
+        .bg-surface { background-color: var(--color-surface); }
+        .text-main { color: var(--color-text); }
+        .text-muted { color: var(--color-text-muted); }
+        .border-main { border-color: var(--color-border); }
 
-        .btn-danger {
-            @apply bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/20;
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .main-view-enter { animation: fadeIn 500ms ease-out forwards; }
+        
+        @keyframes toast-enter { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes toast-exit { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100%); } }
+        .toast-enter { animation: toast-enter 0.3s ease-out forwards; }
+        .toast-exit { animation: toast-exit 0.3s ease-in forwards; }
+
+        /* --- NUEVO MENÚ PROFESIONAL Y RESPONSIVE --- */
+        #admin-sidebar { 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-right: 1px solid var(--color-border);
+        }
+        
+        #main-content-wrapper { 
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        
+        /* Mobile-first: El menú está oculto por defecto fuera de la pantalla */
+        @media (max-width: 1023px) {
+            #admin-sidebar {
+                transform: translateX(-100%);
+            }
+            #admin-sidebar.is-open {
+                transform: translateX(0);
+            }
         }
 
-        .btn-secondary {
-            background-color: #374151;
-            @apply text-gray-200 hover:bg-gray-700;
+        /* Desktop: El menú es visible y ajusta el contenido */
+        @media (min-width: 1024px) {
+            #admin-sidebar {
+                transform: translateX(0); /* Siempre visible en escritorio */
+            }
+            #main-content-wrapper {
+                padding-left: 256px; /* Ancho por defecto del menú */
+            }
+            body.sidebar-collapsed #main-content-wrapper {
+                padding-left: 72px; /* Ancho del menú contraído */
+            }
+            body.sidebar-collapsed #admin-sidebar {
+                width: 72px;
+            }
+            body.sidebar-collapsed .nav-text, 
+            body.sidebar-collapsed .brand-title .nav-text,
+            body.sidebar-collapsed .admin-nav-footer {
+                display: none;
+            }
+            body.sidebar-collapsed .nav-link {
+                justify-content: center;
+            }
+            body.sidebar-collapsed #sidebar-toggler .fa-chevron-left { 
+                display: none; 
+            }
+            body.sidebar-collapsed #sidebar-toggler .fa-chevron-right { 
+                display: inline-block; 
+            }
+        }
+        
+        .users-table tr:hover, .tracking-table tr:hover, .recent-users-table tr:hover { 
+            background-color: var(--color-table-hover); 
         }
 
-        .btn-success {
-            background-color: var(--color-success);
-            @apply text-white;
-        }
-
-        .bg-surface {
-            background-color: var(--color-surface);
-        }
-
-        .text-main {
-            color: var(--color-text);
-        }
-
-        .text-muted {
+        .nav-link {
+            position: relative;
+            transition: background-color 0.2s ease, color 0.2s ease;
             color: var(--color-text-muted);
         }
-
-        .border-main {
-            border-color: var(--color-border);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .main-view-enter {
-            animation: fadeIn 500ms ease-out forwards;
-        }
-
-        @keyframes toast-enter {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes toast-exit {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-            to {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-        }
-
-        .toast-enter {
-            animation: toast-enter 0.3s ease-out forwards;
-        }
-
-        .toast-exit {
-            animation: toast-exit 0.3s ease-in forwards;
-        }
-
-        #admin-sidebar {
-            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-        }
-
-        .sidebar-collapsed {
-            width: 72px;
-        }
-
-        .sidebar-collapsed .nav-text {
-            display: none;
-        }
-
-        .sidebar-collapsed .nav-link {
-            justify-content: center;
-        }
-
-        #main-content-wrapper {
-            transition: margin-left 0.3s ease-in-out;
-        }
-
-        /* Tema claro para elementos específicos */
-        .light-theme .bg-gray-800 {
-            background-color: #e5e7eb;
-        }
-
-        .light-theme .hover\:bg-gray-700\/50:hover {
-            background-color: rgba(229, 231, 235, 0.5);
-        }
-
-        .light-theme .users-table tr:hover {
-            background-color: #f3f4f6;
-        }
-
-        /* gray-100 */
-
-        .users-table tr:hover {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-
-        /* Estilos de navegación de Admin mejorados */
-        .nav-link.active {
-            background-color: var(--color-nav-active);
-            color: var(--color-text);
-        }
-
         .nav-link:hover {
             background-color: var(--color-nav-hover);
+            color: var(--color-text);
+        }
+        .nav-link.active {
+            color: var(--color-text);
+            background-color: var(--color-nav-hover);
+        }
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 24px;
+            width: 4px;
+            background-color: var(--color-primary-start);
+            border-radius: 0 4px 4px 0;
+        }
+        body.sidebar-collapsed .nav-link.active::before {
+            height: 60%;
         }
 
-
-        .lesson-link.selected {
-            background-color: rgba(var(--color-primary-rgb), 0.1);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out;
-        }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
     </style>
 </head>
-
 <body class="antialiased">
     <div id="app-container" class="relative z-10">
         <div id="loader" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100]">
@@ -265,11 +193,9 @@
         </div>
 
         <div id="toast-container" class="fixed top-5 right-5 z-[90] space-y-3"></div>
-
-        <div id="login-view" class="min-h-screen flex items-center justify-center p-4 bg-cover bg-center hidden"
-            style="background-color: var(--color-bg);">
-            <div
-                class="w-full max-w-md p-8 space-y-8 rounded-xl shadow-2xl bg-surface transition-all duration-500 hover:shadow-[var(--color-primary-start)]/20 border border-[var(--color-border)]">
+        
+        <div id="login-view" class="min-h-screen flex items-center justify-center p-4 bg-cover bg-center hidden" style="background-color: var(--color-bg);">
+            <div class="w-full max-w-md p-8 space-y-8 rounded-xl shadow-2xl bg-surface transition-all duration-500 hover:shadow-[var(--color-primary-start)]/20 border border-[var(--color-border)]">
                 <div class="text-center">
                     <i class="fas fa-graduation-cap text-6xl text-[var(--color-primary-start)]"></i>
                     <h1 class="text-4xl font-bold text-main mt-4">Portal Educativo</h1>
@@ -279,34 +205,25 @@
                     <div>
                         <label for="usuario" class="text-sm font-bold text-muted">Usuario</label>
                         <div class="relative mt-2">
-                            <span class="absolute left-3.5 top-3.5 text-muted"><i
-                                    class="fas fa-user-astronaut"></i></span>
-                            <input type="text" id="usuario" placeholder="tu@email.com"
-                                class="w-full pl-10 p-3 rounded-lg form-input" required>
+                            <span class="absolute left-3.5 top-3.5 text-muted"><i class="fas fa-user-astronaut"></i></span>
+                            <input type="text" id="usuario" placeholder="tu@email.com" class="w-full pl-10 p-3 rounded-lg form-input" required>
                         </div>
                     </div>
                     <div>
                         <label for="contrasena" class="text-sm font-bold text-muted">Contraseña</label>
                         <div class="relative mt-2">
                             <span class="absolute left-3.5 top-3.5 text-muted"><i class="fas fa-key"></i></span>
-                            <input type="password" id="contrasena" placeholder="••••••••"
-                                class="w-full pl-10 p-3 rounded-lg form-input" required>
+                            <input type="password" id="contrasena" placeholder="••••••••" class="w-full pl-10 p-3 rounded-lg form-input" required>
                         </div>
-                        <div class="text-right mt-2">
-                            <a href="#" id="forgot-password-link"
-                                class="text-sm text-[var(--color-primary-start)] hover:underline">¿Olvidaste tu
-                                contraseña?</a>
+                         <div class="text-right mt-2">
+                            <a href="#" id="forgot-password-link" class="text-sm text-[var(--color-primary-start)] hover:underline">¿Olvidaste tu contraseña?</a>
                         </div>
                     </div>
                     <button type="submit" id="login-button" class="w-full btn btn-primary">
                         <span class="button-text">Acceder</span>
-                        <svg class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
+                        <svg class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                     </button>
                 </form>
@@ -315,19 +232,17 @@
 
         <div id="main-view" class="hidden">
             <!-- NAVEGACIÓN LATERAL PARA ADMIN -->
-            <aside id="admin-sidebar"
-                class="bg-surface h-full fixed top-0 left-0 z-40 w-64 lg:translate-x-0 -translate-x-full shadow-lg hidden">
+            <aside id="admin-sidebar" class="bg-surface h-full fixed top-0 left-0 z-40 w-64 shadow-lg hidden">
                 <div class="p-4 flex flex-col h-full">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-xl font-bold text-main"><i
-                                class="fas fa-graduation-cap text-[var(--color-primary-start)]"></i> <span
-                                class="nav-text">Admin Panel</span></h1>
-                        <button id="sidebar-toggler" class="hidden lg:block text-muted hover:text-main">
+                    <div class="flex justify-between items-center mb-6 h-10">
+                        <h1 class="text-xl font-bold text-main flex items-center gap-3 brand-title"><i class="fas fa-graduation-cap text-[var(--color-primary-start)]"></i> <span class="nav-text">Admin Panel</span></h1>
+                        <button id="sidebar-toggler" class="text-muted hover:text-main text-xl w-8 h-8 lg:flex items-center justify-center hidden">
                             <i class="fas fa-chevron-left"></i>
+                            <i class="fas fa-chevron-right hidden"></i>
                         </button>
                     </div>
                     <nav id="admin-nav" class="flex-grow flex flex-col">
-                        <!-- Los links de navegación se inyectarán aquí -->
+                         <!-- Los links de navegación se inyectarán aquí -->
                     </nav>
                 </div>
             </aside>
@@ -335,38 +250,30 @@
             <div id="main-content-wrapper">
                 <header class="p-4 flex justify-between items-center sticky top-0 z-30 glassmorphism">
                     <div class="flex items-center gap-4">
-                        <button id="menu-toggle" class="lg:hidden btn btn-secondary text-lg !p-0 w-10 h-10">
+                       <button id="menu-toggle" class="lg:hidden btn btn-secondary text-lg !p-0 w-10 h-10">
                             <i class="fas fa-bars"></i>
-                        </button>
-                        <h1 class="text-xl font-bold text-main hidden sm:block"><i
-                                class="fas fa-graduation-cap text-[var(--color-primary-start)]"></i> Portal Educativo
-                        </h1>
+                       </button>
+                       <h1 class="text-xl font-bold text-main hidden sm:block"><i class="fas fa-graduation-cap text-[var(--color-primary-start)]"></i> Portal Educativo</h1>
                     </div>
-
+                    
                     <div class="flex items-center gap-4">
-                        <button id="theme-toggle" class="btn btn-secondary text-lg !p-0 w-10 h-10"><i
-                                class="fas"></i></button>
+                        <button id="theme-toggle" class="btn btn-secondary text-lg !p-0 w-10 h-10"><i class="fas"></i></button>
                         <span id="user-greeting" class="font-semibold text-main hidden md:block"></span>
-                        <button id="home-button" class="btn btn-secondary hidden"><i class="fas fa-home"></i><span
-                                class="ml-2 hidden lg:inline">Inicio</span></button>
+                        <button id="home-button" class="btn btn-secondary hidden"><i class="fas fa-home"></i><span class="ml-2 hidden lg:inline">Inicio</span></button>
                         <div id="profile-menu-button" class="relative cursor-pointer">
-                            <img id="user-avatar" src="https://placehold.co/40x40/0a192f/FFFFFF?text=U"
-                                class="w-10 h-10 rounded-full border-2 border-[var(--color-primary-start)]">
+                            <img id="user-avatar" src="https://placehold.co/40x40/0a192f/FFFFFF?text=U" class="w-10 h-10 rounded-full border-2 border-[var(--color-primary-start)]">
                         </div>
-                        <button id="logout-button" class="btn btn-danger !p-0 w-10 h-10" title="Cerrar Sesión"><i
-                                class="fas fa-sign-out-alt"></i></button>
+                        <button id="logout-button" class="btn btn-danger !p-0 w-10 h-10" title="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></button>
                     </div>
                 </header>
-
+                
                 <main class="p-4 md:p-8">
                     <div id="student-view" class="hidden">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                             <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-24 self-start">
                                 <div class="bg-surface p-4 rounded-xl shadow-lg">
-                                    <button id="student-dashboard-btn"
-                                        class="w-full text-left p-3 mb-4 bg-surface rounded-md font-semibold text-main flex items-center nav-link">
-                                        <i
-                                            class="fas fa-tachometer-alt w-6 text-center mr-2 text-[var(--color-primary-start)]"></i>
+                                    <button id="student-dashboard-btn" class="w-full text-left p-3 mb-4 bg-surface rounded-md font-semibold text-main flex items-center nav-link">
+                                        <i class="fas fa-tachometer-alt w-6 text-center mr-2 text-[var(--color-primary-start)]"></i>
                                         <span>Vista General</span>
                                     </button>
                                     <h2 class="text-xl font-bold text-main mb-3 px-2">Contenido del Curso</h2>
@@ -387,28 +294,15 @@
                         <h2 class="text-3xl font-bold text-main mb-6">Mi Perfil</h2>
                         <div class="bg-surface p-8 rounded-lg space-y-6">
                             <div class="text-center">
-                                <img id="profile-img-preview" src="https://placehold.co/128x128/0a192f/FFFFFF?text=U"
-                                    class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[var(--color-primary-start)]"
-                                    alt="Vista previa del avatar">
+                                <img id="profile-img-preview" src="https://placehold.co/128x128/0a192f/FFFFFF?text=U" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[var(--color-primary-start)]" alt="Vista previa del avatar">
                                 <p class="text-muted text-sm">Las imágenes deben ser URLs públicas.</p>
                             </div>
                             <form id="profile-form" class="space-y-4">
-                                <div><label for="profile-nombre" class="block mb-2 text-sm font-medium">Nombre
-                                        Completo</label><input type="text" id="profile-nombre"
-                                        class="w-full p-2.5 rounded-lg form-input" required></div>
-                                <div><label for="profile-usuario" class="block mb-2 text-sm font-medium">Usuario /
-                                        Correo</label><input type="text" id="profile-usuario"
-                                        class="w-full p-2.5 rounded-lg form-input !bg-gray-700 !text-gray-400" disabled>
-                                </div>
-                                <div><label for="profile-img-url" class="block mb-2 text-sm font-medium">URL de Foto de
-                                        Perfil</label><input type="url" id="profile-img-url"
-                                        placeholder="https://ejemplo.com/imagen.png"
-                                        class="w-full p-2.5 rounded-lg form-input"></div>
-                                <div><label for="profile-new-password" class="block mb-2 text-sm font-medium">Nueva
-                                        Contraseña (dejar en blanco para no cambiar)</label><input type="password"
-                                        id="profile-new-password" class="w-full p-2.5 rounded-lg form-input"></div>
-                                <button type="submit" class="w-full py-3 px-4 btn btn-primary"><i
-                                        class="fas fa-save"></i>Guardar Cambios</button>
+                                <div><label for="profile-nombre" class="block mb-2 text-sm font-medium">Nombre Completo</label><input type="text" id="profile-nombre" class="w-full p-2.5 rounded-lg form-input" required></div>
+                                <div><label for="profile-usuario" class="block mb-2 text-sm font-medium">Usuario / Correo</label><input type="text" id="profile-usuario" class="w-full p-2.5 rounded-lg form-input !bg-gray-700 !text-gray-400" disabled></div>
+                                <div><label for="profile-img-url" class="block mb-2 text-sm font-medium">URL de Foto de Perfil</label><input type="url" id="profile-img-url" placeholder="https://ejemplo.com/imagen.png" class="w-full p-2.5 rounded-lg form-input"></div>
+                                <div><label for="profile-new-password" class="block mb-2 text-sm font-medium">Nueva Contraseña (dejar en blanco para no cambiar)</label><input type="password" id="profile-new-password" class="w-full p-2.5 rounded-lg form-input"></div>
+                                <button type="submit" class="w-full py-3 px-4 btn btn-primary"><i class="fas fa-save"></i>Guardar Cambios</button>
                             </form>
                         </div>
                     </div>
@@ -416,35 +310,35 @@
             </div>
         </div>
     </div>
-
+    
     <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden"></div>
     <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-[60]"></div>
     <div id="modal-container" class="fixed inset-0 flex items-center justify-center hidden z-[70] p-4"></div>
-
+    
     <script>
         // ===================================================================================
         // --- SECCIÓN 1: DATOS INICIALES Y CONFIGURACIÓN ---
         // ===================================================================================
-
+        
         const initialData = {
             users: [
-                { id: "admin@seamosgenios.org", usuario: "admin@seamosgenios.org", contrasena: "admin1234", nombre: "Admin Genial", rol: "administrador", fotoUrl: "", telefono: "N/A", pais: "N/A", fechaCreacion: new Date().toISOString(), progreso: {}, status: 'activo', tipoDocumento: 'N/A', numeroDocumento: 'N/A', institucion: 'N/A', tipoPrueba: 'N/A', departamento: 'N/A', emailRecuperacion: 'admin@seamosgenios.org', codigoRecuperacion: 'ADMIN001' },
-                { id: "andres@seamosgenios.org", usuario: "andres@seamosgenios.org", contrasena: "1724", nombre: "Andrés el Estudiante", rol: "estudiante", fotoUrl: "", telefono: "3001234567", pais: "Colombia", fechaCreacion: new Date().toISOString(), progreso: { "1-1": true }, status: 'activo', tipoDocumento: 'CC', numeroDocumento: '123456789', institucion: 'Colegio Genios', tipoPrueba: 'SABER11', departamento: 'Antioquia', emailRecuperacion: 'andres.rec@email.com', codigoRecuperacion: 'USER001' }
+                { id: "admin@seamosgenios.org", usuario:"admin@seamosgenios.org", contrasena:"admin1234", nombre:"Admin Genial", rol:"administrador", fotoUrl:"", telefono: "N/A", pais: "N/A", fechaCreacion: new Date().toISOString(), progreso: {}, status: 'activo', tipoDocumento: 'N/A', numeroDocumento: 'N/A', institucion: 'N/A', tipoPrueba: 'N/A', departamento: 'N/A', emailRecuperacion: 'admin@seamosgenios.org', codigoRecuperacion: 'ADMIN001' },
+                { id: "andres@seamosgenios.org", usuario:"andres@seamosgenios.org", contrasena:"1724", nombre:"Andrés el Estudiante", rol:"estudiante", fotoUrl:"", telefono: "3001234567", pais: "Colombia", fechaCreacion: new Date().toISOString(), progreso: {"1-1": true}, status: 'activo', tipoDocumento: 'CC', numeroDocumento: '123456789', institucion: 'Colegio Genios', tipoPrueba: 'SABER11', departamento: 'Antioquia', emailRecuperacion: 'andres.rec@email.com', codigoRecuperacion: 'USER001' }
             ],
             course: {
                 semanas: [
-                    {
-                        numero: 1,
+                    { 
+                        numero: 1, 
                         grabaciones: [
-                            { id: "1-1", titulo: "Fundamentos del Aprendizaje", descripcion: "En esta clase exploramos las bases del aprendizaje efectivo y cómo aplicarlas en tu día a día.", link: "https://www.youtube.com/watch?v=rokGy0huYEA", materialLink: "https://www.ejemplo.com/material1.pdf", asignatura: "Metodología", tema: "Técnicas de Estudio", profesor: "Dr. Alexandro", fecha: "2024-08-01", expiracion: null },
-                            { id: "1-2", titulo: "Herramientas para el Éxito", descripcion: "Descubre las herramientas digitales y conceptuales esenciales que te ayudarán a tener éxito en este curso y más allá.", link: "https://www.youtube.com/watch?v=T5pRlIbr6gg", materialLink: "", asignatura: "Tecnología", tema: "Software Educativo", profesor: "Ing. Sofía", fecha: "2024-08-03", expiracion: "2025-12-31" }
-                        ]
+                            {id: "1-1", titulo:"Fundamentos del Aprendizaje", descripcion: "En esta clase exploramos las bases del aprendizaje efectivo y cómo aplicarlas en tu día a día.", link:"https://www.youtube.com/watch?v=rokGy0huYEA", materialLink: "https://www.ejemplo.com/material1.pdf", asignatura: "Metodología", tema: "Técnicas de Estudio", profesor: "Dr. Alexandro", fecha: "2024-08-01", expiracion: null}, 
+                            {id: "1-2", titulo:"Herramientas para el Éxito", descripcion: "Descubre las herramientas digitales y conceptuales esenciales que te ayudarán a tener éxito en este curso y más allá.", link:"https://www.youtube.com/watch?v=T5pRlIbr6gg", materialLink: "", asignatura: "Tecnología", tema: "Software Educativo", profesor: "Ing. Sofía", fecha: "2024-08-03", expiracion: "2025-12-31"}
+                        ] 
                     },
-                    {
-                        numero: 2,
+                    { 
+                        numero: 2, 
                         grabaciones: [
-                            { id: "2-1", titulo: "Introducción a la Programación", descripcion: "Comienza tu viaje en el mundo del código con los conceptos básicos de la programación.", link: "https://www.youtube.com/watch?v=zOjov-2OZ0E", materialLink: "https://www.ejemplo.com/material2.pdf", asignatura: "Programación", tema: "Algoritmos", profesor: "Ing. Sofía", fecha: "2024-08-08", expiracion: null },
-                        ]
+                            {id: "2-1", titulo:"Introducción a la Programación", descripcion: "Comienza tu viaje en el mundo del código con los conceptos básicos de la programación.", link:"https://www.youtube.com/watch?v=zOjov-2OZ0E", materialLink: "https://www.ejemplo.com/material2.pdf", asignatura: "Programación", tema: "Algoritmos", profesor: "Ing. Sofía", fecha: "2024-08-08", expiracion: null},
+                        ] 
                     }
                 ]
             },
@@ -461,11 +355,11 @@
         // ===================================================================================
         // --- SECCIÓN 2: LÓGICA PRINCIPAL DE LA APLICACIÓN ---
         // ===================================================================================
-
+        
         const App = {
-            state: {
-                currentUser: null,
-                courseContent: { semanas: [] },
+            state: { 
+                currentUser: null, 
+                courseContent: { semanas: [] }, 
                 users: [],
                 comments: [],
                 filteredUsers: [],
@@ -473,6 +367,7 @@
                 isSidebarCollapsed: false,
             },
             elements: {
+                body: document.body,
                 loader: document.getElementById('loader'),
                 mainView: document.getElementById('main-view'),
                 loginView: document.getElementById('login-view'),
@@ -498,24 +393,24 @@
             init() {
                 this.showLoader();
                 this.initUI();
-
+                
                 queueMicrotask(() => {
                     const data = this.loadDataFromStorage();
                     this.state.users = data.users;
                     this.state.filteredUsers = data.users;
                     this.state.courseContent = data.course;
                     this.state.comments = data.comments;
-
+                    
                     const savedUserJSON = localStorage.getItem('currentUser');
                     if (savedUserJSON) {
                         const savedUser = JSON.parse(savedUserJSON);
                         const fullUser = this.state.users.find(u => u.id === savedUser.id);
-                        if (fullUser) {
-                            this.state.currentUser = fullUser;
-                            this.initializeAppUI();
-                        } else {
-                            localStorage.removeItem('currentUser');
-                            this.switchView('login-view');
+                        if (fullUser) { 
+                            this.state.currentUser = fullUser; 
+                            this.initializeAppUI(); 
+                        } else { 
+                            localStorage.removeItem('currentUser'); 
+                            this.switchView('login-view'); 
                         }
                     } else {
                         this.switchView('login-view');
@@ -528,7 +423,9 @@
                 this.initTheme();
                 this.attachEventListeners();
                 this.state.isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-                if (this.state.isSidebarCollapsed) this.collapseSidebar(true);
+                if(this.state.isSidebarCollapsed) {
+                   this.elements.body.classList.add('sidebar-collapsed');
+                }
             },
 
             loadDataFromStorage() {
@@ -553,26 +450,26 @@
                             return parsedData;
                         }
                     }
-                } catch (error) {
+                } catch (error) { 
                     console.error("Error al cargar datos de localStorage:", error);
                 }
-                return JSON.parse(JSON.stringify(initialData));
+                return JSON.parse(JSON.stringify(initialData)); 
             },
 
             saveDataToStorage() {
                 try {
-                    const dataToStore = {
-                        users: this.state.users,
+                    const dataToStore = { 
+                        users: this.state.users, 
                         course: this.state.courseContent,
                         comments: this.state.comments,
                     };
                     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
-                } catch (error) {
+                } catch (error) { 
                     this.showToast("No se pudieron guardar los cambios.", "error");
                     console.error("Error guardando en localStorage:", error);
                 }
             },
-
+            
             attachEventListeners() {
                 this.elements.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
                 this.elements.logoutButton.addEventListener('click', () => this.handleLogout());
@@ -593,7 +490,7 @@
                 this.elements.sidebarToggler.addEventListener('click', () => this.collapseSidebar());
                 this.elements.sidebarBackdrop.addEventListener('click', () => this.toggleMobileSidebar());
             },
-
+            
             initTheme() {
                 const savedTheme = localStorage.getItem('theme') || 'dark';
                 document.body.classList.toggle('light-theme', savedTheme === 'light');
@@ -611,13 +508,13 @@
 
             switchView(viewId, isRefresh = false) {
                 ['student-view', 'admin-view', 'profile-view', 'login-view'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
-
+                
                 const isMainView = viewId !== 'login-view';
                 this.elements.mainView.classList.toggle('hidden', !isMainView);
-
+                
                 if (isMainView) {
                     document.getElementById(viewId)?.classList.remove('hidden');
-                    if (!isRefresh) {
+                    if(!isRefresh) {
                         this.elements.mainView.classList.remove('main-view-enter');
                         void this.elements.mainView.offsetWidth;
                         this.elements.mainView.classList.add('main-view-enter');
@@ -628,14 +525,6 @@
 
                 const isStudent = this.state.currentUser?.rol === 'estudiante';
                 this.elements.adminSidebar.classList.toggle('hidden', viewId !== 'admin-view');
-
-                if (viewId === 'admin-view' && window.innerWidth >= 1024) {
-                    this.elements.mainContentWrapper.style.marginLeft = this.state.isSidebarCollapsed ? '72px' : '256px';
-                } else {
-                    this.elements.mainContentWrapper.style.marginLeft = '0';
-                }
-
-                this.elements.menuToggle.classList.toggle('hidden', viewId !== 'admin-view');
                 this.elements.homeButton.classList.toggle('hidden', viewId === 'login-view' || (isStudent && viewId === 'student-view') || (!isStudent && viewId === 'admin-view'));
             },
 
@@ -645,18 +534,18 @@
                 this.elements.userGreeting.textContent = `Hola, ${user.nombre.split(' ')[0]}`;
                 this.elements.userAvatar.src = user.fotoUrl || `https://placehold.co/40x40/1e1e1e/FFFFFF?text=${user.nombre.charAt(0)}`;
                 this.elements.userAvatar.onerror = () => { this.elements.userAvatar.src = `https://placehold.co/40x40/1e1e1e/FFFFFF?text=${user.nombre.charAt(0)}`; };
-
-                if (user.rol === 'administrador') {
+                
+                if (user.rol === 'administrador') { 
                     this.renderAdminNav();
-                    if (doSwitchView) {
+                    if(doSwitchView) {
                         this.switchView('admin-view');
                         const lastTab = localStorage.getItem('activeAdminTab') || 'dashboard';
                         const tabButton = this.elements.adminNav.querySelector(`[data-tab="${lastTab}"]`);
                         this.handleAdminTabSwitch({ currentTarget: tabButton || this.elements.adminNav.querySelector('[data-tab="dashboard"]') });
                     }
-                } else {
-                    if (doSwitchView) this.switchView('student-view');
-                    this.renderStudentView();
+                } else { 
+                    if(doSwitchView) this.switchView('student-view');
+                    this.renderStudentView(); 
                 }
             },
 
@@ -677,7 +566,7 @@
                     }
                 }, 3000);
             },
-
+            
             handleLogin(e) {
                 e.preventDefault();
                 const button = this.elements.loginForm.querySelector('button[type="submit"]');
@@ -690,7 +579,7 @@
                 const usuario = this.elements.loginForm.usuario.value;
                 const contrasena = this.elements.loginForm.contrasena.value;
 
-                setTimeout(() => {
+                setTimeout(() => { 
                     const foundUser = this.state.users.find(u => u.usuario === usuario && u.contrasena === contrasena);
                     if (!foundUser) {
                         this.showToast("Usuario o contraseña incorrectos.", "error");
@@ -707,7 +596,7 @@
                     button.disabled = false;
                 }, 500);
             },
-
+            
             openForgotPasswordModal() {
                 this.openModal(`
                     <h3 class="text-2xl font-bold mb-6 text-main">Recuperar Contraseña</h3>
@@ -754,7 +643,7 @@
                 imgPreview.onerror = () => { imgPreview.src = `https://placehold.co/128x128/1e1e1e/FFFFFF?text=${user.nombre.charAt(0)}`; };
                 form.addEventListener('submit', (e) => this.handleUpdateProfile(e), { once: true });
             },
-
+            
             handleUpdateProfile(e) {
                 e.preventDefault();
                 const form = e.target;
@@ -776,7 +665,7 @@
                 this.showToast('Perfil actualizado con éxito', 'success');
                 this.initializeAppUI(false);
             },
-
+            
             getYoutubeThumbnail(url) {
                 if (!url) return 'https://placehold.co/160x90/112240/ccd6f6?text=Video';
                 try {
@@ -798,7 +687,7 @@
                     if (match && match[1]) {
                         videoId = match[1];
                     }
-
+                    
                     if (videoId) {
                         const params = new URLSearchParams({ autoplay: 0, controls: 1, modestbranding: 1, rel: 0, showinfo: 0 });
                         return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
@@ -807,7 +696,7 @@
                     if (link.includes("drive.google.com")) {
                         return link.replace("/view", "/preview");
                     }
-                } catch (e) {
+                } catch(e) {
                     console.error("Enlace de video inválido:", link, e);
                 }
                 return link;
@@ -822,7 +711,7 @@
                 const syllabusContainer = document.getElementById('course-syllabus');
                 if (!syllabusContainer) return;
                 syllabusContainer.innerHTML = '';
-
+                
                 this.state.courseContent.semanas.forEach(week => {
                     const weekContainer = document.createElement('div');
                     weekContainer.innerHTML = `
@@ -832,13 +721,13 @@
                         </button>
                         <div class="accordion-content pl-4 pt-2 space-y-1">
                             ${week.grabaciones.map(lesson => {
-                        const isCompleted = this.state.currentUser.progreso && this.state.currentUser.progreso[lesson.id];
-                        return `
+                                const isCompleted = this.state.currentUser.progreso && this.state.currentUser.progreso[lesson.id];
+                                return `
                                     <div class="flex items-center gap-2 p-2 nav-link rounded-md cursor-pointer lesson-link ${isCompleted ? 'opacity-60' : ''}" data-lesson-id="${lesson.id}">
                                         <i class="fas ${isCompleted ? 'fa-check-circle text-green-500' : 'fa-play-circle text-muted'}"></i>
                                         <span class="text-sm">${lesson.titulo}</span>
                                     </div>`;
-                    }).join('')}
+                            }).join('')}
                         </div>
                     `;
                     syllabusContainer.appendChild(weekContainer);
@@ -861,18 +750,18 @@
                 syllabusContainer.querySelectorAll('.lesson-link').forEach(link => {
                     link.addEventListener('click', (e) => this.renderStudentLessonView(e.currentTarget.dataset.lessonId));
                 });
-
+                
                 document.getElementById('student-dashboard-btn').addEventListener('click', () => this.renderStudentDashboard());
             },
 
             renderStudentDashboard() {
                 const mainContent = document.getElementById('student-main-content');
                 if (!mainContent) return;
-
+                
                 const allLessons = this.state.courseContent.semanas.flatMap(s => s.grabaciones);
                 const completedLessons = allLessons.filter(l => this.state.currentUser.progreso && this.state.currentUser.progreso[l.id]);
                 const nextLesson = allLessons.find(l => !completedLessons.find(cl => cl.id === l.id));
-                const points = completedLessons.length * 10;
+                const points = completedLessons.length * 10; 
 
                 mainContent.innerHTML = `
                     <div class="space-y-6 main-view-enter">
@@ -909,23 +798,17 @@
                     });
                 }
             },
-
+            
             toggleMobileSidebar() {
-                const isHidden = this.elements.adminSidebar.classList.contains('-translate-x-full');
-                this.elements.adminSidebar.classList.toggle('-translate-x-full');
-                this.elements.sidebarBackdrop.classList.toggle('hidden', isHidden);
+                this.elements.adminSidebar.classList.toggle('is-open');
+                this.elements.sidebarBackdrop.classList.toggle('hidden');
             },
 
-            collapseSidebar(isInitial = false) {
+            collapseSidebar() {
                 if (window.innerWidth < 1024) return;
-                if (!isInitial) {
-                    this.state.isSidebarCollapsed = !this.state.isSidebarCollapsed;
-                    localStorage.setItem('sidebarCollapsed', this.state.isSidebarCollapsed);
-                }
-
-                this.elements.adminSidebar.classList.toggle('sidebar-collapsed', this.state.isSidebarCollapsed);
-                this.elements.mainContentWrapper.style.marginLeft = this.state.isSidebarCollapsed ? '72px' : '256px';
-                this.elements.sidebarToggler.querySelector('i').className = this.state.isSidebarCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
+                this.state.isSidebarCollapsed = !this.state.isSidebarCollapsed;
+                localStorage.setItem('sidebarCollapsed', this.state.isSidebarCollapsed);
+                this.elements.body.classList.toggle('sidebar-collapsed', this.state.isSidebarCollapsed);
             },
 
             renderAdminNav() {
@@ -939,17 +822,17 @@
                 const settingsItem = { tab: 'settings', icon: 'fa-cogs', text: 'Configuración' };
 
                 this.elements.adminNav.innerHTML = `
-                    <div class="space-y-2">
+                    <div class="space-y-2 flex-grow">
                         ${navItems.map(item => `
-                            <a href="#" class="nav-link flex items-center p-3 rounded-lg transition-colors" data-tab="${item.tab}">
-                                <i class="fas ${item.icon} w-8 text-center text-lg"></i>
+                            <a href="#" class="nav-link flex items-center p-3 rounded-lg" data-tab="${item.tab}">
+                                <i class="fas ${item.icon} w-8 text-center text-xl"></i>
                                 <span class="nav-text ml-3 font-semibold">${item.text}</span>
                             </a>
                         `).join('')}
                     </div>
-                    <div class="mt-auto">
-                         <a href="#" class="nav-link flex items-center p-3 rounded-lg transition-colors" data-tab="${settingsItem.tab}">
-                            <i class="fas ${settingsItem.icon} w-8 text-center text-lg"></i>
+                    <div class="admin-nav-footer">
+                         <a href="#" class="nav-link flex items-center p-3 rounded-lg" data-tab="${settingsItem.tab}">
+                            <i class="fas ${settingsItem.icon} w-8 text-center text-xl"></i>
                             <span class="nav-text ml-3 font-semibold">${settingsItem.text}</span>
                         </a>
                     </div>
@@ -957,12 +840,9 @@
 
                 this.elements.adminNav.addEventListener('click', e => {
                     const link = e.target.closest('.nav-link');
-                    if (link) {
+                    if(link) {
                         e.preventDefault();
                         this.handleAdminTabSwitch({ currentTarget: link });
-                        if (window.innerWidth < 1024) {
-                            this.toggleMobileSidebar();
-                        }
                     }
                 });
             },
@@ -977,8 +857,12 @@
                     btn.classList.remove('active');
                 });
                 tabButton.classList.add('active');
+                
+                if (window.innerWidth < 1024 && this.elements.adminSidebar.classList.contains('is-open')) {
+                    this.toggleMobileSidebar();
+                }
 
-                this.elements.adminContentArea.innerHTML = '';
+                this.elements.adminContentArea.innerHTML = ''; 
 
                 if (tabName === 'dashboard') this.renderDashboard();
                 else if (tabName === 'tracking') this.renderStudentTrackingView();
@@ -987,11 +871,11 @@
                 else if (tabName === 'comments') this.renderCommentManagement();
                 else if (tabName === 'settings') this.renderSettingsView();
             },
-
-            renderStudentLessonView(lessonId) {
+            
+             renderStudentLessonView(lessonId) {
                 this.state.currentLessonId = lessonId;
                 const mainContent = document.getElementById('student-main-content');
-                if (!mainContent) return;
+                if(!mainContent) return;
 
                 let selectedLesson;
                 for (const week of this.state.courseContent.semanas) {
@@ -999,10 +883,10 @@
                     if (lesson) { selectedLesson = lesson; break; }
                 }
                 if (!selectedLesson) return;
-
-                mainContent.innerHTML = `
-                    <div class="space-y-6 main-view-enter">
-                         <h2 class="text-3xl font-bold text-main">${selectedLesson.titulo}</h2>
+                
+                 mainContent.innerHTML = `
+                     <div class="space-y-6 main-view-enter">
+                          <h2 class="text-3xl font-bold text-main">${selectedLesson.titulo}</h2>
                         <div class="bg-surface rounded-xl shadow-lg overflow-hidden">
                             <div class="aspect-video relative">
                                 <iframe id="video-player" class="w-full h-full" src="${this.formatVideoLink(selectedLesson.link)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -1029,7 +913,7 @@
                     </div>`;
 
                 this.selectClass(lessonId);
-
+                
                 document.querySelectorAll('#lesson-details-tabs .tab-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('#lesson-details-tabs .tab-btn').forEach(b => b.classList.remove('active-tab'));
@@ -1047,26 +931,26 @@
                     if (lesson) { selectedLesson = lesson; break; }
                 }
                 if (!selectedLesson) return;
-
+        
                 document.querySelectorAll('.lesson-link').forEach(card => {
                     card.classList.toggle('selected', card.dataset.lessonId === lessonId);
                 });
-
+        
                 document.getElementById('lesson-details-content').innerHTML = `
                     <div><strong class="font-semibold text-main">Asignatura:</strong><br><span class="text-muted">${selectedLesson.asignatura}</span></div>
                     <div><strong class="font-semibold text-main">Profesor:</strong><br><span class="text-muted">${selectedLesson.profesor}</span></div>
                     <div><strong class="font-semibold text-main">Fecha:</strong><br><span class="text-muted">${new Date(selectedLesson.fecha).toLocaleDateString()}</span></div>
                 `;
                 document.getElementById('lesson-description').textContent = selectedLesson.descripcion || "Esta lección no tiene una descripción detallada.";
-
+        
                 const actionsContainer = document.getElementById('lesson-actions-container');
                 const isCompleted = this.state.currentUser.progreso && this.state.currentUser.progreso[selectedLesson.id];
                 actionsContainer.innerHTML = '';
-
+                
                 if (selectedLesson.materialLink) {
                     actionsContainer.innerHTML += `<a href="${selectedLesson.materialLink}" target="_blank" class="btn btn-lg btn-secondary flex-1 text-center"><i class="fas fa-book-open mr-2"></i>Ver Material</a>`;
                 }
-
+                
                 const completeBtn = document.createElement('button');
                 completeBtn.className = `btn btn-lg ${isCompleted ? 'btn-success' : 'btn-primary'} flex-1 text-center`;
                 completeBtn.innerHTML = `<i class="fas ${isCompleted ? 'fa-check-double' : 'fa-check'} mr-2"></i> ${isCompleted ? 'Clase Completada' : 'Marcar como Completada'}`;
@@ -1075,17 +959,17 @@
 
                 this.renderCommentsForLesson(lessonId);
             },
-
+            
             renderCommentsForLesson(lessonId) {
                 const commentsList = document.getElementById('comments-list');
                 if (!commentsList) return;
                 commentsList.innerHTML = '';
                 const lessonComments = this.state.comments.filter(c => c.lessonId === lessonId);
-
+                
                 if (lessonComments.length === 0) {
                     commentsList.innerHTML = `<p class="text-muted text-sm text-center">No hay comentarios aún. ¡Sé el primero!</p>`;
                 } else {
-                    lessonComments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(comment => {
+                    lessonComments.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(comment => {
                         const commentEl = document.createElement('div');
                         commentEl.className = 'flex gap-3';
                         const user = this.state.users.find(u => u.id === comment.userId);
@@ -1100,9 +984,9 @@
                         commentsList.appendChild(commentEl);
                     });
                 }
-
+                
                 const commentForm = document.getElementById('comment-form');
-                if (commentForm) {
+                if(commentForm) {
                     commentForm.onsubmit = (e) => this.handleCommentSubmit(e);
                 }
             },
@@ -1130,17 +1014,17 @@
 
             toggleLessonProgress(lessonId) {
                 const userIndex = this.state.users.findIndex(u => u.id === this.state.currentUser.id);
-                if (userIndex === -1) return;
-
+                if(userIndex === -1) return;
+                
                 if (!this.state.users[userIndex].progreso) {
                     this.state.users[userIndex].progreso = {};
                 }
-
+                
                 this.state.users[userIndex].progreso[lessonId] = !this.state.users[userIndex].progreso[lessonId];
                 this.state.currentUser = this.state.users[userIndex];
-
+                
                 this.saveDataToStorage();
-
+                
                 this.renderStudentSyllabus();
                 this.renderStudentLessonView(lessonId);
                 this.showToast("Progreso actualizado", "success");
@@ -1151,7 +1035,7 @@
                 const adminCount = this.state.users.filter(u => u.rol === 'administrador').length;
                 const studentCount = totalUsers - adminCount;
                 const activeUsers = this.state.users.filter(u => u.status === 'activo').length;
-                const recentUsers = [...this.state.users].sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion)).slice(0, 5);
+                const recentUsers = [...this.state.users].sort((a,b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion)).slice(0, 5);
                 this.elements.adminContentArea.innerHTML = `
                     <div id="dashboard-content" class="main-view-enter">
                         <h2 class="text-3xl font-bold mb-6 text-main">Dashboard</h2>
@@ -1162,7 +1046,7 @@
                             <div class="bg-surface p-6 rounded-lg flex items-center gap-4 shadow-lg"><i class="fas fa-user-check text-4xl text-yellow-400"></i><div><p class="text-3xl font-bold text-main">${activeUsers}</p><p class="text-muted">Usuarios Activos</p></div></div>
                         </div>
                         <h3 class="text-2xl font-bold mb-4 text-main">Usuarios Recientes</h3>
-                        <div class="bg-surface p-4 rounded-lg shadow-lg"><div class="overflow-x-auto"><table class="w-full text-sm text-left text-main"><thead class="text-xs text-[var(--color-primary-start)] uppercase"><tr><th class="px-6 py-3">Nombre</th><th class="px-6 py-3">Rol</th><th class="px-6 py-3">Estado</th><th class="px-6 py-3">Tipo Prueba</th><th class="px-6 py-3">Fecha Registro</th></tr></thead><tbody>
+                        <div class="bg-surface p-4 rounded-lg shadow-lg"><div class="overflow-x-auto"><table class="w-full text-sm text-left text-main recent-users-table"><thead class="text-xs text-[var(--color-primary-start)] uppercase"><tr><th class="px-6 py-3">Nombre</th><th class="px-6 py-3">Rol</th><th class="px-6 py-3">Estado</th><th class="px-6 py-3">Tipo Prueba</th><th class="px-6 py-3">Fecha Registro</th></tr></thead><tbody>
                         ${recentUsers.map(user => `<tr class="border-b border-main"><td class="px-6 py-4 font-medium">${user.nombre}</td><td class="px-6 py-4">${user.rol}</td><td class="px-6 py-4">${user.status}</td><td class="px-6 py-4">${user.tipoPrueba || 'N/A'}</td><td class="px-6 py-4">${new Date(user.fechaCreacion).toLocaleDateString()}</td></tr>`).join('')}
                         </tbody></table></div></div>
                     </div>`;
@@ -1210,7 +1094,7 @@
                     `;
                     tableBody.appendChild(row);
                 });
-
+                
                 tableBody.querySelectorAll('.view-completers-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const lessonId = e.currentTarget.dataset.lessonId;
@@ -1222,7 +1106,7 @@
                         } else {
                             modalContent += `<p class="text-muted">Aún nadie ha completado esta clase.</p>`;
                         }
-                        modalContent += `<div class="flex justify-end mt-6"><button class="btn btn-primary cancel-btn">Cerrar</button></div>`;
+                         modalContent += `<div class="flex justify-end mt-6"><button class="btn btn-primary cancel-btn">Cerrar</button></div>`;
                         this.openModal(modalContent);
                     });
                 });
@@ -1233,7 +1117,7 @@
                     <div id="comments-management-content" class="main-view-enter">
                         <h2 class="text-3xl font-bold mb-6 text-main">Gestión de Comentarios</h2>
                         <div class="bg-surface p-4 rounded-lg shadow-lg"><div class="overflow-x-auto">
-                            <table class="w-full text-sm text-left text-main"><thead class="text-xs text-[var(--color-primary-start)] uppercase"><tr>
+                            <table class="w-full text-sm text-left text-main users-table"><thead class="text-xs text-[var(--color-primary-start)] uppercase"><tr>
                                 <th scope="col" class="px-6 py-3">Usuario</th>
                                 <th scope="col" class="px-6 py-3">Comentario</th>
                                 <th scope="col" class="px-6 py-3">Clase</th>
@@ -1247,10 +1131,10 @@
 
             renderCommentsTable() {
                 const tableBody = document.getElementById('comments-table-body');
-                if (!tableBody) return;
+                if(!tableBody) return;
                 tableBody.innerHTML = '';
                 const allLessons = this.state.courseContent.semanas.flatMap(s => s.grabaciones);
-                this.state.comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(comment => {
+                this.state.comments.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(comment => {
                     const lesson = allLessons.find(l => l.id === comment.lessonId);
                     const row = document.createElement('tr');
                     row.className = 'border-b border-main';
@@ -1277,7 +1161,7 @@
                 this.showToast('Comentario eliminado.', 'success');
                 this.renderCommentsTable();
             },
-
+            
             renderUserManagement() {
                 this.elements.adminContentArea.innerHTML = `
                     <div id="users-content" class="main-view-enter">
@@ -1310,7 +1194,7 @@
                             </tr></thead><tbody id="user-list-body" class="text-main"></tbody></table>
                         </div></div>
                     </div>`;
-
+                
                 document.getElementById('open-add-user-modal-btn').addEventListener('click', () => this.openAddUserModal());
                 document.getElementById('export-excel-btn').addEventListener('click', () => this.exportUsersToExcel());
                 ['user-search-input', 'role-filter', 'status-filter'].forEach(id => {
@@ -1318,7 +1202,7 @@
                 });
                 this.applyUserFilters();
             },
-
+            
             applyUserFilters() {
                 const searchTerm = document.getElementById('user-search-input').value.toLowerCase();
                 const role = document.getElementById('role-filter').value;
@@ -1338,7 +1222,7 @@
                 userListBody.innerHTML = '';
                 this.state.filteredUsers.forEach(user => {
                     const row = document.createElement('tr');
-                    row.className = `border-b border-main transition-colors duration-200 hover:bg-slate-800 ${user.status === 'inactivo' ? 'opacity-50' : ''}`;
+                    row.className = `border-b border-main transition-colors duration-200 ${user.status === 'inactivo' ? 'opacity-50' : ''}`;
                     row.innerHTML = `
                         <td class="px-6 py-4 font-medium">${user.nombre}</td>
                         <td class="px-6 py-4 whitespace-nowrap">${user.usuario}</td>
@@ -1356,11 +1240,11 @@
                             <button class="font-medium text-yellow-400 hover:underline toggle-status-btn" data-id="${user.id}" title="Cambiar Estado"><i class="fas ${user.status === 'activo' ? 'fa-user-slash' : 'fa-user-check'}"></i></button>
                             <button class="font-medium text-red-400 hover:underline delete-user-btn" data-id="${user.id}" data-name="${user.nombre}" title="Eliminar"><i class="fas fa-trash"></i></button>
                         </td>`;
-
+                    
                     const toggleBtn = row.querySelector('.toggle-password-btn');
                     const passwordField = row.querySelector('.password-field');
                     toggleBtn.addEventListener('click', () => {
-                        if (passwordField.textContent === '••••••••') { passwordField.textContent = user.contrasena; toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>'; }
+                        if (passwordField.textContent === '••••••••') { passwordField.textContent = user.contrasena; toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>'; } 
                         else { passwordField.textContent = '••••••••'; toggleBtn.innerHTML = '<i class="fas fa-eye"></i>'; }
                     });
 
@@ -1371,7 +1255,7 @@
                 userListBody.querySelectorAll('.toggle-status-btn').forEach(btn => btn.addEventListener('click', (e) => this.toggleUserStatus(e.currentTarget.dataset.id)));
                 userListBody.querySelectorAll('.delete-user-btn').forEach(btn => btn.addEventListener('click', (e) => this.confirmDeleteUser(e.currentTarget.dataset.id, e.currentTarget.dataset.name)));
             },
-
+            
             openAddUserModal() {
                 this.openModal(`
                     <h3 class="text-2xl font-bold mb-6 text-main">Crear Nuevo Usuario</h3>
@@ -1396,7 +1280,7 @@
                 `);
                 document.getElementById('add-user-form').addEventListener('submit', (e) => this.handleCreateUser(e));
             },
-
+            
             handleCreateUser(e) {
                 e.preventDefault();
                 const form = e.target;
@@ -1405,23 +1289,23 @@
                     this.showToast('Error: El usuario ya existe.', 'error');
                     return;
                 }
-                const newUser = {
-                    id: usuario,
-                    usuario,
-                    rol: form['add-rol'].value,
-                    nombre: form['add-nombre'].value,
-                    contrasena: form['add-contrasena'].value,
-                    telefono: form['add-telefono'].value || 'N/A',
+                const newUser = { 
+                    id: usuario, 
+                    usuario, 
+                    rol: form['add-rol'].value, 
+                    nombre: form['add-nombre'].value, 
+                    contrasena: form['add-contrasena'].value, 
+                    telefono: form['add-telefono'].value || 'N/A', 
                     emailRecuperacion: form['add-emailRecuperacion'].value || usuario,
-                    tipoDocumento: form['add-tipoDocumento'].value || 'N/A',
+                    tipoDocumento: form['add-tipoDocumento'].value || 'N/A', 
                     numeroDocumento: form['add-numeroDocumento'].value || 'N/A',
-                    institucion: form['add-institucion'].value || 'N/A',
-                    tipoPrueba: form['add-tipoPrueba'].value || 'N/A',
+                    institucion: form['add-institucion'].value || 'N/A', 
+                    tipoPrueba: form['add-tipoPrueba'].value || 'N/A', 
                     departamento: form['add-departamento'].value || 'N/A',
-                    fotoUrl: '',
-                    status: 'activo',
-                    progreso: {},
-                    fechaCreacion: new Date().toISOString(),
+                    fotoUrl: '', 
+                    status: 'activo', 
+                    progreso: {}, 
+                    fechaCreacion: new Date().toISOString(), 
                     codigoRecuperacion: this.generateRecoveryCode()
                 };
                 this.state.users.push(newUser);
@@ -1464,14 +1348,14 @@
                     const form = e.target;
                     const updatedUser = {
                         ...this.state.users[userIndex],
-                        rol: form['edit-rol'].value,
-                        nombre: form['edit-nombre'].value,
+                        rol: form['edit-rol'].value, 
+                        nombre: form['edit-nombre'].value, 
                         telefono: form['edit-telefono'].value || 'N/A',
-                        emailRecuperacion: form['edit-emailRecuperacion'].value || 'N/A',
+                        emailRecuperacion: form['edit-emailRecuperacion'].value || 'N/A', 
                         tipoDocumento: form['edit-tipoDocumento'].value || 'N/A',
-                        numeroDocumento: form['edit-numeroDocumento'].value || 'N/A',
+                        numeroDocumento: form['edit-numeroDocumento'].value || 'N/A', 
                         institucion: form['edit-institucion'].value || 'N/A',
-                        tipoPrueba: form['edit-tipoPrueba'].value || 'N/A',
+                        tipoPrueba: form['edit-tipoPrueba'].value || 'N/A', 
                         departamento: form['edit-departamento'].value || 'N/A',
                     };
                     const newPassword = form['edit-new-password'].value;
@@ -1483,7 +1367,7 @@
                     this.applyUserFilters();
                 }
             },
-
+            
             toggleUserStatus(userId) {
                 const userIndex = this.state.users.findIndex(u => u.id === userId);
                 if (userIndex !== -1) {
@@ -1523,7 +1407,7 @@
                 XLSX.writeFile(workbook, "usuarios_plataforma.xlsx");
                 this.showToast('Exportación a Excel completada.', 'success');
             },
-
+            
             openModal(content) {
                 this.elements.modalContainer.innerHTML = `<div class="bg-surface p-6 md:p-8 rounded-lg w-full max-w-2xl shadow-2xl">${content}</div>`;
                 this.elements.modalContainer.classList.remove('hidden');
@@ -1531,7 +1415,7 @@
                 this.elements.modalBackdrop.onclick = () => this.closeModal();
                 this.elements.modalContainer.querySelector('.cancel-btn')?.addEventListener('click', () => this.closeModal());
             },
-
+            
             closeModal() {
                 this.elements.modalContainer.classList.add('hidden');
                 this.elements.modalBackdrop.classList.add('hidden');
@@ -1567,8 +1451,8 @@
                         </div>
                         <div class="space-y-2">
                             ${semana.grabaciones.map((lesson, lessonIndex) => {
-                        const isExpired = lesson.expiracion && new Date(lesson.expiracion) < new Date();
-                        return `
+                                const isExpired = lesson.expiracion && new Date(lesson.expiracion) < new Date();
+                                return `
                                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-3 bg-gray-800 rounded">
                                     <div class="flex-grow">
                                         <p class="font-semibold text-main">${lesson.titulo} ${isExpired ? `<span class="text-red-500 text-xs">(Expirado)</span>` : ''}</p>
@@ -1588,7 +1472,7 @@
                 editorList.querySelectorAll('.delete-lesson-btn').forEach(btn => btn.addEventListener('click', e => { const d = e.currentTarget.dataset; this.handleDeleteLesson(d.weekIndex, d.lessonIndex); }));
                 editorList.querySelectorAll('.delete-week-btn').forEach(btn => btn.addEventListener('click', e => this.handleDeleteWeek(e.currentTarget.dataset.index)));
             },
-
+            
             openLessonModal(weekIndex, lessonIndex = null) {
                 const isEditing = lessonIndex !== null;
                 const lesson = isEditing ? this.state.courseContent.semanas[weekIndex].grabaciones[lessonIndex] : {};
@@ -1611,7 +1495,7 @@
                         <div class="flex justify-end gap-4 pt-4"><button type="button" class="btn btn-secondary cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Guardar Clase</button></div>
                     </form>
                 `);
-
+                
                 const linkInput = document.getElementById('lesson-link');
                 const previewFrame = document.getElementById('lesson-preview');
                 const updatePreview = () => { previewFrame.src = this.formatVideoLink(linkInput.value); };
@@ -1625,7 +1509,7 @@
                 e.preventDefault();
                 const form = e.target;
                 const isEditing = lessonIndex !== null;
-                const lessonData = {
+                const lessonData = { 
                     id: isEditing ? this.state.courseContent.semanas[weekIndex].grabaciones[lessonIndex].id : `${Date.now()}`,
                     titulo: form['lesson-titulo'].value,
                     descripcion: form['lesson-descripcion'].value,
@@ -1646,7 +1530,7 @@
                 this.closeModal();
                 this.renderCourseEditorList();
             },
-
+            
             renderSettingsView() {
                 this.elements.adminContentArea.innerHTML = `<div id="settings-content" class="main-view-enter"><h2 class="text-3xl font-bold mb-6 text-main">Configuración</h2><div class="bg-surface p-6 rounded-lg border border-red-500/50 shadow-lg"><h3 class="text-xl font-bold text-red-400">Zona de Peligro</h3><p class="text-muted mt-2 mb-4">Esta acción es irreversible. Se borrarán todos los usuarios y cambios del curso guardados en este navegador, restaurando la plataforma a su estado original.</p><button id="reset-data-btn" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i>Restaurar Datos de Fábrica</button></div></div>`;
                 document.getElementById('reset-data-btn').addEventListener('click', () => this.confirmResetData());
@@ -1658,32 +1542,32 @@
             },
 
             handleResetData() {
-                try {
-                    localStorage.removeItem(LOCAL_STORAGE_KEY);
-                    localStorage.removeItem('currentUser');
-                    this.showToast('Datos restaurados. Reiniciando...', 'success');
-                    setTimeout(() => window.location.reload(), 1500);
-                } catch (error) {
-                    this.showToast("No se pudieron restaurar los datos.", "error");
+                try { 
+                    localStorage.removeItem(LOCAL_STORAGE_KEY); 
+                    localStorage.removeItem('currentUser'); 
+                    this.showToast('Datos restaurados. Reiniciando...', 'success'); 
+                    setTimeout(() => window.location.reload(), 1500); 
+                } catch (error) { 
+                    this.showToast("No se pudieron restaurar los datos.", "error"); 
                 }
             },
 
             handleAddWeek() {
                 const nextWeekNumber = this.state.courseContent.semanas.length > 0 ? Math.max(...this.state.courseContent.semanas.map(s => s.numero)) + 1 : 1;
                 this.state.courseContent.semanas.push({ numero: nextWeekNumber, grabaciones: [] });
-                this.saveDataToStorage();
+                this.saveDataToStorage(); 
                 this.renderCourseEditorList();
             },
 
             handleDeleteWeek(weekIndex) {
                 this.state.courseContent.semanas.splice(weekIndex, 1);
-                this.saveDataToStorage();
+                this.saveDataToStorage(); 
                 this.renderCourseEditorList();
             },
 
             handleDeleteLesson(weekIndex, lessonIndex) {
                 this.state.courseContent.semanas[weekIndex].grabaciones.splice(lessonIndex, 1);
-                this.saveDataToStorage();
+                this.saveDataToStorage(); 
                 this.renderCourseEditorList();
             },
 
@@ -1701,5 +1585,5 @@
         });
     </script>
 </body>
-
 </html>
+
