@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso Preicfes 2025 - SeamosGenios</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://images.prismic.io/seamosgenios2026/aMSzIWGNHVfTPKS1_logosg.png?auto=format,compress">
+    <link rel="icon" type="image/png"
+        href="https://images.prismic.io/seamosgenios2026/aMSzIWGNHVfTPKS1_logosg.png?auto=format,compress">
     <!-- Social Share Image -->
-    <meta property="og:image" content="https://images.prismic.io/seamosgenios2026/aMSyKmGNHVfTPKQv_SEAMOSGENIOS2025.png?auto=format,compress">
+    <meta property="og:image"
+        content="https://images.prismic.io/seamosgenios2026/aMSyKmGNHVfTPKQv_SEAMOSGENIOS2025.png?auto=format,compress">
     <!-- Meta Theme Color for Browser UI -->
     <meta name="theme-color" content="#0d0d0d">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- PDF.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
     <style>
         *,
         *::before,
@@ -39,23 +39,47 @@
         }
 
         @keyframes aurora {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         @keyframes gradient-text {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
-        
+
         @keyframes genios-gradient-text {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
-        
+
         body,
         html {
             margin: 0;
@@ -69,8 +93,10 @@
             overflow-x: hidden;
             font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
         }
-        
-        body.nav-open, body.loading, body.modal-open {
+
+        body.nav-open,
+        body.loading,
+        body.modal-open {
             overflow: hidden;
         }
 
@@ -78,262 +104,1352 @@
             background: linear-gradient(125deg, var(--dark-bg-start), var(--dark-bg-end));
             background-size: 400% 400%;
             animation: aurora 15s ease-in-out infinite;
-            padding-bottom: 0.1px; /* Fix for collapsing margins */
+            padding-bottom: 0.1px;
+            /* Fix for collapsing margins */
         }
 
         /* Custom Scrollbar */
-        body::-webkit-scrollbar { width: 8px; }
-        body::-webkit-scrollbar-track { background: var(--dark-bg-end); }
-        body::-webkit-scrollbar-thumb { background-color: var(--primary-red); border-radius: 10px; }
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: var(--dark-bg-end);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--primary-red);
+            border-radius: 10px;
+        }
 
         #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; display: flex;
-            justify-content: center; align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: opacity 0.6s var(--ease-in-out-cubic) 0.3s, visibility 0.6s var(--ease-in-out-cubic) 0.3s;
         }
-        #preloader.loaded { opacity: 0; visibility: hidden; }
-        .preloader-content { text-align: center; }
-        .preloader-logo { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 8vw, 4rem); margin: 0 0 20px 0; color: var(--light-text); }
-        .preloader-logo span { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s forwards; display: inline-block; }
+
+        #preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-content {
+            text-align: center;
+        }
+
+        .preloader-logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin: 0 0 20px 0;
+            color: var(--light-text);
+        }
+
+        .preloader-logo span {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+            display: inline-block;
+        }
+
         .preloader-logo .logo-accent {
             background: linear-gradient(90deg, var(--primary-red), var(--accent-gold), #fff, var(--primary-red));
-            background-size: 250% auto; color: transparent;
-            -webkit-background-clip: text; background-clip: text;
+            background-size: 250% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
             animation: genios-gradient-text 4s linear infinite, fadeInUp 0.5s forwards;
         }
-        .preloader-logo span:nth-child(1) { animation-delay: 0.1s; } .preloader-logo span:nth-child(2) { animation-delay: 0.2s; } .preloader-logo span:nth-child(3) { animation-delay: 0.3s; } .preloader-logo span:nth-child(4) { animation-delay: 0.4s; } .preloader-logo span:nth-child(5) { animation-delay: 0.5s; } .preloader-logo span:nth-child(6) { animation-delay: 0.6s; } .preloader-logo span:nth-child(7) { animation-delay: 0.7s; } .preloader-logo span:nth-child(8) { animation-delay: 0.8s; } .preloader-logo span:nth-child(9) { animation-delay: 0.9s; } .preloader-logo span:nth-child(10) { animation-delay: 1.0s; } .preloader-logo span:nth-child(11) { animation-delay: 1.1s; } .preloader-logo span:nth-child(12) { animation-delay: 1.2s; }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        .loading-dots { display: flex; justify-content: center; gap: 15px; }
-        .loading-dots div { width: 12px; height: 12px; border-radius: 50%; background-color: var(--primary-red); animation: bounce 1.4s infinite ease-in-out both; }
-        .loading-dots div:nth-child(1) { animation-delay: -0.32s; } .loading-dots div:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
-        section { padding: 80px 0; position: relative; }
-        section:nth-of-type(even) { background-color: var(--dark-bg-alt); }
+        .preloader-logo span:nth-child(1) {
+            animation-delay: 0.1s;
+        }
 
-        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-out-quint), transform 0.8s var(--ease-out-quint); }
-        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-        
-        .section-divider { position: absolute; top: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
-        .section-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 80px; }
-        .section-divider .shape-fill { fill: var(--dark-bg-end); }
-        section:nth-of-type(even) .section-divider .shape-fill { fill: var(--dark-bg-alt); }
+        .preloader-logo span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .preloader-logo span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .preloader-logo span:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .preloader-logo span:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .preloader-logo span:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .preloader-logo span:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .preloader-logo span:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+        .preloader-logo span:nth-child(9) {
+            animation-delay: 0.9s;
+        }
+
+        .preloader-logo span:nth-child(10) {
+            animation-delay: 1.0s;
+        }
+
+        .preloader-logo span:nth-child(11) {
+            animation-delay: 1.1s;
+        }
+
+        .preloader-logo span:nth-child(12) {
+            animation-delay: 1.2s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .loading-dots div {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary-red);
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .loading-dots div:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .loading-dots div:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1.0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        section:nth-of-type(even) {
+            background-color: var(--dark-bg-alt);
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-quint), transform 0.8s var(--ease-out-quint);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-divider {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .section-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+
+        .section-divider .shape-fill {
+            fill: var(--dark-bg-end);
+        }
+
+        section:nth-of-type(even) .section-divider .shape-fill {
+            fill: var(--dark-bg-alt);
+        }
 
 
-        .main-nav { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4); transition: padding 0.3s var(--ease-in-out-cubic), background-color 0.3s var(--ease-in-out-cubic); }
-        .main-nav.scrolled { padding: 10px 5%; }
-        .nav-logo a { font-weight: 800; font-size: 1.5rem; color: var(--light-text); text-decoration: none; }
-        .nav-logo a span, .hero-text h1 span { background: linear-gradient(90deg, var(--primary-red), var(--accent-gold), #fff, var(--primary-red)); background-size: 250% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: genios-gradient-text 4s linear infinite; }
-        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; }
-        .nav-links a { color: var(--light-text); text-decoration: none; padding: 10px 12px; font-weight: 600; position: relative; transition: color 0.3s var(--ease-in-out-cubic); }
-        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; transform: translateX(-50%); background-color: var(--accent-gold); transition: width 0.3s var(--ease-in-out-cubic); }
-        .nav-links a:hover, .nav-links a.active { color: var(--accent-gold); }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 70%; }
-        .hamburger-menu { display: none; cursor: pointer; padding: 10px; z-index: 10001; position: relative; }
-        .hamburger-menu div { width: 25px; height: 3px; background-color: white; margin: 5px 0; transition: all 0.4s var(--ease-in-out-cubic); }
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            transition: padding 0.3s var(--ease-in-out-cubic), background-color 0.3s var(--ease-in-out-cubic);
+        }
 
-        #hero { padding-top: 160px; padding-bottom: 120px; display: flex; align-items: center; min-height: 90vh; }
-        .hero-content { display: grid; grid-template-columns: 1fr; align-items: center; gap: 40px; }
-        .hero-text { text-align: center; }
-        .hero-text h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin: 0 0 15px 0; }
-        .hero-text p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px auto; }
-        .hero-media { display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .hero-image { max-width: 100%; width: 500px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); transition: transform 0.4s var(--ease-out-quint); }
-        .hero-image:hover { transform: scale(1.05); }
+        .main-nav.scrolled {
+            padding: 10px 5%;
+        }
 
-        .cta-button { background: linear-gradient(45deg, #FF512F, var(--primary-red)); color: white; padding: 15px 35px; text-decoration: none; font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.2rem); border-radius: 8px; border: none; box-shadow: 0 0 20px var(--glow-color); transition: transform 0.2s var(--ease-out-back), box-shadow 0.2s var(--ease-out-quint); display: inline-block; }
-        .cta-button:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 30px var(--glow-color); }
-        h1, h2, h3 { text-align: center; }
-        h2 { font-size: clamp(2.2rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 60px; }
-        h2 span { background: linear-gradient(90deg, var(--accent-gold), #fff, var(--accent-gold)); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: gradient-text 3s linear infinite; }
-        
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; list-style: none; padding: 0; }
-        .info-card { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color); transition: transform 0.4s var(--ease-out-quint), box-shadow 0.4s var(--ease-out-quint), border-color 0.4s var(--ease-out-quint); position: relative; overflow: hidden; background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.05), rgba(13, 13, 13, 0.7) 40%); }
-        .info-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); border-color: rgba(255, 255, 255, 0.3); }
-        .feature-card { text-align: left; padding-top: 80px !important; }
-        .feature-card .icon-bg { position: absolute; top: -20px; right: -20px; font-size: 8rem; color: var(--accent-gold); opacity: 0.08; transition: transform 0.5s var(--ease-out-quint); }
-        .feature-card:hover .icon-bg { transform: rotate(-15deg) scale(1.1); }
-        .feature-card h3 { font-size: 1.5rem; margin-bottom: 10px; text-align: left; display: flex; align-items: center; position: relative; z-index: 2; }
-        .feature-card h3 .badge-4k { font-weight: 800; font-size: 0.7rem; padding: 3px 8px; margin-left: 10px; border-radius: 5px; background: linear-gradient(45deg, var(--accent-gold), #ffd450); color: #111; display: inline-block; }
-        .feature-card p { text-align: left; position: relative; z-index: 2; }
-        
-        #testimonials .testimonials-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
-        .testimonial-comments { display: flex; flex-direction: column; gap: 15px; }
-        .comment-card { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; border-left: 3px solid var(--primary-red); }
-        .comment-card p { margin: 0; font-style: italic; }
-        .comment-card .author { font-weight: 700; margin-top: 10px; display: block; text-align: right; color: var(--accent-gold); }
+        .nav-logo a {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--light-text);
+            text-decoration: none;
+        }
+
+        .nav-logo a span,
+        .hero-text h1 span {
+            background: linear-gradient(90deg, var(--primary-red), var(--accent-gold), #fff, var(--primary-red));
+            background-size: 250% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: genios-gradient-text 4s linear infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 10px 12px;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s var(--ease-in-out-cubic);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-gold);
+            transition: width 0.3s var(--ease-in-out-cubic);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-gold);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 70%;
+        }
+
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10001;
+            position: relative;
+        }
+
+        .hamburger-menu div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.4s var(--ease-in-out-cubic);
+        }
+
+        #hero {
+            padding-top: 160px;
+            padding-bottom: 120px;
+            display: flex;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-text {
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin: 0 0 15px 0;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .hero-media {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s var(--ease-out-quint);
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #FF512F, var(--primary-red));
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 0 20px var(--glow-color);
+            transition: transform 0.2s var(--ease-out-back), box-shadow 0.2s var(--ease-out-quint);
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 0 30px var(--glow-color);
+        }
+
+        h1,
+        h2,
+        h3 {
+            text-align: center;
+        }
+
+        h2 {
+            font-size: clamp(2.2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        h2 span {
+            background: linear-gradient(90deg, var(--accent-gold), #fff, var(--accent-gold));
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient-text 3s linear infinite;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s var(--ease-out-quint), box-shadow 0.4s var(--ease-out-quint), border-color 0.4s var(--ease-out-quint);
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.05), rgba(13, 13, 13, 0.7) 40%);
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-card {
+            text-align: left;
+            padding-top: 80px !important;
+        }
+
+        .feature-card .icon-bg {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            color: var(--accent-gold);
+            opacity: 0.08;
+            transition: transform 0.5s var(--ease-out-quint);
+        }
+
+        .feature-card:hover .icon-bg {
+            transform: rotate(-15deg) scale(1.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card h3 .badge-4k {
+            font-weight: 800;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            margin-left: 10px;
+            border-radius: 5px;
+            background: linear-gradient(45deg, var(--accent-gold), #ffd450);
+            color: #111;
+            display: inline-block;
+        }
+
+        .feature-card p {
+            text-align: left;
+            position: relative;
+            z-index: 2;
+        }
+
+        #testimonials .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .testimonial-comments {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-red);
+        }
+
+        .comment-card p {
+            margin: 0;
+            font-style: italic;
+        }
+
+        .comment-card .author {
+            font-weight: 700;
+            margin-top: 10px;
+            display: block;
+            text-align: right;
+            color: var(--accent-gold);
+        }
+
         @media(min-width: 992px) {
-             #testimonials .testimonials-grid { grid-template-columns: 500px 1fr; }
+            #testimonials .testimonials-grid {
+                grid-template-columns: 500px 1fr;
+            }
         }
-        
-        #interactive-viewer .instructions { text-align: center; max-width: 650px; margin: 0 auto 30px auto; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; line-height: 1.6; }
-        #viewer-wrapper { position: relative; width: 100%; max-width: 1100px; margin: 0 auto; }
+
+        #interactive-viewer .instructions {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 30px auto;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        #viewer-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
         #viewer-container {
-            position: relative; width: 100%; background: #000;
-            border-radius: 8px; overflow: auto; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
-        #canvas-container { position: relative; width: 100%; height: auto; transition: transform 0.2s; }
-        #pdf-render, #drawing-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        #pdf-render { z-index: 1; }
-        #drawing-canvas { z-index: 2; pointer-events: none; }
-        #pdf-error-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); color: white; z-index: 10;
-            display: none; justify-content: center; align-items: center;
-            text-align: center; padding: 20px; flex-direction: column;
+
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+            /* Prevents extra space below canvas */
+        }
+
+        #image-viewer {
+            display: block;
+            width: 100%;
+            height: auto;
+            z-index: 1;
+        }
+
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        #viewer-error-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            z-index: 10;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            flex-direction: column;
         }
 
         #toolbar {
-            position: absolute; top: 50%; left: 10px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
             transform: translateY(-50%);
             background-color: rgba(25, 25, 40, 0.85);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-radius: 12px; width: auto; padding: 10px; z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            width: auto;
+            padding: 10px;
+            z-index: 100;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color); display: flex;
-            opacity: 0; pointer-events: none;
+            border: 1px solid var(--border-color);
+            display: flex;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s var(--ease-in-out-cubic), transform 0.4s var(--ease-in-out-cubic);
         }
-        #toolbar.visible { opacity: 1; pointer-events: auto; }
-        #toolbar-content { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-        .toolbar-section { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
-        .toolbar-separator { height: 1px; width: 80%; background-color: var(--border-color); margin: 4px 0; }
-        .tool-button-group { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; }
-        .tool-button { background: transparent; border: 2px solid transparent; color: var(--light-text); width: 40px; height: 40px; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: background-color 0.2s, border-color 0.2s; padding: 0; }
-        .tool-button svg { width: 22px; height: 22px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; transition: stroke 0.2s; stroke: currentColor; pointer-events: none; }
-        .tool-button:hover { background-color: rgba(255,255,255,0.1); }
-        .tool-button.active { border-color: var(--accent-gold); }
-        #color-picker-container { position: relative; }
-        #color-picker-input { position: absolute; top: 0; left: 0; width: 40px; height: 40px; opacity: 0; cursor: pointer; }
-        .color-palette { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; padding: 0 5px; }
-        .color-swatch { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s, transform 0.2s; }
-        .color-swatch:hover { transform: scale(1.15); }
-        .color-swatch.active { border-color: #fff; transform: scale(1.15); }
-        #toolbar-toggle { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 20px; height: 60px; background-color: inherit; border: 1px solid var(--border-color); border-left: none; border-radius: 0 10px 10px 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        #toolbar-toggle svg { width: 16px; height: 16px; stroke: var(--light-text); transition: transform 0.3s var(--ease-in-out-cubic); }
-        #toolbar.collapsed { transform: translate(calc(-100% - 10px), -50%); }
-        #toolbar.collapsed #toolbar-toggle svg { transform: rotate(180deg); }
-        .slider-container { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%; color: var(--light-text); font-size: 0.8rem; }
-        .slider-label { display: flex; justify-content: space-between; width: 100%; padding: 0 5px; }
-        input[type="range"] { width: 120px; -webkit-appearance: none; appearance: none; height: 5px; background: #555; border-radius: 5px; cursor: pointer; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 15px; height: 15px; background: var(--primary-red); border-radius: 50%; }
-        .opacity-container { display: none; }
-        .opacity-container.visible { display: flex; }
-        
-        .viewer-nav { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
-        .viewer-nav-btn { background: var(--primary-red); border: none; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1.2rem; transition: background-color 0.2s, transform 0.2s var(--ease-out-back); display: flex; align-items: center; gap: 8px; }
-        .viewer-nav-btn:hover { background-color: #d62828; transform: scale(1.05); }
-        .viewer-nav-btn:disabled { background-color: #555; cursor: not-allowed; transform: none; }
-        #drawing-page-indicator { font-weight: 600; font-size: 1.1rem; }
-        .zoom-controls { display: flex; align-items: center; gap: 10px; }
-        #zoom-level-indicator { font-weight: 600; font-size: 1rem; width: 50px; text-align: center; }
-        .viewer-nav-btn#download-btn { position: relative; overflow: hidden; transition: all 0.3s var(--ease-in-out-cubic); }
-        .viewer-nav-btn#download-btn .spinner { animation: rotate 2s linear infinite; width: 24px; height: 24px; }
-        .viewer-nav-btn#download-btn .spinner .path { stroke: #FFF; stroke-linecap: round; animation: dash 1.5s ease-in-out infinite; }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-        @keyframes dash { 0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; } }
-        .viewer-nav-btn#download-btn.downloading { background-color: #0077B6; transform: scale(1.05); }
-        .viewer-nav-btn#download-btn.success { background-color: #00A878; }
-        
-        #faq { padding-bottom: 120px; }
-        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .faq-question-card { background: var(--card-bg); border-radius: 10px; padding: 25px; font-weight: 600; cursor: pointer; transition: transform 0.3s var(--ease-out-quint), box-shadow 0.3s var(--ease-out-quint); }
-        .faq-question-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-        #faq-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 10001; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
-        #faq-modal.visible { opacity: 1; visibility: visible; }
-        .faq-modal-content { position: relative; background: var(--dark-bg-start); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); max-width: 600px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.3s var(--ease-out-back); }
-        #faq-modal.visible .faq-modal-content { transform: scale(1); }
-        #faq-modal-question { font-size: 1.5rem; color: var(--accent-gold); margin-bottom: 15px; text-align: left;}
-        #faq-modal-answer { font-size: 1rem; line-height: 1.6; text-align: left;}
-        #faq-modal-close { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: white; cursor: pointer; font-size: 1.5rem; opacity: 0.7; transition: opacity 0.2s; }
-        #faq-modal-close:hover { opacity: 1; }
-        
-        #pricing { text-align: center; }
-        .price-card { padding: 40px; }
-        .discount { font-weight: 700; color: #111; background: var(--accent-gold); padding: 5px 15px; border-radius: 5px; display: inline-block; margin-bottom: 15px; }
-        .price-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .old-price { font-size: 1.8rem; text-decoration: line-through; opacity: 0.6; }
-        .price-tag { font-size: 3.5rem; font-weight: 800; color: var(--primary-red); margin: 0; }
-        .price-tag .cop { font-size: 1.5rem; opacity: 0.8; }
-        #countdown-timer { margin-bottom: 30px; }
-        .countdown-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; }
-        .timer { display: flex; justify-content: center; gap: 15px; }
-        .time-box { background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 8px; width: 70px; }
-        .time-box span { display: block; font-size: 2rem; font-weight: 800; color: var(--accent-gold); }
-        .time-box .label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; }
-        
-        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; opacity: 0; transform: scale(0.8); pointer-events: none; transition: opacity 0.3s var(--ease-in-out-cubic), transform 0.3s var(--ease-in-out-cubic); }
-        .fab-container.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
-        .fab-main { width: 60px; height: 60px; background-color: var(--primary-red); border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative; }
-        .fab-main svg { width: 28px; height: 28px; transition: transform 0.3s var(--ease-in-out-cubic), opacity 0.3s; position: absolute; }
-        .fab-main .icon-close { opacity: 0; transform: rotate(-45deg); }
-        .fab-actions { position: absolute; bottom: 70px; right: 0; display: flex; flex-direction: column; gap: 15px; }
-        .fab-action { width: 50px; height: 50px; background-color: var(--accent-gold); color: #111; border-radius: 50%; border: none; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); display: flex; justify-content: center; align-items: center; cursor: pointer; text-decoration: none; opacity: 0; transform: translateY(20px) scale(0.8); transition: opacity 0.3s var(--ease-out-back), transform 0.3s var(--ease-out-back); }
-        .fab-action svg { width: 24px; height: 24px; stroke: #111; }
-        .fab-container.active .fab-main .icon-plus { transform: rotate(45deg); opacity: 0;}
-        .fab-container.active .fab-main .icon-close { transform: rotate(0deg); opacity: 1;}
-        .fab-container.active .fab-actions .fab-action { opacity: 1; transform: translateY(0) scale(1); }
-        .fab-container.active .fab-actions .fab-action:nth-child(1) { transition-delay: 0.05s; }
-        .fab-container.active .fab-actions .fab-action:nth-child(2) { transition-delay: 0.1s; }
+        #toolbar.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10001; pointer-events: none; }
-        .toast-notification { background-color: rgba(22, 33, 62, 0.9); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: white; padding: 12px 25px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); border: 1px solid var(--border-color); font-weight: 600; opacity: 0; transform: translateY(20px) scale(0.9); transition: opacity 0.4s var(--ease-out-back), transform 0.4s var(--ease-out-back); }
-        .toast-notification.show { opacity: 1; transform: translateY(0) scale(1); }
-        
-        footer { text-align: center; padding: 40px 20px; background-color: var(--dark-bg-alt); }
-        .social-icons a { margin: 0 10px; color: var(--light-text); transition: color 0.3s var(--ease-in-out-cubic); }
-        .social-icons a:hover { color: var(--primary-red); }
-        .social-icons svg { width: 24px; height: 24px; }
-        
-        #menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: opacity 0.4s var(--ease-in-out-cubic), visibility 0.4s var(--ease-in-out-cubic); }
-        #menu-overlay.visible { opacity: 1; visibility: visible; }
+        #toolbar-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
 
-        @media (min-width: 992px) { .hero-content { grid-template-columns: 1fr 1fr; text-align: left; } .hero-text h1, .hero-text p { text-align: left; margin-left: 0; margin-right: 0; } .nav-logo { order: -1; } }
-        @media (max-width: 991px) { 
-            .main-nav, .main-nav.scrolled { padding: 15px 25px; align-items: center; } 
-            .nav-logo { order: 0; } 
-            .hamburger-menu { display: block; order: -1; }
-            .nav-links { 
-                position: fixed; top: 0; left: 0; 
-                width: 300px; max-width: 80%; height: 100vh; 
+        .toolbar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .toolbar-separator {
+            height: 1px;
+            width: 80%;
+            background-color: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .tool-button-group {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .tool-button {
+            background: transparent;
+            border: 2px solid transparent;
+            color: var(--light-text);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s, border-color 0.2s;
+            padding: 0;
+        }
+
+        .tool-button svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            transition: stroke 0.2s;
+            stroke: currentColor;
+            pointer-events: none;
+        }
+
+        .tool-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-button.active {
+            border-color: var(--accent-gold);
+        }
+
+        #color-picker-container {
+            position: relative;
+        }
+
+        #color-picker-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 5px;
+        }
+
+        .color-swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.15);
+        }
+
+        .color-swatch.active {
+            border-color: #fff;
+            transform: scale(1.15);
+        }
+
+        #toolbar-toggle {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 60px;
+            background-color: inherit;
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #toolbar-toggle svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--light-text);
+            transition: transform 0.3s var(--ease-in-out-cubic);
+        }
+
+        #toolbar.collapsed {
+            transform: translate(calc(-100% - 10px), -50%);
+        }
+
+        #toolbar.collapsed #toolbar-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+            color: var(--light-text);
+            font-size: 0.8rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 5px;
+        }
+
+        input[type="range"] {
+            width: 120px;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: #555;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--primary-red);
+            border-radius: 50%;
+        }
+
+        .opacity-container {
+            display: none;
+        }
+
+        .opacity-container.visible {
+            display: flex;
+        }
+
+        .viewer-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .viewer-nav-btn {
+            background: var(--primary-red);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: background-color 0.2s, transform 0.2s var(--ease-out-back);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .viewer-nav-btn:hover {
+            background-color: #d62828;
+            transform: scale(1.05);
+        }
+
+        .viewer-nav-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #page-indicator {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .viewer-nav-btn#download-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease-in-out-cubic);
+        }
+
+        .viewer-nav-btn#download-btn .spinner {
+            animation: rotate 2s linear infinite;
+            width: 24px;
+            height: 24px;
+        }
+
+        .viewer-nav-btn#download-btn .spinner .path {
+            stroke: #FFF;
+            stroke-linecap: round;
+            animation: dash 1.5s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
+            }
+        }
+
+        .viewer-nav-btn#download-btn.downloading {
+            background-color: #0077B6;
+            transform: scale(1.05);
+        }
+
+        .viewer-nav-btn#download-btn.success {
+            background-color: #00A878;
+        }
+
+        #faq {
+            padding-bottom: 120px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .faq-question-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s var(--ease-out-quint), box-shadow 0.3s var(--ease-out-quint);
+        }
+
+        .faq-question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #faq-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 10001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        #faq-modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .faq-modal-content {
+            position: relative;
+            background: var(--dark-bg-start);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        #faq-modal.visible .faq-modal-content {
+            transform: scale(1);
+        }
+
+        #faq-modal-question {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        #faq-modal-answer {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        #faq-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        #faq-modal-close:hover {
+            opacity: 1;
+        }
+
+        #pricing {
+            text-align: center;
+        }
+
+        .price-card {
+            padding: 40px;
+        }
+
+        .discount {
+            font-weight: 700;
+            color: #111;
+            background: var(--accent-gold);
+            padding: 5px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .price-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .old-price {
+            font-size: 1.8rem;
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .price-tag {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin: 0;
+        }
+
+        .price-tag .cop {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        #countdown-timer {
+            margin-bottom: 30px;
+        }
+
+        .countdown-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            width: 70px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        .time-box .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            transition: opacity 0.3s var(--ease-in-out-cubic), transform 0.3s var(--ease-in-out-cubic);
+        }
+
+        .fab-container.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-red);
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .fab-main svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s var(--ease-in-out-cubic), opacity 0.3s;
+            position: absolute;
+        }
+
+        .fab-main .icon-close {
+            opacity: 0;
+            transform: rotate(-45deg);
+        }
+
+        .fab-actions {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .fab-action {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-gold);
+            color: #111;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: opacity 0.3s var(--ease-out-back), transform 0.3s var(--ease-out-back);
+        }
+
+        .fab-action svg {
+            width: 24px;
+            height: 24px;
+            stroke: #111;
+        }
+
+        .fab-container.active .fab-main .icon-plus {
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .fab-container.active .fab-main .icon-close {
+            transform: rotate(0deg);
+            opacity: 1;
+        }
+
+        .fab-container.active .fab-actions .fab-action {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .fab-container.active .fab-actions .fab-action:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .fab-container.active .fab-actions .fab-action:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10001;
+            pointer-events: none;
+        }
+
+        .toast-notification {
+            background-color: rgba(22, 33, 62, 0.9);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: opacity 0.4s var(--ease-out-back), transform 0.4s var(--ease-out-back);
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--dark-bg-alt);
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            color: var(--light-text);
+            transition: color 0.3s var(--ease-in-out-cubic);
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-red);
+        }
+
+        .social-icons svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        #menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s var(--ease-in-out-cubic), visibility 0.4s var(--ease-in-out-cubic);
+        }
+
+        #menu-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (min-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
+                text-align: left;
+            }
+
+            .hero-text h1,
+            .hero-text p {
+                text-align: left;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .nav-logo {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 991px) {
+
+            .main-nav,
+            .main-nav.scrolled {
+                padding: 15px 25px;
+                align-items: center;
+            }
+
+            .nav-logo {
+                order: 0;
+            }
+
+            .hamburger-menu {
+                display: block;
+                order: -1;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 300px;
+                max-width: 80%;
+                height: 100vh;
                 background-color: #0d0d0d;
-                box-shadow: 5px 0 20px rgba(0,0,0,0.4);
-                display: flex; flex-direction: column; justify-content: center;
-                align-items: flex-start; 
-                gap: 1rem; padding: 0 2rem;
+                box-shadow: 5px 0 20px rgba(0, 0, 0, 0.4);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 0 2rem;
                 transform: translateX(-100%);
                 transition: transform 0.4s var(--ease-in-out-cubic);
                 z-index: 9999;
-            } 
-            .nav-links.nav-open { transform: translateX(0); } 
-            .nav-links a { font-size: 1.5rem; font-weight: 700; } 
-            .hamburger-menu.toggled .bar1 { transform: rotate(45deg) translate(5px, 6px); } 
-            .hamburger-menu.toggled .bar2 { opacity: 0; } 
-            .hamburger-menu.toggled .bar3 { transform: rotate(-45deg) translate(5px, -6px); } 
-            .fab-main { width: 50px; height: 50px; } 
-            .fab-action { width: 45px; height: 45px; } 
-            .timer { gap: 8px; } .time-box { width: 60px; padding: 8px; } 
-            .time-box span { font-size: 1.5rem; } 
+            }
+
+            .nav-links.nav-open {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+
+            .hamburger-menu.toggled .bar1 {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .hamburger-menu.toggled .bar2 {
+                opacity: 0;
+            }
+
+            .hamburger-menu.toggled .bar3 {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            .fab-main {
+                width: 50px;
+                height: 50px;
+            }
+
+            .fab-action {
+                width: 45px;
+                height: 45px;
+            }
+
+            .timer {
+                gap: 8px;
+            }
+
+            .time-box {
+                width: 60px;
+                padding: 8px;
+            }
+
+            .time-box span {
+                font-size: 1.5rem;
+            }
         }
-        @media (max-width: 420px) { .feature-card h3 { flex-direction: column; align-items: center; text-align: center; gap: 5px; } }
-        @media print { body * { display: none !important; } }
+
+        @media (max-width: 420px) {
+            .feature-card h3 {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 5px;
+            }
+        }
+
+        @media print {
+            body * {
+                display: none !important;
+            }
+        }
     </style>
 </head>
+
 <body class="loading">
     <div id="preloader">
         <div class="preloader-content">
-            <h1 class="preloader-logo"><span>S</span><span>e</span><span>a</span><span>m</span><span>o</span><span>s</span><span class="logo-accent">G</span><span class="logo-accent">e</span><span class="logo-accent">n</span><span class="logo-accent">i</span><span class="logo-accent">o</span><span class="logo-accent">s</span></h1>
-            <div class="loading-dots"><div></div><div></div><div></div></div>
+            <h1 class="preloader-logo">
+                <span>S</span><span>e</span><span>a</span><span>m</span><span>o</span><span>s</span><span
+                    class="logo-accent">G</span><span class="logo-accent">e</span><span
+                    class="logo-accent">n</span><span class="logo-accent">i</span><span
+                    class="logo-accent">o</span><span class="logo-accent">s</span></h1>
+            <div class="loading-dots">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
     <div id="app-wrapper">
         <div id="menu-overlay"></div>
         <nav class="main-nav">
-            <div class="hamburger-menu"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></div>
+            <div class="hamburger-menu">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
             <div class="nav-logo"><a href="#hero">Seamos<span>Genios</span></a></div>
             <div class="nav-links">
                 <a href="#hero">Inicio</a>
@@ -350,156 +1466,322 @@
                 <div class="container hero-content">
                     <div class="hero-text">
                         <h1>Calendario de <span>Genios</span></h1>
-                        <p>Una experiencia única al alcance de todos. Prepárate con +125 horas de contenido intensivo y asegura un puntaje sobresaliente.</p>
+                        <p>Una experiencia única al alcance de todos. Prepárate con +125 horas de contenido intensivo y
+                            asegura un puntaje sobresaliente.</p>
                     </div>
                     <div class="hero-media">
-                        <img src="https://images.prismic.io/seamosgenios2026/aMRhV2GNHVfTPHKE_CURSOPREICFESVACACIONALSEAMOSGENIOS.png?auto=format,compress" alt="Flyer Promocional del Calendario de Genios" class="hero-image">
-                        <a href="https://wa.me/573042797630?text=Hola,%20estoy%20interesado%20en%20el%20Calendario%20de%20Genios." class="cta-button" target="_blank">¡Quiero Mi Cupo!</a>
+                        <img src="https://images.prismic.io/seamosgenios2026/aMRhV2GNHVfTPHKE_CURSOPREICFESVACACIONALSEAMOSGENIOS.png?auto=format,compress"
+                            alt="Flyer Promocional del Calendario de Genios" class="hero-image">
+                        <a href="https://wa.me/573042797630?text=Hola,%20estoy%20interesado%20en%20el%20Calendario%20de%20Genios."
+                            class="cta-button" target="_blank">¡Quiero Mi Cupo!</a>
                     </div>
                 </div>
             </section>
 
             <section id="benefits" class="animate-on-scroll">
-                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path></svg></div>
+                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path
+                            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+                            class="shape-fill"></path>
+                    </svg></div>
                 <div class="container">
                     <h2>Beneficios <span>Clave</span></h2>
                     <div class="grid-layout">
-                        <div class="info-card feature-card"><div class="icon-bg">🕒</div><h3>+125 Horas Intensivas</h3><p>Sumérgete en un entrenamiento completo con clases en vivo enfocadas en los temas de mayor peso en el examen.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">📈</div><h3>2 Simulacros Completos</h3><p>Mide tu progreso y familiarízate con la estructura del examen real a través de simulacros con resultados individuales y detallados.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">📚</div><h3>5 Compilados Nuevos</h3><p>Accede a material de estudio exclusivo y actualizado, diseñado por nuestros expertos para cada una de las áreas evaluadas.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">❓</div><h3>+2000 Preguntas ICFES</h3><p>Fortalece tus conocimientos y practica con un extenso banco de preguntas tipo ICFES, presentadas en la más alta calidad.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">🎥</div><h3>Grabaciones en 4K <span class="badge-4k">ULTRA HD</span></h3><p>¿Te perdiste una clase? No hay problema. Revive cada sesión con la máxima calidad de imagen y sonido cuando quieras.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">🤝</div><h3>Apoyo Especial</h3><p>Forma parte de nuestra comunidad y recibe acompañamiento constante y resolución de dudas para asegurar tu aprendizaje.</p></div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">🕒</div>
+                            <h3>+125 Horas Intensivas</h3>
+                            <p>Sumérgete en un entrenamiento completo con clases en vivo enfocadas en los temas de mayor
+                                peso en el examen.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">📈</div>
+                            <h3>2 Simulacros Completos</h3>
+                            <p>Mide tu progreso y familiarízate con la estructura del examen real a través de simulacros
+                                con resultados individuales y detallados.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">📚</div>
+                            <h3>5 Compilados Nuevos</h3>
+                            <p>Accede a material de estudio exclusivo y actualizado, diseñado por nuestros expertos para
+                                cada una de las áreas evaluadas.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">❓</div>
+                            <h3>+2000 Preguntas ICFES</h3>
+                            <p>Fortalece tus conocimientos y practica con un extenso banco de preguntas tipo ICFES,
+                                presentadas en la más alta calidad.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">🎥</div>
+                            <h3>Grabaciones en 4K <span class="badge-4k">ULTRA HD</span></h3>
+                            <p>¿Te perdiste una clase? No hay problema. Revive cada sesión con la máxima calidad de
+                                imagen y sonido cuando quieras.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">🤝</div>
+                            <h3>Apoyo Especial</h3>
+                            <p>Forma parte de nuestra comunidad y recibe acompañamiento constante y resolución de dudas
+                                para asegurar tu aprendizaje.</p>
+                        </div>
                     </div>
                 </div>
             </section>
-            
+
             <section id="interactive-viewer" class="animate-on-scroll">
                 <div class="container">
                     <h2>Prueba Nuestro <span>Material</span> Interactivo</h2>
                     <div class="instructions">
-                        <p><strong>Material Gratuito (Sesión 1):</strong><br>
-                            Interactúa con una muestra de nuestro material. Usa los botones <strong>[+]</strong> y <strong>[-]</strong> para hacer zoom y activa el modo de dibujo desde el menú flotante para tomar apuntes.</p>
+                        <p><strong>Material Gratuito:</strong><br>
+                            Interactúa con una muestra de nuestro material. Usa los botones de navegación para cambiar
+                            de página y activa el modo de dibujo para tomar apuntes.</p>
                     </div>
                     <div id="viewer-wrapper">
                         <div id="viewer-container">
                             <div id="canvas-container">
-                                <canvas id="pdf-render"></canvas>
+                                <img id="image-viewer" alt="Material de estudio página 1">
                                 <canvas id="drawing-canvas"></canvas>
                             </div>
-                            <div id="pdf-error-overlay">
+                            <div id="viewer-error-overlay">
                                 <h3 style="color: var(--primary-red);">Error al Cargar Material</h3>
-                                <p>No pudimos cargar el PDF. Es posible que el enlace esté roto o el archivo dañado.</p>
+                                <p>No pudimos cargar la imagen. Asegúrate de que los archivos (1.svg, 2.svg, etc.) se
+                                    encuentren en la carpeta `img`.</p>
                             </div>
                         </div>
                         <div id="toolbar">
                             <div id="toolbar-content">
                                 <div class="toolbar-section">
                                     <div class="tool-button-group">
-                                        <button class="tool-button" id="fountainpen-btn" title="Pluma"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.7,5.2a1.7,1.7,0,0,0-2.4,0L9.6,13.9,7.1,11.4a1.7,1.7,0,0,0-2.4,0,1.7,1.7,0,0,0,0,2.4L9.6,18.7,2,22l3.3-7.6,12-12A1.7,1.7,0,0,0,20.7,5.2Z" fill="currentColor"></path><path d="M18.3,2.8a1.7,1.7,0,0,0-2.4,0L15,3.7l4.9,4.9,1-1a1.7,1.7,0,0,0,0-2.4Z" fill="currentColor"></path></svg></button>
-                                        <button class="tool-button" id="pen-btn" title="Lápiz"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button>
-                                        <button class="tool-button" id="highlighter-btn" title="Resaltador"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,11.5,12.5,3h0a1.7,1.7,0,0,0-2.4,0L3,10.1a1.7,1.7,0,0,0,0,2.4l8.5,8.5h0a1.7,1.7,0,0,0,2.4,0L21,13.9a1.7,1.7,0,0,0,0-2.4Z" fill="currentColor"></path><path d="M7.1,15.8l-4,4" stroke="currentColor" stroke-width="1.5"></path></svg></button>
-                                        <button class="tool-button" id="line-btn" title="Línea Recta"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="5" y1="19" x2="19" y2="5"></line></svg></button>
-                                        <button class="tool-button" id="eraser-btn" title="Borrador"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.929 17.071 16.5 3.5a2.121 2.121 0 0 1 3 3L5.929 20.071a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414zM15 4l5 5"></path></svg></button>
+                                        <button class="tool-button" id="fountainpen-btn" title="Pluma"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M20.7,5.2a1.7,1.7,0,0,0-2.4,0L9.6,13.9,7.1,11.4a1.7,1.7,0,0,0-2.4,0,1.7,1.7,0,0,0,0,2.4L9.6,18.7,2,22l3.3-7.6,12-12A1.7,1.7,0,0,0,20.7,5.2Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M18.3,2.8a1.7,1.7,0,0,0-2.4,0L15,3.7l4.9,4.9,1-1a1.7,1.7,0,0,0,0-2.4Z"
+                                                    fill="currentColor"></path>
+                                            </svg></button>
+                                        <button class="tool-button" id="pen-btn" title="Lápiz"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+                                                </path>
+                                            </svg></button>
+                                        <button class="tool-button" id="highlighter-btn" title="Resaltador"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M21,11.5,12.5,3h0a1.7,1.7,0,0,0-2.4,0L3,10.1a1.7,1.7,0,0,0,0,2.4l8.5,8.5h0a1.7,1.7,0,0,0,2.4,0L21,13.9a1.7,1.7,0,0,0,0-2.4Z"
+                                                    fill="currentColor"></path>
+                                                <path d="M7.1,15.8l-4,4" stroke="currentColor" stroke-width="1.5">
+                                                </path>
+                                            </svg></button>
+                                        <button class="tool-button" id="line-btn" title="Línea Recta"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <line x1="5" y1="19" x2="19" y2="5"></line>
+                                            </svg></button>
+                                        <button class="tool-button" id="eraser-btn" title="Borrador"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M2.929 17.071 16.5 3.5a2.121 2.121 0 0 1 3 3L5.929 20.071a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414zM15 4l5 5">
+                                                </path>
+                                            </svg></button>
                                     </div>
                                 </div>
                                 <div class="toolbar-separator"></div>
                                 <div class="toolbar-section" id="color-picker-container">
-                                     <div class="tool-button-group">
-                                         <label for="color-picker-input" class="tool-button" title="Elegir color">
-                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"></path></svg>
-                                         </label>
-                                         <input type="color" id="color-picker-input" value="#FE3A2D">
-                                     </div>
+                                    <div class="tool-button-group">
+                                        <label for="color-picker-input" class="tool-button" title="Elegir color">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"></path>
+                                            </svg>
+                                        </label>
+                                        <input type="color" id="color-picker-input" value="#FE3A2D">
+                                    </div>
                                     <div class="color-palette">
-                                        <div class="color-swatch active" style="background-color: #FE3A2D;" data-color="#FE3A2D"></div><div class="color-swatch" style="background-color: #FFC300;" data-color="#FFC300"></div><div class="color-swatch" style="background-color: #00A878;" data-color="#00A878"></div><div class="color-swatch" style="background-color: #0077B6;" data-color="#0077B6"></div><div class="color-swatch" style="background-color: #9B5DE5;" data-color="#9B5DE5"></div><div class="color-swatch" style="background-color: #FFFFFF;" data-color="#FFFFFF"></div>
+                                        <div class="color-swatch active" style="background-color: #FE3A2D;"
+                                            data-color="#FE3A2D"></div>
+                                        <div class="color-swatch" style="background-color: #FFC300;"
+                                            data-color="#FFC300"></div>
+                                        <div class="color-swatch" style="background-color: #00A878;"
+                                            data-color="#00A878"></div>
+                                        <div class="color-swatch" style="background-color: #0077B6;"
+                                            data-color="#0077B6"></div>
+                                        <div class="color-swatch" style="background-color: #9B5DE5;"
+                                            data-color="#9B5DE5"></div>
+                                        <div class="color-swatch" style="background-color: #FFFFFF;"
+                                            data-color="#FFFFFF"></div>
                                     </div>
                                 </div>
                                 <div class="toolbar-separator"></div>
                                 <div class="toolbar-section">
-                                    <div class="slider-container"><div class="slider-label"><span>1</span><span>50</span></div><input type="range" id="thickness-slider" min="1" max="50" value="5" title="Grosor"></div>
-                                    <div class="slider-container opacity-container"><div class="slider-label"><span>10%</span><span>100%</span></div><input type="range" id="opacity-slider" min="0.1" max="1" value="0.5" step="0.1" title="Opacidad"></div>
+                                    <div class="slider-container">
+                                        <div class="slider-label"><span>1</span><span>50</span></div><input type="range"
+                                            id="thickness-slider" min="1" max="50" value="5" title="Grosor">
+                                    </div>
+                                    <div class="slider-container opacity-container">
+                                        <div class="slider-label"><span>10%</span><span>100%</span></div><input
+                                            type="range" id="opacity-slider" min="0.1" max="1" value="0.5" step="0.1"
+                                            title="Opacidad">
+                                    </div>
                                 </div>
                                 <div class="toolbar-separator"></div>
                                 <div class="toolbar-section">
                                     <div class="tool-button-group">
-                                         <button class="tool-button" id="undo-btn" title="Deshacer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-15 9 9 0 0 0-6 2.3L3 13"/></svg></button>
-                                         <button class="tool-button" id="clear-btn" title="Limpiar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></button>
+                                        <button class="tool-button" id="undo-btn" title="Deshacer"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path d="M3 7v6h6" />
+                                                <path d="M21 17a9 9 0 0 0-9-15 9 9 0 0 0-6 2.3L3 13" />
+                                            </svg></button>
+                                        <button class="tool-button" id="clear-btn" title="Limpiar"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path d="M3 6h18" />
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                                <line x1="10" x2="10" y1="11" y2="17" />
+                                                <line x1="14" x2="14" y1="11" y2="17" />
+                                            </svg></button>
                                     </div>
                                 </div>
                             </div>
-                            <div id="toolbar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></div>
+                            <div id="toolbar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg></div>
                         </div>
                     </div>
                     <div class="viewer-nav">
-                        <button id="prev-drawing-btn" class="viewer-nav-btn">&lt; Anterior</button>
-                        <span id="drawing-page-indicator">Página 1 / 1</span>
-                        <button id="next-drawing-btn" class="viewer-nav-btn">Siguiente &gt;</button>
-                        <div class="zoom-controls">
-                            <button id="zoom-out-btn" class="viewer-nav-btn">-</button>
-                            <span id="zoom-level-indicator">100%</span>
-                            <button id="zoom-in-btn" class="viewer-nav-btn">+</button>
-                        </div>
+                        <button id="prev-btn" class="viewer-nav-btn">&lt; Anterior</button>
+                        <span id="page-indicator">Página 1 / 15</span>
+                        <button id="next-btn" class="viewer-nav-btn">Siguiente &gt;</button>
                         <button id="download-btn" class="viewer-nav-btn" title="Descargar Página con Apuntes">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                           <span>Descargar</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span>Descargar</span>
                         </button>
                     </div>
                 </div>
             </section>
-            
+
             <section id="testimonials" class="animate-on-scroll">
+                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path
+                            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+                            class="shape-fill"></path>
+                    </svg></div>
                 <div class="container">
                     <h2>Lo que dicen nuestros <span>genios</span></h2>
                     <div class="testimonials-grid">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@seamosgenios/video/7535598968483433784" data-video-id="7535598968483433784" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@seamosgenios" href="https://www.tiktok.com/@seamosgenios?refer=embed">@seamosgenios</a></section> </blockquote>
+                        <blockquote class="tiktok-embed"
+                            cite="https://www.tiktok.com/@seamosgenios/video/7535598968483433784"
+                            data-video-id="7535598968483433784" style="max-width: 605px;min-width: 325px;">
+                            <section> <a target="_blank" title="@seamosgenios"
+                                    href="https://www.tiktok.com/@seamosgenios?refer=embed">@seamosgenios</a></section>
+                        </blockquote>
                         <div class="testimonial-comments">
-                            <div class="comment-card"><p>"Los mejores, me ayudaron a pasar a la Nacional. ¡Mil gracias!"</p><span class="author">- S. Rojas</span></div>
-                            <div class="comment-card"><p>"El profe de matemáticas es un crack, explica súper claro. Gracias a él le perdí el miedo a los números."</p><span class="author">- Valentina C.</span></div>
-                            <div class="comment-card"><p>"El material es súper completo y las clases en vivo son lo mejor. Pude preguntar todo y nunca me quedé con dudas."</p><span class="author">- J. David</span></div>
-                             <div class="comment-card"><p>"Subí 60 puntos de un simulacro a otro, de verdad que la metodología funciona. ¡Recomendadísimos!"</p><span class="author">- Camila G.</span></div>
+                            <div class="comment-card">
+                                <p>"Los mejores, me ayudaron a pasar a la Nacional. ¡Mil gracias!"</p><span
+                                    class="author">- S. Rojas</span>
+                            </div>
+                            <div class="comment-card">
+                                <p>"El profe de matemáticas es un crack, explica súper claro. Gracias a él le perdí el
+                                    miedo a los números."</p><span class="author">- Valentina C.</span>
+                            </div>
+                            <div class="comment-card">
+                                <p>"El material es súper completo y las clases en vivo son lo mejor. Pude preguntar todo
+                                    y nunca me quedé con dudas."</p><span class="author">- J. David</span>
+                            </div>
+                            <div class="comment-card">
+                                <p>"Subí 60 puntos de un simulacro a otro, de verdad que la metodología funciona.
+                                    ¡Recomendadísimos!"</p><span class="author">- Camila G.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-            
+
             <section id="methodology" class="animate-on-scroll">
-                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path></svg></div>
                 <div class="container">
                     <h2>Nuestra <span>Metodología</span></h2>
                     <div class="grid-layout">
-                        <div class="info-card feature-card"><div class="icon-bg">🎯</div><h3>Diagnóstico Inicial</h3><p>Comenzamos con un simulacro diagnóstico para identificar tus fortalezas y áreas de mejora, personalizando tu plan de estudio desde el primer día.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">💡</div><h3>Aprendizaje Intensivo</h3><p>Clases en vivo y grabadas donde nuestros expertos desglosan los temas más complejos con explicaciones claras y ejemplos prácticos.</p></div>
-                        <div class="info-card feature-card"><div class="icon-bg">✍️</div><h3>Práctica Constante</h3><p>Afianza lo aprendido con compilados, talleres y un banco de más de 2000 preguntas tipo ICFES para que domines cada materia.</p></div>
-                         <div class="info-card feature-card"><div class="icon-bg">📊</div><h3>Retroalimentación</h3><p>Después de cada simulacro, analizamos tus resultados contigo para que entiendas tus errores y veas tu progreso de manera tangible.</p></div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">🎯</div>
+                            <h3>Diagnóstico Inicial</h3>
+                            <p>Comenzamos con un simulacro diagnóstico para identificar tus fortalezas y áreas de
+                                mejora, personalizando tu plan de estudio desde el primer día.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">💡</div>
+                            <h3>Aprendizaje Intensivo</h3>
+                            <p>Clases en vivo y grabadas donde nuestros expertos desglosan los temas más complejos con
+                                explicaciones claras y ejemplos prácticos.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">✍️</div>
+                            <h3>Práctica Constante</h3>
+                            <p>Afianza lo aprendido con compilados, talleres y un banco de más de 2000 preguntas tipo
+                                ICFES para que domines cada materia.</p>
+                        </div>
+                        <div class="info-card feature-card">
+                            <div class="icon-bg">📊</div>
+                            <h3>Retroalimentación</h3>
+                            <p>Después de cada simulacro, analizamos tus resultados contigo para que entiendas tus
+                                errores y veas tu progreso de manera tangible.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="faq" class="animate-on-scroll">
+                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path
+                            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+                            class="shape-fill"></path>
+                    </svg></div>
                 <div class="container">
                     <h2>Preguntas <span>Frecuentes</span></h2>
                     <div class="faq-grid">
                         <div class="faq-question-card" data-question="¿Cuáles son los métodos de pago?">
-                           ¿Cuáles son los métodos de pago?
-                           <div style="display: none;" class="faq-answer-content"><p>Aceptamos pagos a través de Nequi, Daviplata, Bancolombia y giros por Efecty. Una vez te pongas en contacto, te daremos toda la información detallada para que elijas el método que más te convenga.</p></div>
+                            ¿Cuáles son los métodos de pago?
+                            <div style="display: none;" class="faq-answer-content">
+                                <p>Aceptamos pagos a través de Nequi, Daviplata, Bancolombia y giros por Efecty. Una vez
+                                    te pongas en contacto, te daremos toda la información detallada para que elijas el
+                                    método que más te convenga.</p>
+                            </div>
                         </div>
-                         <div class="faq-question-card" data-question="¿Qué pasa si no puedo asistir a una clase en vivo?">
-                           ¿Qué pasa si no puedo asistir a una clase en vivo?
-                            <div style="display: none;" class="faq-answer-content"><p>¡No hay problema! Todas las clases en vivo se graban y se suben a nuestra plataforma en 4K para que puedas repasarlas cuantas veces necesites, a tu propio ritmo y en el horario que prefieras.</p></div>
+                        <div class="faq-question-card"
+                            data-question="¿Qué pasa si no puedo asistir a una clase en vivo?">
+                            ¿Qué pasa si no puedo asistir a una clase en vivo?
+                            <div style="display: none;" class="faq-answer-content">
+                                <p>¡No hay problema! Todas las clases en vivo se graban y se suben a nuestra plataforma
+                                    en 4K para que puedas repasarlas cuantas veces necesites, a tu propio ritmo y en el
+                                    horario que prefieras.</p>
+                            </div>
                         </div>
-                         <div class="faq-question-card" data-question="¿Necesito algún requisito técnico?">
-                           ¿Necesito algún requisito técnico?
-                           <div style="display: none;" class="faq-answer-content"><p>Solo necesitas un dispositivo con conexión a internet (computador, tablet o celular) y muchas ganas de aprender. Las clases se realizan por una plataforma de fácil acceso de la cual te daremos el enlace.</p></div>
+                        <div class="faq-question-card" data-question="¿Necesito algún requisito técnico?">
+                            ¿Necesito algún requisito técnico?
+                            <div style="display: none;" class="faq-answer-content">
+                                <p>Solo necesitas un dispositivo con conexión a internet (computador, tablet o celular)
+                                    y muchas ganas de aprender. Las clases se realizan por una plataforma de fácil
+                                    acceso de la cual te daremos el enlace.</p>
+                            </div>
                         </div>
-                         <div class="faq-question-card" data-question="¿Este curso es para mí?">
-                           ¿Este curso es para mí?
-                           <div style="display: none;" class="faq-answer-content"><p>Este curso es ideal si quieres dar un impulso definitivo a tu preparación para el ICFES. Con clases intensivas, simulacros y material exclusivo, te daremos las herramientas clave para el éxito, sin importar tu nivel inicial.</p></div>
+                        <div class="faq-question-card" data-question="¿Este curso es para mí?">
+                            ¿Este curso es para mí?
+                            <div style="display: none;" class="faq-answer-content">
+                                <p>Este curso es ideal si quieres dar un impulso definitivo a tu preparación para el
+                                    ICFES. Con clases intensivas, simulacros y material exclusivo, te daremos las
+                                    herramientas clave para el éxito, sin importar tu nivel inicial.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-             <div id="faq-modal">
+            <div id="faq-modal">
                 <div class="faq-modal-content">
                     <button id="faq-modal-close">&times;</button>
                     <h3 id="faq-modal-question"></h3>
@@ -507,474 +1789,485 @@
                 </div>
             </div>
             <section id="pricing" class="animate-on-scroll">
-                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path></svg></div>
                 <div class="container">
                     <h2>Inscripción al <span>Calendario de Genios</span></h2>
                     <div class="info-card price-card">
-                        <div id="countdown-timer"><p class="countdown-title">¡La oferta termina en!</p><div class="timer"><div class="time-box"><span id="days">00</span><span class="label">Días</span></div><div class="time-box"><span id="hours">00</span><span class="label">Horas</span></div><div class="time-box"><span id="minutes">00</span><span class="label">Min</span></div><div class="time-box"><span id="seconds">00</span><span class="label">Seg</span></div></div></div>
+                        <div id="countdown-timer">
+                            <p class="countdown-title">¡La oferta termina en!</p>
+                            <div class="timer">
+                                <div class="time-box"><span id="days">00</span><span class="label">Días</span></div>
+                                <div class="time-box"><span id="hours">00</span><span class="label">Horas</span></div>
+                                <div class="time-box"><span id="minutes">00</span><span class="label">Min</span></div>
+                                <div class="time-box"><span id="seconds">00</span><span class="label">Seg</span></div>
+                            </div>
+                        </div>
                         <p class="discount">¡20% DE DESCUENTO!</p>
-                        <div class="price-container"><span class="old-price">$100.000</span><p class="price-tag">$80.000<span class="cop"> COP</span></p></div>
+                        <div class="price-container"><span class="old-price">$100.000</span>
+                            <p class="price-tag">$80.000<span class="cop"> COP</span></p>
+                        </div>
                         <p>Aprovecha la oferta por tiempo limitado y asegura tu cupo para el éxito.</p>
-                        <a href="https://wa.me/573042797630?text=Hola,%20estoy%20interesado%20en%20el%20Calendario%20de%20Genios%20con%20el%2020%25%20de%20descuento." class="cta-button" target="_blank">¡Inscribirme con Descuento!</a>
+                        <a href="https://wa.me/573042797630?text=Hola,%20estoy%20interesado%20en%20el%20Calendario%20de%20Genios%20con%20el%2020%25%20de%20descuento."
+                            class="cta-button" target="_blank">¡Inscribirme con Descuento!</a>
                     </div>
                 </div>
             </section>
         </main>
         <div class="fab-container">
             <div class="fab-actions">
-                <button id="fab-draw-mode" class="fab-action" title="Anotar / Navegar"><svg class="icon-draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg><svg class="icon-navigate" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg></button>
-                <a href="#pricing" class="fab-action" title="Inscribirse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></a>
+                <button id="fab-draw-mode" class="fab-action" title="Anotar / Navegar"><svg class="icon-draw"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                    </svg><svg class="icon-navigate" style="display: none;" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+                    </svg></button>
+                <a href="#pricing" class="fab-action" title="Inscribirse"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    </svg></a>
             </div>
-            <button class="fab-main"><svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg><svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            <button class="fab-main"><svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                </svg><svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg></button>
         </div>
         <div id="toast-container"></div>
-        <footer><div class="container"><div class="social-icons"><a href="https://www.instagram.com/seamosgenios/" target="_blank" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a><a href="https://wa.me/573042797630" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></a></div><p>&copy; 2025 SeamosGenios. Todos los derechos reservados.</p></div></footer>
+        <footer>
+            <div class="container">
+                <div class="social-icons"><a href="https://www.instagram.com/seamosgenios/" target="_blank"
+                        title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg></a><a href="https://wa.me/573042797630" target="_blank" title="WhatsApp"><svg
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg></a></div>
+                <p>&copy; 2025 SeamosGenios. Todos los derechos reservados.</p>
+            </div>
+        </footer>
     </div>
     <script async src="https://www.tiktok.com/embed.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const preloader = document.getElementById('preloader');
-        const fabContainer = document.querySelector('.fab-container');
-        const fabDrawBtn = document.getElementById('fab-draw-mode');
-        const pdfCanvas = document.getElementById('pdf-render');
-        const drawingCanvas = document.getElementById('drawing-canvas');
-        const pdfCtx = pdfCanvas.getContext('2d');
-        const drawCtx = drawingCanvas.getContext('2d');
-        const toolbar = document.getElementById('toolbar');
-        const prevDrawingBtn = document.getElementById('prev-drawing-btn');
-        const nextDrawingBtn = document.getElementById('next-drawing-btn');
-        const pageIndicator = document.getElementById('drawing-page-indicator');
-        const viewerContainer = document.getElementById('viewer-container');
-        const canvasContainer = document.getElementById('canvas-container');
-        const zoomInBtn = document.getElementById('zoom-in-btn');
-        const zoomOutBtn = document.getElementById('zoom-out-btn');
-        const zoomLevelIndicator = document.getElementById('zoom-level-indicator');
-        const pdfErrorOverlay = document.getElementById('pdf-error-overlay');
-        const thicknessSlider = document.getElementById('thickness-slider');
-        const opacitySlider = document.getElementById('opacity-slider');
-        const opacityContainer = document.querySelector('.opacity-container');
-        const downloadBtn = document.getElementById('download-btn');
-        const colorPickerInput = document.getElementById('color-picker-input');
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            const fabContainer = document.querySelector('.fab-container');
+            const fabDrawBtn = document.getElementById('fab-draw-mode');
+            const imageViewer = document.getElementById('image-viewer');
+            const drawingCanvas = document.getElementById('drawing-canvas');
+            const drawCtx = drawingCanvas.getContext('2d');
+            const toolbar = document.getElementById('toolbar');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const pageIndicator = document.getElementById('page-indicator');
+            const viewerContainer = document.getElementById('viewer-container');
+            const canvasContainer = document.getElementById('canvas-container');
+            const viewerErrorOverlay = document.getElementById('viewer-error-overlay');
+            const thicknessSlider = document.getElementById('thickness-slider');
+            const opacitySlider = document.getElementById('opacity-slider');
+            const opacityContainer = document.querySelector('.opacity-container');
+            const downloadBtn = document.getElementById('download-btn');
+            const colorPickerInput = document.getElementById('color-picker-input');
 
-        let pdfDoc = null, currentPage = 1, baseScale = 1.0, zoomFactor = 1.0, isRendering = false;
-        let renderTask = null, isDrawingMode = false, isDrawing = false, currentTool = 'pen';
-        let historyPerPage = {}, drawingsData = {}, lastPos = { x: 0, y: 0 };
-        let lastTimestamp = 0, lastLineWidth = 0;
-        let lineStartX = 0, lineStartY = 0, canvasSnapshot = null;
+            // --- Configuration for Image Viewer ---
+            const totalImagePages = 15; // Set the total number of images you have
+            const imagePathPrefix = 'img/';
+            const imageExtension = '.svg';
+            let currentPage = 1;
 
-        const pdfUrl = 'https://seamosgenios2026.cdn.prismic.io/seamosgenios2026/aMXUcmGNHVfTPNwB_SimulacroSG11-08.pdf';
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`;
+            let isDrawingMode = false, isDrawing = false, currentTool = 'pen';
+            let historyPerPage = {}, drawingsData = {}, lastPos = { x: 0, y: 0 };
+            let lastTimestamp = 0, lastLineWidth = 0;
+            let lineStartX = 0, lineStartY = 0, canvasSnapshot = null;
 
-        function renderPage(num) {
-            if (isRendering || !pdfDoc) return;
-            isRendering = true;
-            pageIndicator.textContent = `Cargando página ${num}...`;
-            prevDrawingBtn.disabled = true;
-            nextDrawingBtn.disabled = true;
+            function loadImagePage(pageNum) {
+                pageIndicator.textContent = `Cargando...`;
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
 
-            pdfDoc.getPage(num).then(page => {
-                const currentScale = baseScale * zoomFactor;
-                const viewport = page.getViewport({ scale: currentScale });
-                pdfCanvas.height = viewport.height;
-                pdfCanvas.width = viewport.width;
-                drawingCanvas.height = viewport.height;
-                drawingCanvas.width = viewport.width;
-                canvasContainer.style.width = `${viewport.width}px`;
-                canvasContainer.style.height = `${viewport.height}px`;
-                
-                const renderContext = { canvasContext: pdfCtx, viewport: viewport };
-                if (renderTask) renderTask.cancel();
-                renderTask = page.render(renderContext);
+                const img = new Image();
+                img.src = `${imagePathPrefix}${pageNum}${imageExtension}`;
 
-                renderTask.promise.then(() => {
-                    currentPage = num;
-                    loadDrawingForPage(num);
-                    pageIndicator.textContent = `Página ${num} / ${pdfDoc.numPages}`;
-                    prevDrawingBtn.disabled = num <= 1;
-                    nextDrawingBtn.disabled = num >= pdfDoc.numPages;
-                    isRendering = false;
-                    renderTask = null;
-                }).catch(err => {
-                    if (err.name !== 'RenderingCancelledException') console.error("Error during PDF render:", err);
-                    isRendering = false; renderTask = null;
-                    prevDrawingBtn.disabled = currentPage <= 1;
-                    nextDrawingBtn.disabled = currentPage >= pdfDoc.numPages;
+                img.onload = () => {
+                    imageViewer.src = img.src;
+                    // Resize canvas to match the image's natural dimensions for high-quality drawing
+                    drawingCanvas.width = img.naturalWidth;
+                    drawingCanvas.height = img.naturalHeight;
+
+                    loadDrawingForPage(pageNum);
+                    updateNav();
+                    viewerErrorOverlay.style.display = 'none';
+                };
+
+                img.onerror = () => {
+                    console.error(`Error loading image: ${img.src}`);
+                    viewerErrorOverlay.style.display = 'flex';
+                    pageIndicator.textContent = "Error";
+                };
+            }
+
+            function updateNav() {
+                pageIndicator.textContent = `Página ${currentPage} / ${totalImagePages}`;
+                prevBtn.disabled = currentPage <= 1;
+                nextBtn.disabled = currentPage >= totalImagePages;
+            }
+
+            function changePage(offset) {
+                const newPage = currentPage + offset;
+                if (newPage > 0 && newPage <= totalImagePages) {
+                    saveCurrentDrawing();
+                    currentPage = newPage;
+                    loadImagePage(currentPage);
+                }
+            }
+
+            prevBtn.addEventListener('click', () => changePage(-1));
+            nextBtn.addEventListener('click', () => changePage(1));
+
+            // --- Drawing and Annotation Logic (Adapted for Image Viewer) ---
+
+            function loadDrawingsFromStorage() {
+                try {
+                    const saved = localStorage.getItem('seamosGeniosDrawings');
+                    drawingsData = saved ? JSON.parse(saved) : {};
+                } catch (e) { console.error("Error loading drawings:", e); }
+            }
+
+            function loadDrawingForPage(pageNum) {
+                drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+                const savedDrawingSrc = drawingsData[pageNum];
+                if (savedDrawingSrc) {
+                    const img = new Image();
+                    img.src = savedDrawingSrc;
+                    img.onload = () => {
+                        drawCtx.drawImage(img, 0, 0, drawingCanvas.width, drawingCanvas.height);
+                    }
+                }
+                historyPerPage[pageNum] = historyPerPage[pageNum] || [];
+                saveState();
+            }
+
+            function saveCurrentDrawing() {
+                try {
+                    if (!isCanvasBlank(drawingCanvas)) {
+                        drawingsData[currentPage] = drawingCanvas.toDataURL();
+                    } else {
+                        delete drawingsData[currentPage];
+                    }
+                    localStorage.setItem('seamosGeniosDrawings', JSON.stringify(drawingsData));
+                } catch (e) { console.error("Error saving drawing:", e); }
+            }
+
+            function isCanvasBlank(canvas) {
+                if (!canvas || canvas.width === 0 || canvas.height === 0) return true;
+                return !canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
+            }
+
+            function getPos(e) {
+                const rect = drawingCanvas.getBoundingClientRect();
+                const touch = e.touches ? e.touches[0] : e;
+                // Adjust coordinates based on the displayed image size vs the canvas's natural size
+                const scaleX = drawingCanvas.width / rect.width;
+                const scaleY = drawingCanvas.height / rect.height;
+                return {
+                    x: (touch.clientX - rect.left) * scaleX,
+                    y: (touch.clientY - rect.top) * scaleY
+                };
+            }
+
+            function startDrawing(e) {
+                if (!isDrawingMode) return;
+                e.preventDefault();
+                isDrawing = true;
+                saveState();
+                lastPos = getPos(e);
+
+                if (currentTool === 'line') {
+                    lineStartX = lastPos.x;
+                    lineStartY = lastPos.y;
+                    canvasSnapshot = drawCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
+                } else {
+                    lastTimestamp = performance.now();
+                    lastLineWidth = drawCtx.lineWidth;
+                    drawCtx.beginPath();
+                    drawCtx.moveTo(lastPos.x, lastPos.y);
+                }
+            }
+
+            function draw(e) {
+                if (!isDrawing || !isDrawingMode) return;
+                e.preventDefault();
+                const currentPos = getPos(e);
+
+                if (currentTool === 'line') {
+                    if (canvasSnapshot) drawCtx.putImageData(canvasSnapshot, 0, 0);
+                    drawCtx.beginPath();
+                    drawCtx.moveTo(lineStartX, lineStartY);
+                    drawCtx.lineTo(currentPos.x, currentPos.y);
+                    drawCtx.stroke();
+                    drawCtx.closePath();
+                } else {
+                    const now = performance.now();
+                    if (currentTool === 'fountainpen') {
+                        const time = now - lastTimestamp;
+                        const distance = Math.hypot(currentPos.x - lastPos.x, currentPos.y - lastPos.y);
+                        const speed = time > 10 ? distance / time : 0;
+                        const baseWidth = parseFloat(thicknessSlider.value), minWidth = baseWidth / 4;
+                        const newLineWidth = Math.max(minWidth, baseWidth - (speed * 1.5));
+                        drawCtx.lineWidth = lastLineWidth * 0.7 + newLineWidth * 0.3;
+                        lastLineWidth = drawCtx.lineWidth;
+                    }
+                    drawCtx.lineTo(currentPos.x, currentPos.y);
+                    drawCtx.stroke();
+                    lastPos = currentPos;
+                    lastTimestamp = now;
+                }
+            }
+
+            function stopDrawing(e) {
+                if (!isDrawing) return;
+                isDrawing = false;
+
+                if (currentTool === 'line') {
+                    if (canvasSnapshot) drawCtx.putImageData(canvasSnapshot, 0, 0);
+                    const endPos = (e && (e.type === 'touchend' || e.type === 'mouseup')) ? getPos(e.changedTouches ? e.changedTouches[0] : e) : lastPos;
+                    drawCtx.beginPath();
+                    drawCtx.moveTo(lineStartX, lineStartY);
+                    drawCtx.lineTo(endPos.x, endPos.y);
+                    drawCtx.stroke();
+                    drawCtx.closePath();
+                    canvasSnapshot = null;
+                } else {
+                    drawCtx.closePath();
+                }
+                saveCurrentDrawing();
+            }
+
+            drawingCanvas.addEventListener('mousedown', startDrawing);
+            drawingCanvas.addEventListener('mousemove', draw);
+            window.addEventListener('mouseup', stopDrawing);
+            drawingCanvas.addEventListener('touchstart', startDrawing, { passive: false });
+            drawingCanvas.addEventListener('touchmove', draw, { passive: false });
+            window.addEventListener('touchend', stopDrawing);
+
+            function saveState() {
+                const pageHistory = historyPerPage[currentPage] || [];
+                if (pageHistory.length > 20) pageHistory.shift();
+                pageHistory.push(drawCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height));
+                historyPerPage[currentPage] = pageHistory;
+            }
+
+            function undoLast() {
+                const pageHistory = historyPerPage[currentPage];
+                if (pageHistory && pageHistory.length > 1) {
+                    pageHistory.pop();
+                    drawCtx.putImageData(pageHistory[pageHistory.length - 1], 0, 0);
+                    saveCurrentDrawing();
+                } else { clearCanvas(); }
+            }
+
+            function clearCanvas() {
+                drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+                historyPerPage[currentPage] = [];
+                delete drawingsData[currentPage];
+                saveCurrentDrawing(); saveState();
+            }
+
+            function setTool(toolId) {
+                currentTool = toolId.replace('-btn', '');
+                let color = colorPickerInput.value;
+                drawCtx.lineWidth = thicknessSlider.value;
+                drawCtx.globalCompositeOperation = 'source-over';
+                drawCtx.lineJoin = 'round'; drawCtx.lineCap = 'round';
+
+                opacityContainer.classList.toggle('visible', currentTool === 'highlighter');
+
+                if (currentTool === 'highlighter') {
+                    drawCtx.globalCompositeOperation = 'multiply';
+                    drawCtx.strokeStyle = hexToRgba(color, opacitySlider.value);
+                } else if (currentTool === 'eraser') {
+                    drawCtx.globalCompositeOperation = 'destination-out';
+                    drawCtx.strokeStyle = 'rgba(0,0,0,1)';
+                } else {
+                    drawCtx.strokeStyle = color;
+                }
+                activateToolButton(document.getElementById(toolId));
+            }
+
+            document.querySelectorAll('.tool-button').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = btn.id;
+                    if (id === 'undo-btn') undoLast();
+                    else if (id === 'clear-btn') clearCanvas();
+                    else setTool(id);
                 });
             });
-        }
-        
-        pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
-            pdfDoc = doc;
-            doc.getPage(1).then(page => {
-                const viewport = page.getViewport({scale: 1.0});
-                baseScale = viewerContainer.clientWidth / viewport.width;
-                queueRenderPage(1);
-                updateZoomLevelIndicator();
-            });
-            loadDrawingsFromStorage();
-        }).catch(err => {
-            console.error("Error al cargar el PDF:", err);
-            pageIndicator.textContent = "Error de material";
-            pdfErrorOverlay.style.display = 'flex';
-        });
-        
-        function queueRenderPage(newPageNum) {
-            if (isRendering && renderTask) renderTask.cancel();
-            renderPage(newPageNum);
-        }
 
-        function changePage(offset) {
-            const newPageNum = currentPage + offset;
-            if (pdfDoc && newPageNum > 0 && newPageNum <= pdfDoc.numPages) {
-                saveCurrentDrawing();
-                queueRenderPage(newPageNum);
-            }
-        }
-        
-        function updateZoomLevelIndicator() { zoomLevelIndicator.textContent = `${Math.round(zoomFactor * 100)}%`; }
-        function handleZoom(newZoomFactor) {
-            saveDrawingToTemp();
-            zoomFactor = Math.max(0.5, Math.min(newZoomFactor, 3.0));
-            queueRenderPage(currentPage);
-            updateZoomLevelIndicator();
-        }
-
-        zoomInBtn.addEventListener('click', () => handleZoom(zoomFactor + 0.25));
-        zoomOutBtn.addEventListener('click', () => handleZoom(zoomFactor - 0.25));
-
-        let tempDrawingImage = null;
-        function saveDrawingToTemp() {
-            if (isCanvasBlank(drawingCanvas)) { tempDrawingImage = null; return; }
-            tempDrawingImage = new Image(); tempDrawingImage.src = drawingCanvas.toDataURL();
-        }
-
-        prevDrawingBtn.addEventListener('click', () => changePage(-1));
-        nextDrawingBtn.addEventListener('click', () => changePage(1));
-        
-        function loadDrawingsFromStorage() {
-            try {
-                const saved = localStorage.getItem('seamosGeniosDrawings');
-                drawingsData = saved ? JSON.parse(saved) : {};
-                loadDrawingForPage(currentPage);
-            } catch (e) { console.error("Error loading drawings:", e); }
-        }
-
-        function loadDrawingForPage(pageNum) {
-            drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-            const savedDrawingSrc = drawingsData[pageNum];
-            const drawingToLoad = tempDrawingImage || (savedDrawingSrc ? new Image() : null);
-            if (drawingToLoad) {
-                if (!tempDrawingImage) drawingToLoad.src = savedDrawingSrc;
-                const drawImage = () => { drawCtx.drawImage(drawingToLoad, 0, 0, drawingCanvas.width, drawingCanvas.height); };
-                if (drawingToLoad.complete) drawImage(); else drawingToLoad.onload = drawImage;
-            }
-            tempDrawingImage = null;
-            historyPerPage[pageNum] = historyPerPage[pageNum] || [];
-            saveState();
-        }
-
-        function saveCurrentDrawing() {
-            try {
-                if (!isCanvasBlank(drawingCanvas)) drawingsData[currentPage] = drawingCanvas.toDataURL();
-                else delete drawingsData[currentPage];
-                localStorage.setItem('seamosGeniosDrawings', JSON.stringify(drawingsData));
-            } catch (e) { console.error("Error saving drawing:", e); }
-        }
-
-        function isCanvasBlank(canvas) {
-            if (!canvas || canvas.width === 0 || canvas.height === 0) return true;
-            return !canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
-        }
-
-        function getPos(e) {
-            const rect = drawingCanvas.getBoundingClientRect();
-            const touch = e.touches ? e.touches[0] : e;
-            return {
-                x: (touch.clientX - rect.left) * (drawingCanvas.width / rect.width),
-                y: (touch.clientY - rect.top) * (drawingCanvas.height / rect.height)
-            };
-        }
-
-        function startDrawing(e) {
-            if (!isDrawingMode) return;
-            e.preventDefault();
-            isDrawing = true;
-            saveState();
-            lastPos = getPos(e);
-            
-            if (currentTool === 'line') {
-                lineStartX = lastPos.x;
-                lineStartY = lastPos.y;
-                canvasSnapshot = drawCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
-            } else {
-                lastTimestamp = performance.now();
-                lastLineWidth = drawCtx.lineWidth;
-                drawCtx.beginPath();
-                drawCtx.moveTo(lastPos.x, lastPos.y);
-            }
-        }
-
-        function draw(e) {
-            if (!isDrawing || !isDrawingMode) return;
-            e.preventDefault();
-            const currentPos = getPos(e);
-            
-            if (currentTool === 'line') {
-                if (canvasSnapshot) drawCtx.putImageData(canvasSnapshot, 0, 0);
-                drawCtx.beginPath();
-                drawCtx.moveTo(lineStartX, lineStartY);
-                drawCtx.lineTo(currentPos.x, currentPos.y);
-                drawCtx.stroke();
-                drawCtx.closePath();
-            } else {
-                const now = performance.now();
-                if (currentTool === 'fountainpen') {
-                    const time = now - lastTimestamp;
-                    const distance = Math.hypot(currentPos.x - lastPos.x, currentPos.y - lastPos.y);
-                    const speed = time > 10 ? distance / time : 0;
-                    const baseWidth = parseFloat(thicknessSlider.value), minWidth = baseWidth / 4;
-                    const newLineWidth = Math.max(minWidth, baseWidth - (speed * 1.5));
-                    drawCtx.lineWidth = lastLineWidth * 0.7 + newLineWidth * 0.3;
-                    lastLineWidth = drawCtx.lineWidth;
-                }
-                drawCtx.lineTo(currentPos.x, currentPos.y);
-                drawCtx.stroke();
-                lastPos = currentPos;
-                lastTimestamp = now;
-            }
-        }
-
-        function stopDrawing(e) {
-            if (!isDrawing) return;
-            isDrawing = false;
-            
-            if (currentTool === 'line') {
-                if (canvasSnapshot) drawCtx.putImageData(canvasSnapshot, 0, 0);
-                // Use getPos(e) if event is available, otherwise use last known position.
-                // This handles mouseup outside canvas.
-                const endPos = (e && e.type !== 'mouseup') ? getPos(e) : lastPos;
-                drawCtx.beginPath();
-                drawCtx.moveTo(lineStartX, lineStartY);
-                drawCtx.lineTo(endPos.x, endPos.y);
-                drawCtx.stroke();
-                drawCtx.closePath();
-                canvasSnapshot = null;
-            } else {
-                drawCtx.closePath();
-            }
-            saveCurrentDrawing();
-        }
-
-        drawingCanvas.addEventListener('mousedown', startDrawing);
-        drawingCanvas.addEventListener('mousemove', draw);
-        window.addEventListener('mouseup', stopDrawing);
-        drawingCanvas.addEventListener('touchstart', startDrawing, { passive: false });
-        drawingCanvas.addEventListener('touchmove', draw, { passive: false });
-        window.addEventListener('touchend', stopDrawing);
-
-        function saveState() {
-            const pageHistory = historyPerPage[currentPage] || [];
-            if (pageHistory.length > 20) pageHistory.shift();
-            pageHistory.push(drawCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height));
-            historyPerPage[currentPage] = pageHistory;
-        }
-
-        function undoLast() {
-            const pageHistory = historyPerPage[currentPage];
-            if (pageHistory && pageHistory.length > 1) {
-                pageHistory.pop();
-                drawCtx.putImageData(pageHistory[pageHistory.length - 1], 0, 0);
-                saveCurrentDrawing();
-            } else { clearCanvas(); }
-        }
-
-        function clearCanvas() {
-            drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-            historyPerPage[currentPage] = [];
-            delete drawingsData[currentPage];
-            saveCurrentDrawing(); saveState();
-        }
-        
-        function setTool(toolId) {
-            currentTool = toolId.replace('-btn', '');
-            let color = colorPickerInput.value;
-            drawCtx.lineWidth = thicknessSlider.value;
-            drawCtx.globalCompositeOperation = 'source-over';
-            drawCtx.lineJoin = 'round'; drawCtx.lineCap = 'round';
-            
-            opacityContainer.classList.toggle('visible', currentTool === 'highlighter');
-            
-            if (currentTool === 'highlighter') {
-                drawCtx.globalCompositeOperation = 'multiply';
-                drawCtx.strokeStyle = hexToRgba(color, opacitySlider.value);
-            } else if (currentTool === 'eraser') {
-                drawCtx.globalCompositeOperation = 'destination-out';
-                drawCtx.strokeStyle = 'rgba(0,0,0,1)';
-            } else { 
-                drawCtx.strokeStyle = color; 
-            }
-            activateToolButton(document.getElementById(toolId));
-        }
-        
-        document.querySelectorAll('.tool-button').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = btn.id;
-                if (id === 'undo-btn') undoLast();
-                else if (id === 'clear-btn') clearCanvas();
-                else setTool(id);
-            });
-        });
-
-        colorPickerInput.addEventListener('input', () => {
-            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-            setTool(currentTool + '-btn');
-        });
-
-        document.querySelectorAll('.color-swatch').forEach(swatch => {
-            swatch.addEventListener('click', (e) => {
-                const color = e.currentTarget.dataset.color;
-                colorPickerInput.value = color;
+            colorPickerInput.addEventListener('input', () => {
                 document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-                e.currentTarget.classList.add('active');
                 setTool(currentTool + '-btn');
             });
-        });
 
-        thicknessSlider.addEventListener('input', () => setTool(currentTool + '-btn'));
-        opacitySlider.addEventListener('input', () => setTool(currentTool + '-btn'));
-        
-        document.getElementById('toolbar-toggle').addEventListener('click', () => toolbar.classList.toggle('collapsed'));
-        
-        function toggleDrawingMode() {
-            isDrawingMode = !isDrawingMode;
-            drawingCanvas.style.pointerEvents = isDrawingMode ? 'auto' : 'none';
-            toolbar.classList.toggle('visible', isDrawingMode);
-            const iconDraw = fabDrawBtn.querySelector('.icon-draw');
-            const iconNavigate = fabDrawBtn.querySelector('.icon-navigate');
-            if (isDrawingMode) {
-                setTool('pen-btn');
-                document.getElementById('interactive-viewer').scrollIntoView({ behavior: 'smooth' });
-                showToast('Modo Anotación Activado');
-                iconDraw.style.display = 'none'; iconNavigate.style.display = 'block';
-            } else {
-                showToast('Modo Navegación Activado');
-                iconDraw.style.display = 'block'; iconNavigate.style.display = 'none';
-            }
-        }
-        fabDrawBtn.addEventListener('click', toggleDrawingMode);
-        
-        async function downloadPageAsPNG() {
-            if (downloadBtn.classList.contains('downloading')) return;
-            const originalContent = downloadBtn.innerHTML;
-            const qualityScale = 2.0; 
+            document.querySelectorAll('.color-swatch').forEach(swatch => {
+                swatch.addEventListener('click', (e) => {
+                    const color = e.currentTarget.dataset.color;
+                    colorPickerInput.value = color;
+                    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    setTool(currentTool + '-btn');
+                });
+            });
 
-            try {
-                downloadBtn.classList.add('downloading');
-                downloadBtn.innerHTML = `<svg class="spinner" viewBox="0 0 50 50"><circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle></svg><span>Generando...</span>`;
-                downloadBtn.disabled = true;
-                await new Promise(resolve => setTimeout(resolve, 50));
+            thicknessSlider.addEventListener('input', () => setTool(currentTool + '-btn'));
+            opacitySlider.addEventListener('input', () => setTool(currentTool + '-btn'));
 
-                const offscreenCanvas = document.createElement('canvas');
-                offscreenCanvas.width = pdfCanvas.width * qualityScale;
-                offscreenCanvas.height = pdfCanvas.height * qualityScale;
-                const offscreenCtx = offscreenCanvas.getContext('2d');
-                offscreenCtx.fillStyle = '#FFFFFF';
-                offscreenCtx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
-                offscreenCtx.drawImage(pdfCanvas, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
-                offscreenCtx.drawImage(drawingCanvas, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
-                
-                offscreenCanvas.toBlob(blob => {
-                    const link = document.createElement('a');
-                    link.download = `SeamosGenios-Pagina-${currentPage}-HD.png`;
-                    link.href = URL.createObjectURL(blob);
-                    link.click();
-                    URL.revokeObjectURL(link.href);
+            document.getElementById('toolbar-toggle').addEventListener('click', () => toolbar.classList.toggle('collapsed'));
 
-                    downloadBtn.classList.remove('downloading');
-                    downloadBtn.classList.add('success');
-                    downloadBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>¡Listo!</span>`;
-                    showToast(`Página ${currentPage} descargada en alta calidad.`);
-                }, 'image/png');
-
-            } catch (error) {
-                console.error("Failed to generate download:", error);
-                showToast("Error al generar la descarga.");
-                downloadBtn.classList.remove('downloading');
-                downloadBtn.innerHTML = originalContent;
-            } finally {
-                setTimeout(() => {
-                    downloadBtn.classList.remove('success');
-                    downloadBtn.disabled = false;
-                    downloadBtn.innerHTML = originalContent;
-                }, 2500);
-            }
-        }
-        downloadBtn.addEventListener('click', downloadPageAsPNG);
-
-        const hexToRgba = (hex, alpha) => `rgba(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`;
-        function activateToolButton(selectedTool) { 
-            if (!selectedTool) return; 
-            document.querySelectorAll('#toolbar .tool-button').forEach(btn => {
-                if(btn.parentElement.classList.contains('tool-button-group') && !btn.parentElement.id) {
-                     btn.classList.remove('active');
+            function toggleDrawingMode() {
+                isDrawingMode = !isDrawingMode;
+                drawingCanvas.style.pointerEvents = isDrawingMode ? 'auto' : 'none';
+                toolbar.classList.toggle('visible', isDrawingMode);
+                const iconDraw = fabDrawBtn.querySelector('.icon-draw');
+                const iconNavigate = fabDrawBtn.querySelector('.icon-navigate');
+                if (isDrawingMode) {
+                    setTool('pen-btn');
+                    document.getElementById('interactive-viewer').scrollIntoView({ behavior: 'smooth' });
+                    showToast('Modo Anotación Activado');
+                    iconDraw.style.display = 'none'; iconNavigate.style.display = 'block';
+                } else {
+                    showToast('Modo Navegación Activado');
+                    iconDraw.style.display = 'block'; iconNavigate.style.display = 'none';
                 }
-            }); 
-            selectedTool.classList.add('active'); 
-        }
-
-        function initializeToolbar() { setTool('pen-btn'); }
-        initializeToolbar();
-        
-        const minPreloaderTime = 2500;
-        const preloaderStartTime = Date.now();
-        function hidePreloader() { const elapsedTime = Date.now() - preloaderStartTime; const remainingTime = Math.max(0, minPreloaderTime - elapsedTime); setTimeout(() => { preloader.classList.add('loaded'); document.body.classList.remove('loading'); }, remainingTime); }
-        window.addEventListener('load', hidePreloader);
-        setTimeout(hidePreloader, 10000);
-        
-        function showToast(message) { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className = 'toast-notification'; t.textContent = message; c.appendChild(t); setTimeout(() => t.classList.add('show'), 10); setTimeout(() => { t.classList.remove('show'); setTimeout(() => c.removeChild(t), 300); }, 4000); }
-        const fabObserver = new IntersectionObserver(e => { e.forEach(en => fabContainer.classList.toggle('visible', en.isIntersecting)); }, { threshold: 0.1 });
-        fabObserver.observe(document.getElementById('interactive-viewer'));
-        
-        const faqModal = document.getElementById('faq-modal'), faqModalQuestion = document.getElementById('faq-modal-question'), faqModalAnswer = document.getElementById('faq-modal-answer'), faqModalClose = document.getElementById('faq-modal-close');
-        function openFaqModal(question, answerHTML) {
-            faqModalQuestion.textContent = question;
-            faqModalAnswer.innerHTML = answerHTML;
-            faqModal.classList.add('visible');
-            document.body.classList.add('modal-open');
-        }
-        function closeFaqModal() {
-            faqModal.classList.remove('visible');
-            document.body.classList.remove('modal-open');
-        }
-        document.querySelectorAll('.faq-question-card').forEach(card => card.addEventListener('click', () => openFaqModal(card.dataset.question, card.querySelector('.faq-answer-content').innerHTML)));
-        faqModal.addEventListener('click', e => { if (e.target === faqModal) closeFaqModal(); });
-        faqModalClose.addEventListener('click', closeFaqModal);
-
-        const navLinks = document.querySelectorAll('.nav-links a'), sections = document.querySelectorAll('main section'), hamburger = document.querySelector('.hamburger-menu'), navMenu = document.querySelector('.nav-links'), mainNav = document.querySelector('.main-nav'), menuOverlay = document.getElementById('menu-overlay');
-        function closeMobileMenu() {
-            if (navMenu.classList.contains('nav-open')) {
-                hamburger.classList.remove('toggled');
-                navMenu.classList.remove('nav-open');
-                document.body.classList.remove('nav-open');
-                menuOverlay.classList.remove('visible');
             }
-        }
-        hamburger.addEventListener('click', e => { e.stopPropagation(); navMenu.classList.toggle('nav-open'); hamburger.classList.toggle('toggled'); document.body.classList.toggle('nav-open'); menuOverlay.classList.toggle('visible'); });
-        navLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        menuOverlay.addEventListener('click', closeMobileMenu);
+            fabDrawBtn.addEventListener('click', toggleDrawingMode);
 
-        window.addEventListener('scroll', () => { let c = ''; sections.forEach(s => { if (pageYOffset >= s.offsetTop - 120) c = s.id; }); navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href').substring(1) === c)); mainNav.classList.toggle('scrolled', window.scrollY > 50); });
-        const fabMain = document.querySelector('.fab-main'); fabMain.addEventListener('click', e => { e.stopPropagation(); fabContainer.classList.toggle('active'); });
-        document.addEventListener('click', e => { if (fabContainer.classList.contains('active') && !fabContainer.contains(e.target)) fabContainer.classList.remove('active'); if (navMenu.classList.contains('nav-open') && !navMenu.contains(e.target) && !hamburger.contains(e.target)) closeMobileMenu(); });
-        document.querySelectorAll('.info-card').forEach(c => { c.onmousemove = e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mouse-x', `${e.clientX - r.left}px`); c.style.setProperty('--mouse-y', `${e.clientY - r.top}px`); }; });
-        const animObserver = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); animObserver.unobserve(en.target); } }); }, { threshold: 0.1 });
-        document.querySelectorAll('.animate-on-scroll').forEach(el => animObserver.observe(el));
-        
-        const countdownDate = new Date("Dec 15, 2025 00:00:00").getTime();
-        const countdownFunc = setInterval(() => { const d = countdownDate - new Date().getTime(); const daysEl = document.getElementById("days"); if (daysEl) { daysEl.innerText = Math.floor(d / 864e5).toString().padStart(2, '0'); document.getElementById("hours").innerText = Math.floor((d % 864e5) / 36e5).toString().padStart(2, '0'); document.getElementById("minutes").innerText = Math.floor((d % 36e5) / 6e4).toString().padStart(2, '0'); document.getElementById("seconds").innerText = Math.floor((d % 6e4) / 1e3).toString().padStart(2, '0'); } if (d < 0) { clearInterval(countdownFunc); const timerEl = document.getElementById("countdown-timer"); if(timerEl) timerEl.innerHTML = "<p class='countdown-title'>¡La oferta ha terminado!</p>"; } }, 1000);
-    });
+            async function downloadPageAsPNG() {
+                if (downloadBtn.classList.contains('downloading')) return;
+                const originalContent = downloadBtn.innerHTML;
+
+                try {
+                    downloadBtn.classList.add('downloading');
+                    downloadBtn.innerHTML = `<svg class="spinner" viewBox="0 0 50 50"><circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle></svg><span>Generando...</span>`;
+                    downloadBtn.disabled = true;
+                    await new Promise(resolve => setTimeout(resolve, 50));
+
+                    const offscreenCanvas = document.createElement('canvas');
+                    offscreenCanvas.width = drawingCanvas.width;
+                    offscreenCanvas.height = drawingCanvas.height;
+                    const offscreenCtx = offscreenCanvas.getContext('2d');
+                    offscreenCtx.fillStyle = '#FFFFFF';
+                    offscreenCtx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+                    offscreenCtx.drawImage(imageViewer, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
+                    offscreenCtx.drawImage(drawingCanvas, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
+
+                    offscreenCanvas.toBlob(blob => {
+                        const link = document.createElement('a');
+                        link.download = `SeamosGenios-Pagina-${currentPage}.png`;
+                        link.href = URL.createObjectURL(blob);
+                        link.click();
+                        URL.revokeObjectURL(link.href);
+
+                        downloadBtn.classList.remove('downloading');
+                        downloadBtn.classList.add('success');
+                        downloadBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>¡Listo!</span>`;
+                        showToast(`Página ${currentPage} descargada.`);
+                    }, 'image/png');
+
+                } catch (error) {
+                    console.error("Failed to generate download:", error);
+                    showToast("Error al generar la descarga.");
+                    downloadBtn.classList.remove('downloading');
+                    downloadBtn.innerHTML = originalContent;
+                } finally {
+                    setTimeout(() => {
+                        downloadBtn.classList.remove('success');
+                        downloadBtn.disabled = false;
+                        downloadBtn.innerHTML = originalContent;
+                    }, 2500);
+                }
+            }
+            downloadBtn.addEventListener('click', downloadPageAsPNG);
+
+            const hexToRgba = (hex, alpha) => `rgba(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`;
+            function activateToolButton(selectedTool) {
+                if (!selectedTool) return;
+                document.querySelectorAll('#toolbar .tool-button').forEach(btn => {
+                    if (btn.parentElement.classList.contains('tool-button-group') && !btn.parentElement.id) {
+                        btn.classList.remove('active');
+                    }
+                });
+                selectedTool.classList.add('active');
+            }
+
+            function initializeToolbar() { setTool('pen-btn'); }
+            initializeToolbar();
+
+            // --- General Page Logic ---
+            const minPreloaderTime = 2500;
+            const preloaderStartTime = Date.now();
+            function hidePreloader() { const elapsedTime = Date.now() - preloaderStartTime; const remainingTime = Math.max(0, minPreloaderTime - elapsedTime); setTimeout(() => { preloader.classList.add('loaded'); document.body.classList.remove('loading'); }, remainingTime); }
+            window.addEventListener('load', () => {
+                hidePreloader();
+                loadImagePage(1); // Load the first image page once everything else is ready
+                loadDrawingsFromStorage();
+            });
+            setTimeout(hidePreloader, 10000); // Failsafe
+
+            function showToast(message) { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className = 'toast-notification'; t.textContent = message; c.appendChild(t); setTimeout(() => t.classList.add('show'), 10); setTimeout(() => { t.classList.remove('show'); setTimeout(() => c.removeChild(t), 300); }, 4000); }
+            const fabObserver = new IntersectionObserver(e => { e.forEach(en => fabContainer.classList.toggle('visible', en.isIntersecting)); }, { threshold: 0.1 });
+            fabObserver.observe(document.getElementById('interactive-viewer'));
+
+            const faqModal = document.getElementById('faq-modal'), faqModalQuestion = document.getElementById('faq-modal-question'), faqModalAnswer = document.getElementById('faq-modal-answer'), faqModalClose = document.getElementById('faq-modal-close');
+            function openFaqModal(question, answerHTML) {
+                faqModalQuestion.textContent = question;
+                faqModalAnswer.innerHTML = answerHTML;
+                faqModal.classList.add('visible');
+                document.body.classList.add('modal-open');
+            }
+            function closeFaqModal() {
+                faqModal.classList.remove('visible');
+                document.body.classList.remove('modal-open');
+            }
+            document.querySelectorAll('.faq-question-card').forEach(card => card.addEventListener('click', () => openFaqModal(card.dataset.question, card.querySelector('.faq-answer-content').innerHTML)));
+            faqModal.addEventListener('click', e => { if (e.target === faqModal) closeFaqModal(); });
+            faqModalClose.addEventListener('click', closeFaqModal);
+
+            const navLinks = document.querySelectorAll('.nav-links a'), sections = document.querySelectorAll('main section'), hamburger = document.querySelector('.hamburger-menu'), navMenu = document.querySelector('.nav-links'), mainNav = document.querySelector('.main-nav'), menuOverlay = document.getElementById('menu-overlay');
+            function closeMobileMenu() {
+                if (navMenu.classList.contains('nav-open')) {
+                    hamburger.classList.remove('toggled');
+                    navMenu.classList.remove('nav-open');
+                    document.body.classList.remove('nav-open');
+                    menuOverlay.classList.remove('visible');
+                }
+            }
+            hamburger.addEventListener('click', e => { e.stopPropagation(); navMenu.classList.toggle('nav-open'); hamburger.classList.toggle('toggled'); document.body.classList.toggle('nav-open'); menuOverlay.classList.toggle('visible'); });
+            navLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+            menuOverlay.addEventListener('click', closeMobileMenu);
+
+            window.addEventListener('scroll', () => { let c = ''; sections.forEach(s => { if (pageYOffset >= s.offsetTop - 120) c = s.id; }); navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href').substring(1) === c)); mainNav.classList.toggle('scrolled', window.scrollY > 50); });
+            const fabMain = document.querySelector('.fab-main'); fabMain.addEventListener('click', e => { e.stopPropagation(); fabContainer.classList.toggle('active'); });
+            document.addEventListener('click', e => { if (fabContainer.classList.contains('active') && !fabContainer.contains(e.target)) fabContainer.classList.remove('active'); if (navMenu.classList.contains('nav-open') && !navMenu.contains(e.target) && !hamburger.contains(e.target)) closeMobileMenu(); });
+            document.querySelectorAll('.info-card').forEach(c => { c.onmousemove = e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mouse-x', `${e.clientX - r.left}px`); c.style.setProperty('--mouse-y', `${e.clientY - r.top}px`); }; });
+            const animObserver = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); animObserver.unobserve(en.target); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => animObserver.observe(el));
+
+            const countdownDate = new Date("Dec 15, 2025 00:00:00").getTime();
+            const countdownFunc = setInterval(() => { const d = countdownDate - new Date().getTime(); const daysEl = document.getElementById("days"); if (daysEl) { daysEl.innerText = Math.floor(d / 864e5).toString().padStart(2, '0'); document.getElementById("hours").innerText = Math.floor((d % 864e5) / 36e5).toString().padStart(2, '0'); document.getElementById("minutes").innerText = Math.floor((d % 36e5) / 6e4).toString().padStart(2, '0'); document.getElementById("seconds").innerText = Math.floor((d % 6e4) / 1e3).toString().padStart(2, '0'); } if (d < 0) { clearInterval(countdownFunc); const timerEl = document.getElementById("countdown-timer"); if (timerEl) timerEl.innerHTML = "<p class='countdown-title'>¡La oferta ha terminado!</p>"; } }, 1000);
+        });
     </script>
 </body>
-</html>
 
+</html>
