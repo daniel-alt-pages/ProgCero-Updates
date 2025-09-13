@@ -691,6 +691,43 @@
             background: var(--primary-red);
             border-radius: 50%;
         }
+        
+        .viewer-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .viewer-nav-btn {
+            background: var(--primary-red);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .viewer-nav-btn:hover {
+            background-color: #d62828;
+            transform: scale(1.05);
+        }
+
+        .viewer-nav-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #drawing-page-indicator {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
 
         #faq {
             padding-top: 120px;
@@ -1267,8 +1304,7 @@
         <section id="interactive-viewer" class="animate-on-scroll">
             <div class="container">
                 <h2>Material <span>Gratuito</span> Interactivo</h2>
-                <p>Visualiza nuestro material de ejemplo. El menú de anotación aparecerá a la derecha para que uses el
-                    lápiz, resaltador y más.</p>
+                <p>Dibuja sobre el material y tus apuntes se guardarán. Usa los botones para navegar entre las páginas.</p>
                 <div id="viewer-container">
                     <iframe id="canva-embed"
                         src="https://www.canva.com/design/DAGv0B8km6o/9NPBpNwUNwlf9SYQXVIUaA/view?embed"
@@ -1316,9 +1352,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="viewer-nav">
+                    <button id="prev-drawing-btn" class="viewer-nav-btn">&lt; Anterior</button>
+                    <span id="drawing-page-indicator">Página 1 / 85</span>
+                    <button id="next-drawing-btn" class="viewer-nav-btn">Siguiente &gt;</button>
+                </div>
             </div>
         </section>
-
+        
         <section id="faq" class="animate-on-scroll">
             <div class="container">
                 <h2>Preguntas <span>Frecuentes</span></h2>
@@ -1430,8 +1471,67 @@
             const toolbarToggle = document.getElementById('toolbar-toggle');
             const fabDrawBtn = document.getElementById('fab-draw-mode');
 
+            // Drawing page navigation
+            const prevDrawingBtn = document.getElementById('prev-drawing-btn');
+            const nextDrawingBtn = document.getElementById('next-drawing-btn');
+            const pageIndicator = document.getElementById('drawing-page-indicator');
+
             let isDrawingMode = false, isDrawing = false, currentTool = 'pencil';
-            let startX, startY, history = [];
+            let historyPerPage = {}; // Object to hold history for each page
+            
+            // --- Drawing Page Logic ---
+            let currentPage = 1;
+            const totalPages = 85;
+            let drawingsData = {};
+
+            function loadDrawingsFromStorage() {
+                const savedDrawings = localStorage.getItem('seamosGeniosDrawings');
+                if (savedDrawings) {
+                    drawingsData = JSON.parse(savedDrawings);
+                }
+                changePage(0); // Load initial page
+            }
+
+            function changePage(direction) {
+                currentPage += direction;
+                if (currentPage < 1) currentPage = 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+
+                // Clear canvas before loading new drawing
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Load drawing for the new page
+                if (drawingsData[currentPage]) {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+                    };
+                    img.src = drawingsData[currentPage];
+                }
+
+                // Initialize history for new page if it doesn't exist
+                if (!historyPerPage[currentPage]) {
+                    historyPerPage[currentPage] = [];
+                }
+
+                // Update UI
+                pageIndicator.textContent = `Página ${currentPage} / ${totalPages}`;
+                prevDrawingBtn.disabled = currentPage === 1;
+                nextDrawingBtn.disabled = currentPage === totalPages;
+            }
+
+            function saveCurrentDrawing() {
+                drawingsData[currentPage] = canvas.toDataURL();
+                localStorage.setItem('seamosGeniosDrawings', JSON.stringify(drawingsData));
+            }
+            
+            prevDrawingBtn.addEventListener('click', () => changePage(-1));
+            nextDrawingBtn.addEventListener('click', () => changePage(1));
+            // --- End Drawing Page Logic ---
+
+
+            let startX, startY;
 
             function resizeCanvas() {
                 const container = document.getElementById('viewer-container');
@@ -1443,10 +1543,9 @@
                 canvas.style.height = `${height}px`;
                 ctx.scale(dpr, dpr);
                 ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-                redrawHistory();
+                changePage(0); // Reload current page drawing on resize
             }
             
-            function redrawHistory() { if (history.length > 0) ctx.putImageData(history[history.length - 1], 0, 0); }
             window.addEventListener('resize', resizeCanvas);
             window.addEventListener('load', () => setTimeout(resizeCanvas, 100));
 
@@ -1456,16 +1555,10 @@
                 toast.className = 'toast-notification';
                 toast.textContent = message;
                 container.appendChild(toast);
-                setTimeout(() => {
-                    toast.classList.add('show');
-                }, 10);
+                setTimeout(() => { toast.classList.add('show'); }, 10);
                 setTimeout(() => {
                     toast.classList.remove('show');
-                    setTimeout(() => {
-                        if (toast.parentElement) {
-                            container.removeChild(toast);
-                        }
-                    }, 300);
+                    setTimeout(() => { if (toast.parentElement) { container.removeChild(toast); } }, 300);
                 }, 3000);
             }
 
@@ -1506,11 +1599,11 @@
             const startDrawing = (e) => {
                 if (!isDrawingMode) return;
                 isDrawing = true;
+                saveState();
                 const { x, y } = getPos(e);
                 startX = x; startY = y;
                 ctx.beginPath();
                 ctx.moveTo(x, y);
-                saveState();
             }
 
             const draw = (e) => {
@@ -1561,6 +1654,7 @@
                 }
                 isDrawing = false;
                 ctx.closePath();
+                saveCurrentDrawing();
             }
 
             function drawArrow(fromX, fromY, toX, toY) {
@@ -1580,9 +1674,32 @@
             ['mousemove', 'touchmove'].forEach(evt => canvas.addEventListener(evt, (e) => { if (evt === 'touchmove') e.preventDefault(); draw(e); }, { passive: false }));
             ['mouseup', 'mouseout', 'touchend', 'touchcancel'].forEach(evt => document.body.addEventListener(evt, stopDrawing));
 
-            function saveState() { if (history.length > 20) history.shift(); history.push(ctx.getImageData(0, 0, canvas.width, canvas.height)); }
-            function restoreState() { if (history.length > 0) ctx.putImageData(history[history.length - 1], 0, 0); }
-            function undoLast() { if (history.length > 1) { history.pop(); restoreState(); } else { history.pop(); ctx.clearRect(0, 0, canvas.width, canvas.height); } }
+            function saveState() { 
+                const pageHistory = historyPerPage[currentPage];
+                if (pageHistory.length > 20) pageHistory.shift(); 
+                pageHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            }
+            function restoreState() { 
+                const pageHistory = historyPerPage[currentPage];
+                if (pageHistory.length > 0) ctx.putImageData(pageHistory[pageHistory.length - 1], 0, 0); 
+            }
+            function undoLast() { 
+                const pageHistory = historyPerPage[currentPage];
+                if (pageHistory.length > 0) {
+                     pageHistory.pop();
+                     ctx.clearRect(0,0, canvas.width, canvas.height);
+                     if(drawingsData[currentPage]) { // redraw saved state
+                         const img = new Image();
+                         img.onload = function() {
+                             ctx.drawImage(img, 0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+                             if(pageHistory.length > 0) ctx.putImageData(pageHistory[pageHistory.length - 1], 0, 0); // re-apply history on top
+                         };
+                         img.src = drawingsData[currentPage];
+                     } else {
+                         if(pageHistory.length > 0) ctx.putImageData(pageHistory[pageHistory.length - 1], 0, 0);
+                     }
+                }
+            }
 
             document.querySelectorAll('.tool-button').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -1596,7 +1713,11 @@
                     else if (id === 'circle-btn') setTool('circle');
                     else if (id === 'line-btn') setTool('line');
                     else if (id === 'arrow-btn') setTool('arrow');
-                    else if (id === 'clear-btn') { ctx.clearRect(0, 0, canvas.width, canvas.height); saveState(); }
+                    else if (id === 'clear-btn') { 
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        historyPerPage[currentPage] = [];
+                        saveCurrentDrawing();
+                    }
                 });
             });
             document.getElementById('color-picker').addEventListener('input', () => setTool(currentTool));
@@ -1748,9 +1869,10 @@
                     document.getElementById("countdown-timer").innerHTML = "<p class='countdown-title'>¡La oferta ha terminado!</p>";
                 }
             }, 1000);
-
+            
             window.addEventListener('load', () => {
                 document.getElementById('preloader').classList.add('loaded');
+                loadDrawingsFromStorage();
             });
         });
     </script>
