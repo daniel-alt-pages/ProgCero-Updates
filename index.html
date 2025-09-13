@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario de Geniosenios</title>
+    <title>Curso Preicfes 2025 - SeamosGenios</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://images.prismic.io/seamosgenios2026/aMSzIWGNHVfTPKS1_logosg.png?auto=format,compress">
     <!-- Social Share Image -->
@@ -477,7 +477,16 @@
             margin-top: 15px;
         }
 
-        #interactive-viewer p,
+        #interactive-viewer .instructions {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 30px auto;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+        
         #faq p {
             text-align: center;
             max-width: 600px;
@@ -1304,7 +1313,12 @@
         <section id="interactive-viewer" class="animate-on-scroll">
             <div class="container">
                 <h2>Material <span>Gratuito</span> Interactivo</h2>
-                <p>Dibuja sobre el material y tus apuntes se guardarán. Usa los botones para navegar entre las páginas.</p>
+                <div class="instructions">
+                    <p><strong>Apuntes Sincronizados por Página:</strong><br>
+                    Para una mejor experiencia, sigue estos 2 pasos: <br>
+                    1. Navega en el documento usando las flechas <strong>dentro del visor.</strong><br>
+                    2. Sincroniza tus apuntes usando nuestros botones <strong>"&lt; Anterior"</strong> y <strong>"Siguiente &gt;"</strong>.</p>
+                </div>
                 <div id="viewer-container">
                     <iframe id="canva-embed"
                         src="https://www.canva.com/design/DAGv0B8km6o/9NPBpNwUNwlf9SYQXVIUaA/view?embed"
@@ -1475,6 +1489,10 @@
             const prevDrawingBtn = document.getElementById('prev-drawing-btn');
             const nextDrawingBtn = document.getElementById('next-drawing-btn');
             const pageIndicator = document.getElementById('drawing-page-indicator');
+            
+            // Preloader
+            const preloader = document.getElementById('preloader');
+            const canvaEmbed = document.getElementById('canva-embed');
 
             let isDrawingMode = false, isDrawing = false, currentTool = 'pencil';
             let historyPerPage = {}; // Object to hold history for each page
@@ -1497,10 +1515,8 @@
                 if (currentPage < 1) currentPage = 1;
                 if (currentPage > totalPages) currentPage = totalPages;
 
-                // Clear canvas before loading new drawing
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Load drawing for the new page
                 if (drawingsData[currentPage]) {
                     const img = new Image();
                     img.onload = function() {
@@ -1510,12 +1526,10 @@
                     img.src = drawingsData[currentPage];
                 }
 
-                // Initialize history for new page if it doesn't exist
                 if (!historyPerPage[currentPage]) {
                     historyPerPage[currentPage] = [];
                 }
 
-                // Update UI
                 pageIndicator.textContent = `Página ${currentPage} / ${totalPages}`;
                 prevDrawingBtn.disabled = currentPage === 1;
                 nextDrawingBtn.disabled = currentPage === totalPages;
@@ -1547,8 +1561,7 @@
             }
             
             window.addEventListener('resize', resizeCanvas);
-            window.addEventListener('load', () => setTimeout(resizeCanvas, 100));
-
+            
             function showToast(message) {
                 const container = document.getElementById('toast-container') || document.body;
                 const toast = document.createElement('div');
@@ -1870,14 +1883,15 @@
                 }
             }, 1000);
             
-            window.addEventListener('load', () => {
-                document.getElementById('preloader').classList.add('loaded');
+            // Preloader logic
+            canvaEmbed.onload = () => {
+                preloader.classList.add('loaded');
+                resizeCanvas();
                 loadDrawingsFromStorage();
-            });
+            };
         });
     </script>
 </body>
 
 </html>
-
 
