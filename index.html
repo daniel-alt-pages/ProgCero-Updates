@@ -15,6 +15,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         :root {
             --primary-red: #FE3A2D;
             --accent-gold: #FFC300;
@@ -143,7 +149,7 @@
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px; /* Reduced side padding */
         }
 
         h1,
@@ -153,7 +159,7 @@
         }
 
         section {
-            padding: 100px 0; /* Reduced vertical padding */
+            padding: 80px 0;
             position: relative;
         }
 
@@ -210,6 +216,10 @@
             padding: 10px 5%;
         }
 
+        .nav-logo {
+            order: -1; /* For desktop: force logo to the left */
+        }
+        
         .nav-logo a {
             font-weight: 800;
             font-size: 1.5rem;
@@ -230,7 +240,7 @@
         .nav-links a {
             color: var(--light-text);
             text-decoration: none;
-            padding: 10px 12px; /* Reduced padding */
+            padding: 10px 12px;
             font-weight: 600;
             position: relative;
             transition: color 0.3s;
@@ -383,14 +393,14 @@
             position: relative;
             overflow: hidden;
             background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                    rgba(255, 255, 255, 0.1),
-                    rgba(26, 26, 46, 0.8) 40%);
+                    rgba(255, 255, 255, 0.05),
+                    rgba(26, 26, 46, 0.7) 40%);
         }
 
         .info-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-gold);
-            border-color: var(--accent-gold);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .feature-card {
@@ -405,7 +415,6 @@
             font-size: 8rem;
             color: var(--accent-gold);
             opacity: 0.08;
-            /* Increased opacity */
             transition: transform 0.4s ease-out;
         }
 
@@ -717,10 +726,15 @@
             overflow: hidden;
             transition: max-height 0.3s ease-out, padding 0.3s ease-out;
             background-color: rgba(0, 0, 0, 0.2);
+            padding: 0 20px;
+        }
+
+        .faq-item.open .faq-answer {
+            padding: 20px;
         }
 
         .faq-answer p {
-            padding: 0 20px 20px;
+            padding: 0;
             margin: 0;
             text-align: left;
         }
@@ -945,7 +959,7 @@
         }
 
         /* --- Responsive Styles --- */
-        @media (min-width: 901px) {
+        @media (min-width: 992px) {
             .hero-content {
                 grid-template-columns: 1fr 1fr;
                 text-align: left;
@@ -962,21 +976,38 @@
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
             .main-nav, .main-nav.scrolled {
-                height: 60px;
-                padding: 0 20px;
+                padding: 15px 25px; /* Adjusted hamburger menu padding */
                 align-items: center;
+            }
+            
+            .nav-logo {
+                order: 1; /* Force logo to the right on mobile */
+            }
+            
+            .hamburger-menu {
+                order: -1; /* Force hamburger to the left on mobile */
             }
 
             section {
-                padding: 50px 0; /* Reduced vertical padding */
+                padding: 70px 0;
+            }
+
+            #hero {
+                padding-top: 120px;
+                padding-bottom: 60px;
+                min-height: auto;
+            }
+            
+            .grid-layout {
+                gap: 20px;
             }
 
             .nav-links {
-                display: block;
+                display: none; /* Hide text links, menu is controlled by hamburger */
                 position: fixed;
-                top: 60px; /* Adjusted for fixed nav height */
+                top: 76px; /* Adjusted for new nav padding */
                 left: 0;
                 width: 100%;
                 background-color: #16213E;
@@ -984,17 +1015,23 @@
                 padding: 0;
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+                transition: max-height 0.4s ease-out, padding 0.4s ease-out, top 0.3s ease-in-out;
+            }
+            
+            .main-nav.scrolled .nav-links {
+                 top: 66px; /* Adjusted for scrolled nav padding */
             }
 
+
             .nav-links.nav-open {
+                display: block;
                 max-height: 500px;
                 padding: 10px 0;
             }
 
             .nav-links a {
                 text-align: center;
-                padding: 12px; /* Reduced padding */
+                padding: 12px;
                 border-bottom: 1px solid var(--border-color);
                 width: 100%;
                 opacity: 0;
@@ -1013,16 +1050,18 @@
                 display: block;
             }
 
+            /* New Spin Animation */
             .hamburger-menu.toggled .bar1 {
-                transform: rotate(-45deg) translate(-5px, 6px);
+                transform: rotate(225deg) translate(-5px, -6px);
             }
 
             .hamburger-menu.toggled .bar2 {
+                transform: scale(0);
                 opacity: 0;
             }
 
             .hamburger-menu.toggled .bar3 {
-                transform: rotate(45deg) translate(-5px, -6px);
+                transform: rotate(-225deg) translate(-5px, 6px);
             }
 
             .fab-main {
@@ -1049,6 +1088,16 @@
             }
         }
 
+        @media (max-width: 420px) {
+            .feature-card h3 {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 5px;
+            }
+        }
+
+
         @media print {
             body * {
                 display: none !important;
@@ -1064,6 +1113,11 @@
         <div class="loader-logo">Seamos<span>Genios</span></div>
     </div>
     <nav class="main-nav">
+        <div class="hamburger-menu">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
         <div class="nav-logo">
             <a href="#hero">Seamos<span>Genios</span></a>
         </div>
@@ -1075,11 +1129,6 @@
             <a href="#interactive-viewer" style="animation-delay: 0.3s;">Material</a>
             <a href="#faq" style="animation-delay: 0.35s;">FAQ</a>
             <a href="#pricing" style="animation-delay: 0.4s;">Precios</a>
-        </div>
-        <div class="hamburger-menu">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
         </div>
     </nav>
     <main>
@@ -1163,9 +1212,7 @@
                     </div>
                     <div class="info-card feature-card">
                         <div class="icon-bg">🎥</div>
-                        <h3>
-                            <h3>Grabaciones en 4K <span class="badge-4k">ULTRA HD</span></h3>
-                        </h3>
+                        <h3>Grabaciones en 4K <span class="badge-4k">ULTRA HD</span></h3>
                         <p>¿Te perdiste una clase? No hay problema. Revive cada sesión con la máxima calidad de imagen y
                             sonido cuando quieras.</p>
                     </div>
@@ -1593,10 +1640,8 @@
                     const answer = faqItem.querySelector('.faq-answer');
                     if (faqItem.classList.contains('open')) {
                         answer.style.maxHeight = answer.scrollHeight + "px";
-                        answer.style.padding = "0 20px 20px";
                     } else {
                         answer.style.maxHeight = 0;
-                        answer.style.padding = "0 20px";
                     }
                 });
             });
