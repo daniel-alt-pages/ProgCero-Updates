@@ -2049,7 +2049,7 @@
             const colorPickerInput = document.getElementById('color-picker-input');
 
             // --- Configuration for Image Viewer ---
-            const totalImagePages = 15; // Set the total number of images you have
+            const totalImagePages = 43; // Set the total number of images you have
             const imagePathPrefix = 'img/';
             const imageExtension = '.svg';
             let currentPage = 1;
@@ -2432,13 +2432,14 @@
             const animObserver = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); animObserver.unobserve(en.target); } }); }, { threshold: 0.1 });
             document.querySelectorAll('.animate-on-scroll').forEach(el => animObserver.observe(el));
 
-            const countdownDate = new Date("Dec 15, 2025 00:00:00").getTime();
+            const countdownDate = new Date("Octo 10, 2025 00:00:00").getTime();
             const countdownFunc = setInterval(() => { const d = countdownDate - new Date().getTime(); const daysEl = document.getElementById("days"); if (daysEl) { daysEl.innerText = Math.floor(d / 864e5).toString().padStart(2, '0'); document.getElementById("hours").innerText = Math.floor((d % 864e5) / 36e5).toString().padStart(2, '0'); document.getElementById("minutes").innerText = Math.floor((d % 36e5) / 6e4).toString().padStart(2, '0'); document.getElementById("seconds").innerText = Math.floor((d % 6e4) / 1e3).toString().padStart(2, '0'); } if (d < 0) { clearInterval(countdownFunc); const timerEl = document.getElementById("countdown-timer"); if (timerEl) timerEl.innerHTML = "<p class='countdown-title'>¡La oferta ha terminado!</p>"; } }, 1000);
         });
     </script>
 </body>
 
 </html>
+
 
 
 
