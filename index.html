@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulacro Gratuito 2026-1</title>
+    <title>Curso Preicfes 2025 - SeamosGenios</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png"
         href="https://images.prismic.io/seamosgenios2026/aMSzIWGNHVfTPKS1_logosg.png?auto=format,compress">
@@ -1659,7 +1659,7 @@
                                 <polyline points="7 10 12 15 17 10" />
                                 <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                            <span>Descargar Página con Apuntes</span>
+                            <span>Descargar</span>
                         </button>
                     </div>
                 </div>
@@ -1748,7 +1748,7 @@
                         <div class="faq-question-card" data-question="¿Cuáles son los métodos de pago?">
                             ¿Cuáles son los métodos de pago?
                             <div style="display: none;" class="faq-answer-content">
-                                <p>Aceptamos pagos a través de Nequi o cualquier billetera virtual vigente. Una vez
+                                <p>Aceptamos pagos a través de Nequi, Daviplata, Bancolombia y giros por Efecty. Una vez
                                     te pongas en contacto, te daremos toda la información detallada para que elijas el
                                     método que más te convenga.</p>
                             </div>
@@ -1861,6 +1861,21 @@
     <script async src="https://www.tiktok.com/embed.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Security Measures to prevent inspection and printing ---
+            document.addEventListener('contextmenu', event => event.preventDefault());
+            document.addEventListener('keydown', e => {
+                // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+                if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+                    e.preventDefault();
+                    showToast('Función deshabilitada por seguridad.');
+                }
+                // Block Ctrl+P
+                if (e.ctrlKey && e.keyCode === 80) {
+                    e.preventDefault();
+                    showToast('La impresión está deshabilitada.');
+                }
+            });
+
             const preloader = document.getElementById('preloader');
             const fabContainer = document.querySelector('.fab-container');
             const fabDrawBtn = document.getElementById('fab-draw-mode');
@@ -1881,7 +1896,7 @@
             const colorPickerInput = document.getElementById('color-picker-input');
 
             // --- Configuration for Image Viewer ---
-            const totalImagePages = 43; // Set the total number of images you have
+            const totalImagePages = 15; // Set the total number of images you have
             const imagePathPrefix = 'img/';
             const imageExtension = '.svg';
             let currentPage = 1;
@@ -2271,7 +2286,4 @@
 </body>
 
 </html>
-
-
-
 
