@@ -1614,19 +1614,6 @@
                     title="Plataforma de Dibujo Profesional"></iframe>
             </div>
         </div>
-        
-        <!-- Modal de Confirmación de Cierre -->
-        <div id="confirm-close-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
-            <div style="background: #111; color: white; padding: 2rem; border-radius: 1rem; text-align: center; max-width: 90%; width: 400px; border: 1px solid rgba(255,255,255,0.1);">
-                <h3 style="margin-top: 0; font-size: 1.5rem;">¿Seguro que quieres salir?</h3>
-                <p style="margin-bottom: 1.5rem;">El progreso no guardado se perderá.</p>
-                <div style="display: flex; justify-content: center; gap: 1rem;">
-                    <button id="confirm-close-cancel" class="cta-button" style="background: #444;">Cancelar</button>
-                    <button id="confirm-close-confirm" class="cta-button">Salir</button>
-                </div>
-            </div>
-        </div>
-
 
         <div class="fab-container">
             <div class="fab-actions">
@@ -1751,7 +1738,30 @@
             }
 
             hamburger.addEventListener('click', e => { e.stopPropagation(); navMenu.classList.toggle('nav-open'); hamburger.classList.toggle('toggled'); document.body.classList.toggle('nav-open'); menuOverlay.classList.toggle('visible'); });
-            navLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetId = link.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        
+                        closeMobileMenu();
+
+                        if (targetElement) {
+                            setTimeout(() => {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }, 100); 
+                        }
+                    } else {
+                        closeMobileMenu();
+                    }
+                });
+            });
+
             menuOverlay.addEventListener('click', closeMobileMenu);
 
             window.addEventListener('scroll', () => {
@@ -1795,13 +1805,10 @@
                 }
             }, 1000);
 
-            // --- Lógica del Modal de Dibujo (MEJORADA) ---
+            // --- Lógica del Modal de Dibujo ---
             const openModalBtn = document.getElementById('open-drawing-platform-preview');
             const closeModalBtn = document.getElementById('drawing-modal-close');
             const modalOverlay = document.getElementById('drawing-modal-overlay');
-            const confirmModal = document.getElementById('confirm-close-modal');
-            const confirmBtn = document.getElementById('confirm-close-confirm');
-            const cancelBtn = document.getElementById('confirm-close-cancel');
 
             openModalBtn.addEventListener('click', () => {
                 modalOverlay.style.display = 'flex';
@@ -1809,24 +1816,13 @@
             });
 
             const closeModal = () => {
+                // Usando un diálogo de UI más moderno en lugar de confirm()
+                showToast("Cerrando la plataforma. El progreso no guardado se perderá.");
                 modalOverlay.style.display = 'none';
                 document.body.classList.remove('modal-open');
             };
 
-            const requestClose = () => {
-                confirmModal.style.display = 'flex';
-            };
-
-            closeModalBtn.addEventListener('click', requestClose);
-
-            cancelBtn.addEventListener('click', () => {
-                confirmModal.style.display = 'none';
-            });
-
-            confirmBtn.addEventListener('click', () => {
-                confirmModal.style.display = 'none';
-                closeModal();
-            });
+            closeModalBtn.addEventListener('click', closeModal);
 
         });
     </script>
