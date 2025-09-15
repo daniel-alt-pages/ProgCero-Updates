@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Plataforma de Dibujo Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -36,7 +35,7 @@
 
         /* El cursor de la mano ahora es un SVG para mejor visibilidad */
         #canvasContainer.pan-tool-active {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="rgba(0,0,0,0.8)" stroke="white" stroke-width="2" d="M15.7,28.3c-0.5,0-1-0.2-1.4-0.6c-0.8-0.8-0.8-2,0-2.8l3.4-3.4V12H9v5.2c0,1.1-0.9,2-2,2s-2-0.9-2-2V11c0-1.1,0.9,2,2-2h1V5c0-1.1,0.9-2,2-2s2,0.9,2,2v5h2V6c0-1.1,0.9-2,2-2s2,0.9,2,2v6h2V7c0-1.1,0.9-2,2-2s2,0.9,2,2v10c0,1.1-0.9,2-2,2h-1.8l3.6,3.6c0.8,0.8,0.8,2,0,2.8c-0.8,0.8-2,0.8-2.8,0l-3.6-3.6h-2.1l-3.4,3.4C16.7,28.1,16.2,28.3,15.7,28.3z"/></svg>') 16 16, grab;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="rgba(0,0,0,0.8)" stroke="white" stroke-width="2" d="M15.7,28.3c-0.5,0-1-0.2-1.4-0.6c-0.8-0.8-0.8-2,0-2.8l3.4-3.4V12H9v5.2c0,1.1-0.9,2-2,2s-2-0.9,2-2V11c0-1.1,0.9,2,2-2h1V5c0-1.1,0.9-2,2-2s2,0.9,2,2v5h2V6c0-1.1,0.9-2,2-2s2,0.9,2,2v6h2V7c0-1.1,0.9-2,2-2s2,0.9,2,2v10c0,1.1-0.9,2-2,2h-1.8l3.6,3.6c0.8,0.8,0.8,2,0,2.8c-0.8,0.8-2,0.8-2.8,0l-3.6-3.6h-2.1l-3.4,3.4C16.7,28.1,16.2,28.3,15.7,28.3z"/></svg>') 16 16, grab;
         }
 
 
@@ -82,7 +81,8 @@
             overflow-y: auto;
             border-radius: 1rem;
             z-index: 10;
-            transition: width 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s;
+            transition: width 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s, bottom 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            will-change: transform, opacity;
         }
 
         #side-bar::-webkit-scrollbar {
@@ -342,69 +342,133 @@
             padding: 0.5rem;
         }
 
-
+        /* --- ESTILOS PARA MÓVILES --- */
         @media (max-width: 768px) {
+            
+            /* Controles de Página y Zoom (Barra inferior principal) */
+            #bottom-controls {
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                transform: translateX(0); /* Anular centrado de escritorio */
+                padding: 0.5rem;
+                background-color: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+                justify-content: space-between; /* Distribuir controles de página y zoom */
+                border-top: 1px solid #e5e7eb;
+                border-radius: 0;
+                gap: 0.5rem;
+            }
+
+            .control-panel {
+                background-color: transparent;
+                box-shadow: none;
+                padding: 0;
+                gap: 0.25rem;
+                flex-shrink: 1;
+            }
+             .control-panel .action-btn {
+                padding: 0.5rem;
+            }
+             .control-panel .action-btn i {
+                font-size: 1.5rem;
+            }
+            #page-indicator-input {
+                width: 50px;
+                font-size: 1rem;
+            }
+            #page-navigation {
+                flex-grow: 1;
+                justify-content: center;
+            }
+             #view-controls {
+                flex-grow: 1;
+                justify-content: center;
+            }
+
+
+            /* Barra de Herramientas y Propiedades (Barra flotante secundaria) */
             #side-bar {
                 top: auto;
-                bottom: 5.5rem;
+                bottom: 70px; /* Posicionada sobre la barra de controles inferior */
                 left: 50%;
                 transform: translateX(-50%);
                 width: calc(100% - 2rem);
                 max-width: 500px;
-                flex-direction: column;
-                padding: 0.5rem;
-                overflow-x: auto;
-                max-height: 200px;
+                height: auto;
+                max-height: 45vh; /* Limita la altura para no cubrir toda la pantalla */
+                overflow-y: auto; /* Desplazamiento vertical para propiedades */
+                padding: 0.75rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            }
+
+            #side-bar.mobile-hidden {
+                transform: translateX(-50%) translateY(150%);
+                opacity: 0;
+                pointer-events: none;
             }
 
             #side-bar-content {
                 display: flex;
                 flex-direction: column;
-                width: 100%;
+                gap: 0.75rem;
             }
 
+            /* Hacer que los grupos de herramientas se desplacen horizontalmente */
             #tool-selection,
             #app-actions {
                 display: flex;
                 flex-direction: row;
-                justify-content: space-around;
-                width: 100%;
-                gap: 0.5rem;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Ocultar barra de scroll */
+            }
+             #tool-selection::-webkit-scrollbar,
+             #app-actions::-webkit-scrollbar {
+                display: none; /* Ocultar barra de scroll en Chrome/Safari */
             }
 
-            #tool-properties {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
-                align-items: center;
-                width: 100%;
-            }
 
-            .sidebar-hidable,
-            #menu-toggle-container,
-            #focus-mode {
-                display: none !important;
+            /* Ocultar etiquetas de texto para ahorrar espacio */
+            .sidebar-hidable {
+                display: none;
             }
 
             .action-btn {
+                flex-shrink: 0; /* Evitar que los botones se encojan */
                 padding: 0.75rem;
+                justify-content: center;
             }
-
             .action-btn i {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
+            }
+            
+            #tool-selection .action-btn, #app-actions .action-btn {
+                width: 50px;
+                height: 50px;
             }
 
-            #color-palette {
-                gap: 0.75rem;
+            /* Propiedades de Herramienta (Color, Grosor, etc.) */
+            #tool-properties {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            #color-controls, #custom-colors-container {
+                align-items: center;
+            }
+            #color-palette, #custom-colors-palette {
+                justify-content: center;
             }
 
-            #size-control,
-            #opacity-control {
-                flex: 1;
-                max-width: none;
-                padding: 0 1rem;
+            #size-control, #opacity-control {
+               padding: 0 0.5rem;
             }
-
+            /* Hacer los selectores deslizables más fáciles de tocar */
             .custom-slider::-webkit-slider-thumb {
                 width: 24px;
                 height: 24px;
@@ -413,6 +477,12 @@
             .custom-slider::-moz-range-thumb {
                 width: 24px;
                 height: 24px;
+            }
+
+            /* Ocultar elementos de UI exclusivos de escritorio */
+            #menu-toggle-container,
+            #focus-mode {
+                display: none !important;
             }
         }
     </style>
@@ -519,7 +589,7 @@
             </div>
         </div>
 
-        <div id="menu-toggle-container" class="mt-4 sidebar-item">
+        <div id="menu-toggle-container" class="mt-4 sidebar-item hidden md:flex">
             <button id="menu-toggle" class="action-btn p-3 w-full flex justify-start items-center gap-3 rounded-lg"
                 title="Contraer menú">
                 <i id="toggle-icon" class="ph ph-caret-circle-left text-2xl"></i>
@@ -545,6 +615,9 @@
                     class="ph ph-arrow-right text-2xl"></i></button>
             <button id="gallery-btn" class="action-btn p-3 rounded-lg" title="Galería de Páginas"><i
                     class="ph ph-grid-four text-2xl"></i></button>
+        </div>
+        <div class="control-panel md:hidden">
+             <button id="toggle-tools-btn" class="action-btn p-3 rounded-lg tool-btn active" title="Herramientas"><i class="ph ph-paint-brush-broad text-2xl"></i></button>
         </div>
         <div id="view-controls" class="control-panel">
             <button id="zoom-out-btn" class="action-btn p-3 rounded-lg" title="Alejar"><i
@@ -585,7 +658,6 @@
             const tempCtx = tempCanvas.getContext('2d');
             const backgroundImage = document.getElementById('backgroundImage');
 
-            // ... (resto de referencias a botones y sliders)
             const sideBar = document.getElementById('side-bar');
             const menuToggle = document.getElementById('menu-toggle');
             const toggleIcon = document.getElementById('toggle-icon');
@@ -610,8 +682,6 @@
             const redoBtn = document.getElementById('redo');
             const clearBtn = document.getElementById('clear');
             const downloadBtn = document.getElementById('download');
-
-            // --- Controles de Vista y Navegación ---
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
             const pageInput = document.getElementById('page-indicator-input');
@@ -621,6 +691,8 @@
             const zoomInBtn = document.getElementById('zoom-in-btn');
             const zoomOutBtn = document.getElementById('zoom-out-btn');
             const zoomResetBtn = document.getElementById('zoom-reset-btn');
+            const toggleToolsBtn = document.getElementById('toggle-tools-btn');
+
 
             // --- Estado de la aplicación ---
             let isDrawing = false, currentTool = 'pan', currentStroke = [], startPos = {};
@@ -633,6 +705,7 @@
             let zoom = 1, panX = 0, panY = 0;
             let isPanning = false, panStart = { x: 0, y: 0 };
             const MAX_ZOOM = 5, MIN_ZOOM = 0.2;
+            let lastTouchDistance = null, touchCenter = null; // Para gestos táctiles
 
             const toolSettings = {
                 pan: {},
@@ -643,7 +716,7 @@
                 eraser: { size: 20, opacity: 1.0 }
             };
 
-            // ... (Funciones de UI)
+            // --- Funciones de UI ---
             function expandMenu() { sideBar.classList.remove('collapsed'); sideBar.style.width = '256px'; toggleIcon.classList.replace('ph-caret-circle-right', 'ph-caret-circle-left'); toggleText.textContent = 'Contraer'; }
             function collapseMenu() { sideBar.classList.add('collapsed'); sideBar.style.width = '88px'; toggleIcon.classList.replace('ph-caret-circle-left', 'ph-caret-circle-right'); toggleText.textContent = 'Expandir'; }
             function enterFocusMode() { sideBar.style.transform = 'translateY(-50%) translateX(-120%)'; exitFocusModeBtn.classList.remove('hidden'); }
@@ -658,14 +731,8 @@
 
             function updateUIForTool(tool) {
                 container.classList.toggle('pan-tool-active', tool === 'pan');
-                if (tool !== 'pan') {
-                    updateCustomCursor();
-                } else {
-                    customCursor.style.display = 'none';
-                }
-
+                if (tool !== 'pan') { updateCustomCursor(); } else { customCursor.style.display = 'none'; }
                 if (tool === 'pan') { return; }
-
                 const settings = toolSettings[tool];
                 brushSizeSlider.value = settings.size;
                 brushSizeValue.textContent = `${Math.round(settings.size)}px`;
@@ -700,13 +767,11 @@
             // --- Lógica de Páginas y Almacenamiento ---
             function loadDrawingsFromStorage() { try { const saved = localStorage.getItem('geniusDrawings'); if (saved) drawingsData = JSON.parse(saved); } catch (e) { console.error("Error al cargar dibujos:", e); drawingsData = {}; } }
             function saveCurrentPageDrawing() { if (!isCanvasBlank(mainCanvas)) { drawingsData[currentPage] = mainCanvas.toDataURL(); } else { delete drawingsData[currentPage]; } try { localStorage.setItem('geniusDrawings', JSON.stringify(drawingsData)); } catch (e) { console.error("Error al guardar dibujos:", e); } }
-
             function loadPage(pageNumber) {
                 const num = parseInt(pageNumber, 10);
                 if (isNaN(num) || num < 1 || num > totalPages) { pageInput.value = currentPage; return; }
                 saveCurrentPageDrawing();
                 currentPage = num;
-
                 const img = new Image();
                 img.src = `${imagePath}${currentPage}.svg`;
                 img.onload = () => {
@@ -721,7 +786,6 @@
                 img.onerror = () => { console.error(`No se pudo cargar: ${imagePath}${currentPage}.svg`); backgroundImage.src = ""; };
                 updateNavUI();
             }
-
             function updateNavUI() { pageInput.value = currentPage; prevBtn.disabled = currentPage === 1; nextBtn.disabled = currentPage === totalPages; }
 
             // --- Lógica del Historial ---
@@ -735,21 +799,71 @@
             function redoState() { if (historyStep < history.length - 1) { historyStep++; restoreState(); saveHistoryForCurrentPage(); updateHistoryButtons(); } }
 
             // --- Lógica del Lienzo (Canvas) y Transformaciones ---
-            function getTransformedPointerPos(e) {
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                const rect = canvasWrapper.getBoundingClientRect();
-                return { x: (clientX - rect.left) / zoom, y: (clientY - rect.top) / zoom };
+            function getTransformedPointerPos(e) { const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; const rect = canvasWrapper.getBoundingClientRect(); return { x: (clientX - rect.left) / zoom, y: (clientY - rect.top) / zoom }; }
+            function applyTransform() { canvasWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`; }
+            function getTouchDistance(touches) { const dx = touches[0].clientX - touches[1].clientX; const dy = touches[0].clientY - touches[1].clientY; return Math.sqrt(dx * dx + dy * dy); }
+            function getTouchCenter(touches) { return { x: (touches[0].clientX + touches[1].clientX) / 2, y: (touches[0].clientY + touches[1].clientY) / 2 }; }
+
+            function startDrawing(e) {
+                if (e.touches && e.touches.length === 2) {
+                    e.preventDefault(); isDrawing = false; isPanning = true;
+                    lastTouchDistance = getTouchDistance(e.touches);
+                    touchCenter = getTouchCenter(e.touches);
+                    panStart = { x: touchCenter.x - panX, y: touchCenter.y - panY };
+                    return;
+                }
+                if (currentTool === 'pan') {
+                    isPanning = true;
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    panStart = { x: clientX - panX, y: clientY - panY };
+                    container.classList.add('is-panning');
+                    return;
+                }
+                isDrawing = true; startPos = getTransformedPointerPos(e); currentStroke = [startPos];
             }
 
-            function applyTransform() {
-                canvasWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+            function draw(e) {
+                if (e.touches && e.touches.length === 2) {
+                    e.preventDefault(); if (lastTouchDistance == null) return;
+                    const newTouchCenter = getTouchCenter(e.touches);
+                    const newTouchDistance = getTouchDistance(e.touches);
+                    const zoomFactor = newTouchDistance / lastTouchDistance;
+                    adjustZoom(zoomFactor, newTouchCenter.x, newTouchCenter.y);
+                    panX = newTouchCenter.x - panStart.x;
+                    panY = newTouchCenter.y - panStart.y;
+                    applyTransform();
+                    lastTouchDistance = newTouchDistance;
+                    panStart = { x: newTouchCenter.x - panX, y: newTouchCenter.y - panY };
+                    return;
+                }
+                if (isPanning) {
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    panX = clientX - panStart.x;
+                    panY = clientY - panStart.y;
+                    applyTransform(); return;
+                }
+                if (!isDrawing) return; e.preventDefault(); const currentPos = getTransformedPointerPos(e); if (currentTool === 'eraser') { const lastPos = currentStroke[currentStroke.length - 1]; applyToolStyles(mainCtx); mainCtx.beginPath(); mainCtx.moveTo(lastPos.x, lastPos.y); mainCtx.lineTo(currentPos.x, currentPos.y); mainCtx.stroke(); currentStroke.push(currentPos); } else { currentStroke.push(currentPos); tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(tempCtx, currentStroke); break; case 'line': drawLine(tempCtx, startPos, currentPos); break; case 'rectangle': drawRectangle(tempCtx, startPos, currentPos); break; } }
             }
-            function startDrawing(e) { if (currentTool === 'pan') { isPanning = true; panStart = { x: e.clientX - panX, y: e.clientY - panY }; container.classList.add('is-panning'); return; } isDrawing = true; startPos = getTransformedPointerPos(e); currentStroke = [startPos]; }
-            function draw(e) { if (isPanning) { panX = e.clientX - panStart.x; panY = e.clientY - panStart.y; applyTransform(); return; } if (!isDrawing) return; e.preventDefault(); const currentPos = getTransformedPointerPos(e); if (currentTool === 'eraser') { const lastPos = currentStroke[currentStroke.length - 1]; applyToolStyles(mainCtx); mainCtx.beginPath(); mainCtx.moveTo(lastPos.x, lastPos.y); mainCtx.lineTo(currentPos.x, currentPos.y); mainCtx.stroke(); currentStroke.push(currentPos); } else { currentStroke.push(currentPos); tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(tempCtx, currentStroke); break; case 'line': drawLine(tempCtx, startPos, currentPos); break; case 'rectangle': drawRectangle(tempCtx, startPos, currentPos); break; } } }
-            function stopDrawing() { if (isPanning) { isPanning = false; container.classList.remove('is-panning'); return; } if (!isDrawing) return; isDrawing = false; tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); if (currentStroke.length < 3 && ['pencil', 'marker', 'eraser'].includes(currentTool)) { drawDot(mainCtx, startPos); } else if (currentTool !== 'eraser') { switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(mainCtx, currentStroke); break; case 'line': drawLine(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; case 'rectangle': drawRectangle(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; } } saveState(); saveCurrentPageDrawing(); }
+            function stopDrawing() { lastTouchDistance = null; touchCenter = null; if (isPanning) { isPanning = false; container.classList.remove('is-panning'); return; } if (!isDrawing) return; isDrawing = false; tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); if (currentStroke.length < 3 && ['pencil', 'marker', 'eraser'].includes(currentTool)) { drawDot(mainCtx, startPos); } else if (currentTool !== 'eraser') { switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(mainCtx, currentStroke); break; case 'line': drawLine(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; case 'rectangle': drawRectangle(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; } } saveState(); saveCurrentPageDrawing(); }
             function drawDot(ctx, pos) { applyToolStyles(ctx); ctx.beginPath(); ctx.arc(pos.x, pos.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fill(); }
-            function applyToolStyles(ctx) { const toolConfig = toolSettings[currentTool]; ctx.lineWidth = toolConfig.size / zoom; if (currentTool === 'eraser') { ctx.globalCompositeOperation = 'destination-out'; } else { const color = hexToRgbaString(toolConfig.color, toolConfig.opacity); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.globalCompositeOperation = (currentTool === 'marker') ? 'multiply' : 'source-over'; } ctx.lineCap = (currentTool === 'marker') ? 'butt' : 'round'; ctx.lineJoin = 'round'; }
+            
+            function applyToolStyles(ctx) { 
+                const toolConfig = toolSettings[currentTool]; 
+                ctx.lineWidth = toolConfig.size / zoom; // <-- FIX: Scale line width by zoom
+                if (currentTool === 'eraser') { 
+                    ctx.globalCompositeOperation = 'destination-out'; 
+                } else { 
+                    const color = hexToRgbaString(toolConfig.color, toolConfig.opacity); 
+                    ctx.strokeStyle = color; 
+                    ctx.fillStyle = color; 
+                    ctx.globalCompositeOperation = (currentTool === 'marker') ? 'multiply' : 'source-over'; 
+                } 
+                ctx.lineCap = (currentTool === 'marker') ? 'butt' : 'round'; 
+                ctx.lineJoin = 'round'; 
+            }
+
             function drawSmoothedLine(ctx, points) { if (points.length < 2) return; applyToolStyles(ctx); ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y); for (let i = 1; i < points.length - 2; i++) { const c = (points[i].x + points[i + 1].x) / 2; const d = (points[i].y + points[i + 1].y) / 2; ctx.quadraticCurveTo(points[i].x, points[i].y, c, d); } if (points.length > 1) { ctx.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, points[points.length - 1].x, points[points.length - 1].y); } ctx.stroke(); }
             function drawLine(ctx, start, end) { applyToolStyles(ctx); ctx.beginPath(); ctx.moveTo(start.x, start.y); ctx.lineTo(end.x, end.y); ctx.stroke(); }
             function drawRectangle(ctx, start, end) { applyToolStyles(ctx); ctx.beginPath(); ctx.rect(start.x, start.y, end.x - start.x, end.y - start.y); ctx.stroke(); }
@@ -759,92 +873,38 @@
             document.addEventListener('mousemove', e => { customCursor.style.left = `${e.clientX}px`; customCursor.style.top = `${e.clientY}px`; });
             sideBar.addEventListener('mouseenter', () => document.body.classList.add('sidebar-hover')); sideBar.addEventListener('mouseleave', () => document.body.classList.remove('sidebar-hover'));
             toolButtons.forEach(button => { button.addEventListener('click', () => { currentTool = button.id; toolButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); updateUIForTool(currentTool); }); });
-
-            // --- Lógica de Color Mejorada ---
             colorPickerTrigger.addEventListener('click', () => colorPickerInput.click());
-            colorPickerInput.addEventListener('input', e => {
-                const newColor = e.target.value;
-                if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = newColor;
-                updateActiveColorSwatch(newColor);
-                updateCustomCursor();
-            });
-            function selectColor(color) {
-                if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = color;
-                colorPickerInput.value = color;
-                updateActiveColorSwatch(color);
-                updateCustomCursor();
-            }
+            colorPickerInput.addEventListener('input', e => { const newColor = e.target.value; if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = newColor; updateActiveColorSwatch(newColor); updateCustomCursor(); });
+            function selectColor(color) { if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = color; colorPickerInput.value = color; updateActiveColorSwatch(color); updateCustomCursor(); }
             colorSwatches.forEach(swatch => swatch.addEventListener('click', () => selectColor(swatch.dataset.color)));
-            addCustomColorBtn.addEventListener('click', () => {
-                const newColor = colorPickerInput.value;
-                if (!customColors.includes(newColor)) {
-                    if (customColors.length >= MAX_CUSTOM_COLORS) {
-                        customColors.shift(); // Elimina el color más antiguo
-                    }
-                    customColors.push(newColor);
-                    saveCustomColors();
-                    renderCustomColors();
-                    selectColor(newColor);
-                }
-            });
-            function renderCustomColors() {
-                customColorsPalette.innerHTML = '';
-                customColors.forEach(color => {
-                    const swatch = document.createElement('button');
-                    swatch.className = 'color-swatch';
-                    swatch.style.backgroundColor = color;
-                    swatch.dataset.color = color;
-                    swatch.addEventListener('click', () => selectColor(color));
-                    customColorsPalette.appendChild(swatch);
-                });
-            }
+            addCustomColorBtn.addEventListener('click', () => { const newColor = colorPickerInput.value; if (!customColors.includes(newColor)) { if (customColors.length >= MAX_CUSTOM_COLORS) { customColors.shift(); } customColors.push(newColor); saveCustomColors(); renderCustomColors(); selectColor(newColor); } });
+            function renderCustomColors() { customColorsPalette.innerHTML = ''; customColors.forEach(color => { const swatch = document.createElement('button'); swatch.className = 'color-swatch'; swatch.style.backgroundColor = color; swatch.dataset.color = color; swatch.addEventListener('click', () => selectColor(color)); customColorsPalette.appendChild(swatch); }); }
             function saveCustomColors() { localStorage.setItem('geniusCustomColors', JSON.stringify(customColors)); }
             function loadCustomColors() { const saved = localStorage.getItem('geniusCustomColors'); if (saved) { customColors = JSON.parse(saved); renderCustomColors(); } }
-
             function handleSliderInput(slider, valueSpan, isOpacity) { const value = parseFloat(slider.value); toolSettings[currentTool][isOpacity ? 'opacity' : 'size'] = value; valueSpan.textContent = isOpacity ? `${Math.round(value * 100)}%` : `${Math.round(value)}px`; updateCustomCursor(); }
             brushSizeSlider.addEventListener('input', () => handleSliderInput(brushSizeSlider, brushSizeValue, false)); opacitySlider.addEventListener('input', () => handleSliderInput(opacitySlider, opacityValue, true));
             clearBtn.addEventListener('click', () => { mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height); history = [mainCanvas.toDataURL()]; historyStep = 0; saveHistoryForCurrentPage(); delete drawingsData[currentPage]; saveCurrentPageDrawing(); });
             downloadBtn.addEventListener('click', () => { const link = document.createElement('a'); link.download = `apuntes-pagina-${currentPage}.png`; const tempC = document.createElement('canvas'); tempC.width = backgroundImage.naturalWidth; tempC.height = backgroundImage.naturalHeight; const temp_ctx = tempC.getContext('2d'); temp_ctx.drawImage(backgroundImage, 0, 0); temp_ctx.drawImage(mainCanvas, 0, 0); link.href = tempC.toDataURL(); link.click(); });
             undoBtn.addEventListener('click', undoState); redoBtn.addEventListener('click', redoState); menuToggle.addEventListener('click', () => { sideBar.classList.contains('collapsed') ? expandMenu() : collapseMenu(); }); focusModeBtn.addEventListener('click', enterFocusMode); exitFocusModeBtn.addEventListener('click', exitFocusMode);
-
-            // --- Event Listeners de Navegación, Vista y Galería ---
-            prevBtn.addEventListener('click', () => loadPage(currentPage - 1));
-            nextBtn.addEventListener('click', () => loadPage(currentPage + 1));
-            pageInput.addEventListener('change', () => loadPage(pageInput.value));
-
-            galleryBtn.addEventListener('click', openGallery);
-            galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) closeGallery(); });
-
-            zoomInBtn.addEventListener('click', () => adjustZoom(1.2));
-            zoomOutBtn.addEventListener('click', () => adjustZoom(0.8));
-            zoomResetBtn.addEventListener('click', fitAndCenter);
-
-            container.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                if (e.ctrlKey) {
-                    const zoomFactor = e.deltaY > 0 ? 0.95 : 1.05;
-                    adjustZoom(zoomFactor, e.clientX, e.clientY);
-                } else {
-                    panY -= e.deltaY;
-                    panX -= e.deltaX;
-                    applyTransform();
-                }
-            }, { passive: false });
+            prevBtn.addEventListener('click', () => loadPage(currentPage - 1)); nextBtn.addEventListener('click', () => loadPage(currentPage + 1)); pageInput.addEventListener('change', () => loadPage(pageInput.value));
+            galleryBtn.addEventListener('click', openGallery); galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) closeGallery(); });
+            zoomInBtn.addEventListener('click', () => adjustZoom(1.2)); zoomOutBtn.addEventListener('click', () => adjustZoom(0.8)); zoomResetBtn.addEventListener('click', fitAndCenter);
+            container.addEventListener('wheel', (e) => { e.preventDefault(); if (e.ctrlKey) { const zoomFactor = e.deltaY > 0 ? 0.95 : 1.05; adjustZoom(zoomFactor, e.clientX, e.clientY); } else { panY -= e.deltaY; panX -= e.deltaX; applyTransform(); } }, { passive: false });
+            
+            toggleToolsBtn.addEventListener('click', () => {
+                sideBar.classList.toggle('mobile-hidden');
+                toggleToolsBtn.classList.toggle('active');
+            });
 
             function adjustZoom(factor, x, y) {
-                const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * factor));
-                if (newZoom === zoom) return;
-
+                const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * factor)); if (newZoom === zoom) return;
                 const rect = container.getBoundingClientRect();
                 const mouseX = x === undefined ? rect.width / 2 : x;
                 const mouseY = y === undefined ? rect.height / 2 : y;
-
                 panX = mouseX - (mouseX - panX) * (newZoom / zoom);
                 panY = mouseY - (mouseY - panY) * (newZoom / zoom);
                 zoom = newZoom;
-
-                updateCustomCursor();
-                applyTransform();
+                updateCustomCursor(); applyTransform();
             }
 
             function fitAndCenter() {
@@ -852,49 +912,37 @@
                 const containerHeight = container.clientHeight;
                 const imageWidth = backgroundImage.naturalWidth;
                 const imageHeight = backgroundImage.naturalHeight;
-
                 if (!imageWidth || !imageHeight) return;
-
-                const scaleX = containerWidth / imageWidth;
-                const scaleY = containerHeight / imageHeight;
-
-                zoom = Math.min(scaleX, scaleY) * 0.95;
-
-                // Ajuste para la barra lateral
-                const sidebarWidth = sideBar.classList.contains('collapsed') ? 88 : 256;
+                
+                let sidebarWidth = 0;
+                if (window.innerWidth > 768) { // Considerar barra lateral solo en escritorio
+                    sidebarWidth = sideBar.classList.contains('collapsed') ? 88 : 256;
+                }
                 const availableWidth = containerWidth - sidebarWidth;
 
+                const scaleX = availableWidth / imageWidth;
+                const scaleY = containerHeight / imageHeight;
+                zoom = Math.min(scaleX, scaleY) * 0.95;
                 panX = sidebarWidth + (availableWidth - imageWidth * zoom) / 2;
                 panY = (containerHeight - imageHeight * zoom) / 2;
-
                 applyTransform();
             }
 
-            // --- Lógica de la Galería ---
             function openGallery() {
                 galleryGrid.innerHTML = '';
-                for (let i = 1; i <= totalPages; i++) {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    item.textContent = i;
-                    if (i === currentPage) item.classList.add('active');
-                    item.addEventListener('click', () => { loadPage(i); closeGallery(); });
-                    galleryGrid.appendChild(item);
-                }
+                for (let i = 1; i <= totalPages; i++) { const item = document.createElement('div'); item.className = 'gallery-item'; item.textContent = i; if (i === currentPage) item.classList.add('active'); item.addEventListener('click', () => { loadPage(i); closeGallery(); }); galleryGrid.appendChild(item); }
                 galleryModal.style.display = 'flex';
             }
             function closeGallery() { galleryModal.style.display = 'none'; }
 
-
             // --- Inicialización ---
+            window.addEventListener('resize', fitAndCenter);
             document.querySelectorAll('.sidebar-item').forEach((item, index) => { item.style.animationDelay = `${index * 0.05}s`; });
             sideBar.style.width = '256px'; sideBar.style.transform = 'translateY(-50%)';
-            loadDrawingsFromStorage();
-            loadCustomColors();
-            loadPage(1);
-            document.getElementById('pan').click();
+            loadDrawingsFromStorage(); loadCustomColors(); loadPage(1); document.getElementById('pan').click();
         });
     </script>
 </body>
 
 </html>
+
