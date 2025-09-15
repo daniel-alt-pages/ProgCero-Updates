@@ -705,7 +705,7 @@
             let zoom = 1, panX = 0, panY = 0;
             let isPanning = false, panStart = { x: 0, y: 0 };
             const MAX_ZOOM = 5, MIN_ZOOM = 0.2;
-            let lastTouchDistance = null, touchCenter = null; // Para gestos táctiles
+            let lastTouchDistance = null, touchCenter = null; 
 
             const toolSettings = {
                 pan: {},
@@ -777,10 +777,20 @@
                 img.onload = () => {
                     backgroundImage.src = img.src;
                     const canvasWidth = img.naturalWidth; const canvasHeight = img.naturalHeight;
-                    [mainCanvas, tempCanvas, backgroundImage].forEach(el => { el.width = canvasWidth; el.height = canvasHeight; el.style.width = `${canvasWidth}px`; el.style.height = `${canvasHeight}px`; });
+                    [mainCanvas, tempCanvas].forEach(el => { el.width = canvasWidth; el.height = canvasHeight; });
+                    [mainCanvas, tempCanvas, backgroundImage].forEach(el => { el.style.width = `${canvasWidth}px`; el.style.height = `${canvasHeight}px`; });
+
                     mainCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-                    if (drawingsData[currentPage]) { const drawingImg = new Image(); drawingImg.src = drawingsData[currentPage]; drawingImg.onload = () => { mainCtx.drawImage(drawingImg, 0, 0); loadHistoryForCurrentPage(); }; }
-                    else { loadHistoryForCurrentPage(); }
+                     if (drawingsData[currentPage]) {
+                        const drawingImg = new Image();
+                        drawingImg.src = drawingsData[currentPage];
+                        drawingImg.onload = () => { 
+                            mainCtx.drawImage(drawingImg, 0, 0); 
+                            loadHistoryForCurrentPage(); 
+                        };
+                    } else {
+                        loadHistoryForCurrentPage();
+                    }
                     fitAndCenter();
                 }
                 img.onerror = () => { console.error(`No se pudo cargar: ${imagePath}${currentPage}.svg`); backgroundImage.src = ""; };
@@ -789,26 +799,67 @@
             function updateNavUI() { pageInput.value = currentPage; prevBtn.disabled = currentPage === 1; nextBtn.disabled = currentPage === totalPages; }
 
             // --- Lógica del Historial ---
-            function loadHistoryForCurrentPage() { if (historyPerPage[currentPage]) { history = historyPerPage[currentPage].history; historyStep = historyPerPage[currentPage].step; } else { history = [mainCanvas.toDataURL()]; historyStep = 0; } updateHistoryButtons(); }
+            function loadHistoryForCurrentPage() { 
+                if (historyPerPage[currentPage]) { 
+                    history = historyPerPage[currentPage].history; 
+                    historyStep = historyPerPage[currentPage].step; 
+                } else { 
+                    history = [mainCanvas.toDataURL()]; 
+                    historyStep = 0; 
+                } 
+                updateHistoryButtons(); 
+            }
             function saveHistoryForCurrentPage() { historyPerPage[currentPage] = { history: history, step: historyStep }; }
             function updateHistoryButtons() { undoBtn.disabled = historyStep <= 0; redoBtn.disabled = historyStep >= history.length - 1; }
             function isCanvasBlank(canvas) { return !canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0); }
-            function saveState() { historyStep++; if (historyStep < history.length) { history.length = historyStep; } history.push(mainCanvas.toDataURL()); saveHistoryForCurrentPage(); updateHistoryButtons(); }
-            function restoreState() { if (history[historyStep]) { const img = new Image(); img.src = history[historyStep]; img.onload = () => { mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height); mainCtx.drawImage(img, 0, 0); }; } }
+            function saveState() { 
+                historyStep++; 
+                if (historyStep < history.length) { history.length = historyStep; } 
+                history.push(mainCanvas.toDataURL()); 
+                saveHistoryForCurrentPage(); 
+                updateHistoryButtons(); 
+            }
+            function restoreState() { 
+                if (history[historyStep]) { 
+                    const img = new Image(); 
+                    img.src = history[historyStep]; 
+                    img.onload = () => { 
+                        mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height); 
+                        mainCtx.drawImage(img, 0, 0); 
+                    }; 
+                } 
+            }
             function undoState() { if (historyStep > 0) { historyStep--; restoreState(); saveHistoryForCurrentPage(); updateHistoryButtons(); } }
             function redoState() { if (historyStep < history.length - 1) { historyStep++; restoreState(); saveHistoryForCurrentPage(); updateHistoryButtons(); } }
 
             // --- Lógica del Lienzo (Canvas) y Transformaciones ---
-            function getTransformedPointerPos(e) { const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; const rect = canvasWrapper.getBoundingClientRect(); return { x: (clientX - rect.left), y: (clientY - rect.top) }; }
-            function applyTransform() { 
-                canvasWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`; 
-                mainCtx.setTransform(zoom, 0, 0, zoom, panX, panY);
-                tempCtx.setTransform(zoom, 0, 0, zoom, panX, panY);
+            function getPointerPos(e) {
+                const rect = container.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
             }
+
+            function screenToCanvas(pos) {
+                return {
+                    x: (pos.x - panX) / zoom,
+                    y: (pos.y - panY) / zoom
+                };
+            }
+
+            function applyTransform() {
+                canvasWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+            }
+            
             function getTouchDistance(touches) { const dx = touches[0].clientX - touches[1].clientX; const dy = touches[0].clientY - touches[1].clientY; return Math.sqrt(dx * dx + dy * dy); }
             function getTouchCenter(touches) { return { x: (touches[0].clientX + touches[1].clientX) / 2, y: (touches[0].clientY + touches[1].clientY) / 2 }; }
 
             function startDrawing(e) {
+                 if (window.innerWidth <= 768 && !sideBar.classList.contains('mobile-hidden') && e.target === tempCanvas) {
+                    sideBar.classList.add('mobile-hidden');
+                    toggleToolsBtn.classList.remove('active');
+                }
+
                 if (e.touches && e.touches.length === 2) {
                     e.preventDefault();
                     isDrawing = false; 
@@ -826,39 +877,32 @@
                     return;
                 }
                 isDrawing = true; 
-                const pos = getTransformedPointerPos(e);
-                startPos = {x: pos.x / zoom - panX / zoom, y: pos.y / zoom - panY / zoom};
+                startPos = screenToCanvas(getPointerPos(e));
                 currentStroke = [startPos];
             }
 
              function draw(e) {
                 if (e.touches && e.touches.length === 2) {
                     e.preventDefault();
-                    if (!touchCenter) {
+                    if (lastTouchDistance === null) {
                          lastTouchDistance = getTouchDistance(e.touches);
                          touchCenter = getTouchCenter(e.touches);
                          return;
                     }
-
-                    const newTouchCenter = getTouchCenter(e.touches);
                     const newTouchDistance = getTouchDistance(e.touches);
+                    const newTouchCenter = getTouchCenter(e.touches);
+
+                    const zoomFactor = newTouchDistance / lastTouchDistance;
+                     const smoothedZoomFactor = 1 + (zoomFactor - 1) * 0.5; // Suavizado
                     
+                    adjustZoom(smoothedZoomFactor, newTouchCenter.x, newTouchCenter.y);
+
                     const panDeltaX = newTouchCenter.x - touchCenter.x;
                     const panDeltaY = newTouchCenter.y - touchCenter.y;
                     panX += panDeltaX;
                     panY += panDeltaY;
-
-                    const zoomFactor = newTouchDistance / lastTouchDistance;
-                    const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * zoomFactor));
-
-                    if (newZoom !== zoom) {
-                        panX = newTouchCenter.x - (newTouchCenter.x - panX) * (newZoom / zoom);
-                        panY = newTouchCenter.y - (newTouchCenter.y - panY) * (newZoom / zoom);
-                        zoom = newZoom;
-                    }
                     
                     applyTransform();
-                    updateCustomCursor();
                     
                     lastTouchDistance = newTouchDistance;
                     touchCenter = newTouchCenter;
@@ -876,32 +920,24 @@
 
                 if (!isDrawing) return; 
                 e.preventDefault(); 
-                const pos = getTransformedPointerPos(e);
-                const currentPos = {x: pos.x / zoom - panX / zoom, y: pos.y / zoom - panY / zoom};
+                const currentPos = screenToCanvas(getPointerPos(e));
+                currentStroke.push(currentPos); 
 
-                if (currentTool === 'eraser') { 
-                    const lastPos = currentStroke[currentStroke.length - 1]; 
-                    applyToolStyles(mainCtx); 
-                    mainCtx.beginPath(); 
-                    mainCtx.moveTo(lastPos.x, lastPos.y); 
-                    mainCtx.lineTo(currentPos.x, currentPos.y); 
-                    mainCtx.stroke(); 
-                    currentStroke.push(currentPos); 
-                } else { 
-                    currentStroke.push(currentPos); 
-                    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); 
-                    switch (currentTool) { 
-                        case 'pencil': 
-                        case 'marker': 
-                            drawSmoothedLine(tempCtx, currentStroke); 
-                            break; 
-                        case 'line': 
-                            drawLine(tempCtx, startPos, currentPos); 
-                            break; 
-                        case 'rectangle': 
-                            drawRectangle(tempCtx, startPos, currentPos); 
-                            break; 
-                    } 
+                tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); 
+                switch (currentTool) { 
+                    case 'pencil': 
+                    case 'marker': 
+                        drawSmoothedLine(tempCtx, currentStroke); 
+                        break; 
+                    case 'line': 
+                        drawLine(tempCtx, startPos, currentPos); 
+                        break; 
+                    case 'rectangle': 
+                        drawRectangle(tempCtx, startPos, currentPos); 
+                        break;
+                    case 'eraser':
+                         drawSmoothedLine(tempCtx, currentStroke);
+                         break;
                 } 
             }
             function stopDrawing() { 
@@ -915,19 +951,23 @@
                 if (!isDrawing) return; 
                 isDrawing = false; 
                 tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); 
-                if (currentStroke.length < 3 && ['pencil', 'marker', 'eraser'].includes(currentTool)) { 
-                    drawDot(mainCtx, startPos); 
-                } else if (currentTool !== 'eraser') { 
+                
+                 const targetCtx = currentTool === 'eraser' ? mainCtx : mainCtx;
+                
+                if (currentStroke.length < 2) { 
+                    drawDot(targetCtx, startPos); 
+                } else { 
                     switch (currentTool) { 
                         case 'pencil': 
-                        case 'marker': 
-                            drawSmoothedLine(mainCtx, currentStroke); 
+                        case 'marker':
+                        case 'eraser':
+                            drawSmoothedLine(targetCtx, currentStroke); 
                             break; 
                         case 'line': 
-                            drawLine(mainCtx, startPos, currentStroke[currentStroke.length - 1]); 
+                            drawLine(targetCtx, startPos, currentStroke[currentStroke.length - 1]); 
                             break; 
                         case 'rectangle': 
-                            drawRectangle(mainCtx, startPos, currentStroke[currentStroke.length - 1]); 
+                            drawRectangle(targetCtx, startPos, currentStroke[currentStroke.length - 1]); 
                             break; 
                     } 
                 } 
@@ -938,14 +978,14 @@
             function drawDot(ctx, pos) { 
                 applyToolStyles(ctx); 
                 ctx.beginPath(); 
-                const radius = (toolSettings[currentTool].size / 2);
+                const radius = (toolSettings[currentTool].size / 2) / zoom;
                 ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2); 
                 ctx.fill(); 
             }
             
             function applyToolStyles(ctx) { 
                 const toolConfig = toolSettings[currentTool]; 
-                ctx.lineWidth = toolConfig.size;
+                ctx.lineWidth = toolConfig.size / zoom;
                 if (currentTool === 'eraser') { 
                     ctx.globalCompositeOperation = 'destination-out'; 
                 } else { 
@@ -978,11 +1018,18 @@
             function handleSliderInput(slider, valueSpan, isOpacity) { const value = parseFloat(slider.value); toolSettings[currentTool][isOpacity ? 'opacity' : 'size'] = value; valueSpan.textContent = isOpacity ? `${Math.round(value * 100)}%` : `${Math.round(value)}px`; updateCustomCursor(); }
             brushSizeSlider.addEventListener('input', () => handleSliderInput(brushSizeSlider, brushSizeValue, false)); opacitySlider.addEventListener('input', () => handleSliderInput(opacitySlider, opacityValue, true));
             clearBtn.addEventListener('click', () => { mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height); history = [mainCanvas.toDataURL()]; historyStep = 0; saveHistoryForCurrentPage(); delete drawingsData[currentPage]; saveCurrentPageDrawing(); });
-            downloadBtn.addEventListener('click', () => { const link = document.createElement('a'); link.download = `apuntes-pagina-${currentPage}.png`; const tempC = document.createElement('canvas'); tempC.width = backgroundImage.naturalWidth; tempC.height = backgroundImage.naturalHeight; const temp_ctx = tempC.getContext('2d'); temp_ctx.drawImage(backgroundImage, 0, 0); temp_ctx.drawImage(mainCanvas, 0, 0); link.href = tempC.toDataURL(); link.click(); });
+            downloadBtn.addEventListener('click', () => { const link = document.createElement('a'); link.download = `apuntes-pagina-${currentPage}.png`; const tempC = document.createElement('canvas'); tempC.width = backgroundImage.naturalWidth; tempC.height = backgroundImage.naturalHeight; const temp_ctx = tempC.getContext('2d'); temp_ctx.drawImage(backgroundImage, 0, 0); mainCtx.save(); mainCtx.setTransform(1,0,0,1,0,0); temp_ctx.drawImage(mainCanvas, 0, 0); mainCtx.restore(); link.href = tempC.toDataURL(); link.click(); });
             undoBtn.addEventListener('click', undoState); redoBtn.addEventListener('click', redoState); menuToggle.addEventListener('click', () => { sideBar.classList.contains('collapsed') ? expandMenu() : collapseMenu(); }); focusModeBtn.addEventListener('click', enterFocusMode); exitFocusModeBtn.addEventListener('click', exitFocusMode);
             prevBtn.addEventListener('click', () => loadPage(currentPage - 1)); nextBtn.addEventListener('click', () => loadPage(currentPage + 1)); pageInput.addEventListener('change', () => loadPage(pageInput.value));
             galleryBtn.addEventListener('click', openGallery); galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) closeGallery(); });
-            zoomInBtn.addEventListener('click', () => adjustZoom(1.2)); zoomOutBtn.addEventListener('click', () => adjustZoom(0.8)); zoomResetBtn.addEventListener('click', fitAndCenter);
+            
+            const zoomHandler = (e) => { e.preventDefault(); adjustZoom(e.currentTarget.id === 'zoom-in-btn' ? 1.2 : 0.8); };
+            zoomInBtn.addEventListener('click', zoomHandler);
+            zoomOutBtn.addEventListener('click', zoomHandler);
+            zoomInBtn.addEventListener('touchstart', zoomHandler, {passive: false});
+            zoomOutBtn.addEventListener('touchstart', zoomHandler, {passive: false});
+
+            zoomResetBtn.addEventListener('click', fitAndCenter);
             container.addEventListener('wheel', (e) => { e.preventDefault(); if (e.ctrlKey) { const zoomFactor = e.deltaY > 0 ? 0.95 : 1.05; adjustZoom(zoomFactor, e.clientX, e.clientY); } else { panY -= e.deltaY; panX -= e.deltaX; applyTransform(); } }, { passive: false });
             
             if(toggleToolsBtn) {
