@@ -344,19 +344,21 @@
 
         /* --- ESTILOS PARA MÓVILES --- */
         @media (max-width: 768px) {
-            
+
             /* Controles de Página y Zoom (Barra inferior principal) */
             #bottom-controls {
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                transform: translateX(0); /* Anular centrado de escritorio */
+                transform: translateX(0);
+                /* Anular centrado de escritorio */
                 padding: 0.5rem;
                 background-color: rgba(255, 255, 255, 0.9);
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
                 box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
-                justify-content: space-between; /* Distribuir controles de página y zoom */
+                justify-content: space-between;
+                /* Distribuir controles de página y zoom */
                 border-top: 1px solid #e5e7eb;
                 border-radius: 0;
                 gap: 0.5rem;
@@ -369,21 +371,26 @@
                 gap: 0.25rem;
                 flex-shrink: 1;
             }
-             .control-panel .action-btn {
+
+            .control-panel .action-btn {
                 padding: 0.5rem;
             }
-             .control-panel .action-btn i {
+
+            .control-panel .action-btn i {
                 font-size: 1.5rem;
             }
+
             #page-indicator-input {
                 width: 50px;
                 font-size: 1rem;
             }
+
             #page-navigation {
                 flex-grow: 1;
                 justify-content: center;
             }
-             #view-controls {
+
+            #view-controls {
                 flex-grow: 1;
                 justify-content: center;
             }
@@ -392,16 +399,19 @@
             /* Barra de Herramientas y Propiedades (Barra flotante secundaria) */
             #side-bar {
                 top: auto;
-                bottom: 70px; /* Posicionada sobre la barra de controles inferior */
+                bottom: 70px;
+                /* Posicionada sobre la barra de controles inferior */
                 left: 50%;
                 transform: translateX(-50%);
                 width: calc(100% - 2rem);
                 max-width: 500px;
                 height: auto;
-                max-height: 45vh; /* Limita la altura para no cubrir toda la pantalla */
-                overflow-y: auto; /* Desplazamiento vertical para propiedades */
+                max-height: 45vh;
+                /* Limita la altura para no cubrir toda la pantalla */
+                overflow-y: auto;
+                /* Desplazamiento vertical para propiedades */
                 padding: 0.75rem;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             }
 
             #side-bar.mobile-hidden {
@@ -424,11 +434,14 @@
                 overflow-x: auto;
                 padding-bottom: 0.5rem;
                 -webkit-overflow-scrolling: touch;
-                scrollbar-width: none; /* Ocultar barra de scroll */
+                scrollbar-width: none;
+                /* Ocultar barra de scroll */
             }
-             #tool-selection::-webkit-scrollbar,
-             #app-actions::-webkit-scrollbar {
-                display: none; /* Ocultar barra de scroll en Chrome/Safari */
+
+            #tool-selection::-webkit-scrollbar,
+            #app-actions::-webkit-scrollbar {
+                display: none;
+                /* Ocultar barra de scroll en Chrome/Safari */
             }
 
 
@@ -438,15 +451,18 @@
             }
 
             .action-btn {
-                flex-shrink: 0; /* Evitar que los botones se encojan */
+                flex-shrink: 0;
+                /* Evitar que los botones se encojan */
                 padding: 0.75rem;
                 justify-content: center;
             }
+
             .action-btn i {
                 font-size: 1.5rem;
             }
-            
-            #tool-selection .action-btn, #app-actions .action-btn {
+
+            #tool-selection .action-btn,
+            #app-actions .action-btn {
                 width: 50px;
                 height: 50px;
             }
@@ -458,16 +474,22 @@
                 gap: 1rem;
                 align-items: stretch;
             }
-            #color-controls, #custom-colors-container {
+
+            #color-controls,
+            #custom-colors-container {
                 align-items: center;
             }
-            #color-palette, #custom-colors-palette {
+
+            #color-palette,
+            #custom-colors-palette {
                 justify-content: center;
             }
 
-            #size-control, #opacity-control {
-               padding: 0 0.5rem;
+            #size-control,
+            #opacity-control {
+                padding: 0 0.5rem;
             }
+
             /* Hacer los selectores deslizables más fáciles de tocar */
             .custom-slider::-webkit-slider-thumb {
                 width: 24px;
@@ -589,7 +611,7 @@
             </div>
         </div>
 
-        <div id="menu-toggle-container" class="mt-4 sidebar-item hidden md:flex">
+        <div id="menu-toggle-container" class="mt-4 sidebar-item">
             <button id="menu-toggle" class="action-btn p-3 w-full flex justify-start items-center gap-3 rounded-lg"
                 title="Contraer menú">
                 <i id="toggle-icon" class="ph ph-caret-circle-left text-2xl"></i>
@@ -617,7 +639,8 @@
                     class="ph ph-grid-four text-2xl"></i></button>
         </div>
         <div class="control-panel md:hidden">
-             <button id="toggle-tools-btn" class="action-btn p-3 rounded-lg tool-btn active" title="Herramientas"><i class="ph ph-paint-brush-broad text-2xl"></i></button>
+            <button id="toggle-tools-btn" class="action-btn p-3 rounded-lg tool-btn active" title="Herramientas"><i
+                    class="ph ph-paint-brush-broad text-2xl"></i></button>
         </div>
         <div id="view-controls" class="control-panel">
             <button id="zoom-out-btn" class="action-btn p-3 rounded-lg" title="Alejar"><i
@@ -848,20 +871,20 @@
             }
             function stopDrawing() { lastTouchDistance = null; touchCenter = null; if (isPanning) { isPanning = false; container.classList.remove('is-panning'); return; } if (!isDrawing) return; isDrawing = false; tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); if (currentStroke.length < 3 && ['pencil', 'marker', 'eraser'].includes(currentTool)) { drawDot(mainCtx, startPos); } else if (currentTool !== 'eraser') { switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(mainCtx, currentStroke); break; case 'line': drawLine(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; case 'rectangle': drawRectangle(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; } } saveState(); saveCurrentPageDrawing(); }
             function drawDot(ctx, pos) { applyToolStyles(ctx); ctx.beginPath(); ctx.arc(pos.x, pos.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fill(); }
-            
-            function applyToolStyles(ctx) { 
-                const toolConfig = toolSettings[currentTool]; 
-                ctx.lineWidth = toolConfig.size / zoom; // <-- FIX: Scale line width by zoom
-                if (currentTool === 'eraser') { 
-                    ctx.globalCompositeOperation = 'destination-out'; 
-                } else { 
-                    const color = hexToRgbaString(toolConfig.color, toolConfig.opacity); 
-                    ctx.strokeStyle = color; 
-                    ctx.fillStyle = color; 
-                    ctx.globalCompositeOperation = (currentTool === 'marker') ? 'multiply' : 'source-over'; 
-                } 
-                ctx.lineCap = (currentTool === 'marker') ? 'butt' : 'round'; 
-                ctx.lineJoin = 'round'; 
+
+            function applyToolStyles(ctx) {
+                const toolConfig = toolSettings[currentTool];
+                ctx.lineWidth = toolConfig.size;
+                if (currentTool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                } else {
+                    const color = hexToRgbaString(toolConfig.color, toolConfig.opacity);
+                    ctx.strokeStyle = color;
+                    ctx.fillStyle = color;
+                    ctx.globalCompositeOperation = (currentTool === 'marker') ? 'multiply' : 'source-over';
+                }
+                ctx.lineCap = (currentTool === 'marker') ? 'butt' : 'round';
+                ctx.lineJoin = 'round';
             }
 
             function drawSmoothedLine(ctx, points) { if (points.length < 2) return; applyToolStyles(ctx); ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y); for (let i = 1; i < points.length - 2; i++) { const c = (points[i].x + points[i + 1].x) / 2; const d = (points[i].y + points[i + 1].y) / 2; ctx.quadraticCurveTo(points[i].x, points[i].y, c, d); } if (points.length > 1) { ctx.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, points[points.length - 1].x, points[points.length - 1].y); } ctx.stroke(); }
@@ -890,11 +913,13 @@
             galleryBtn.addEventListener('click', openGallery); galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) closeGallery(); });
             zoomInBtn.addEventListener('click', () => adjustZoom(1.2)); zoomOutBtn.addEventListener('click', () => adjustZoom(0.8)); zoomResetBtn.addEventListener('click', fitAndCenter);
             container.addEventListener('wheel', (e) => { e.preventDefault(); if (e.ctrlKey) { const zoomFactor = e.deltaY > 0 ? 0.95 : 1.05; adjustZoom(zoomFactor, e.clientX, e.clientY); } else { panY -= e.deltaY; panX -= e.deltaX; applyTransform(); } }, { passive: false });
-            
-            toggleToolsBtn.addEventListener('click', () => {
-                sideBar.classList.toggle('mobile-hidden');
-                toggleToolsBtn.classList.toggle('active');
-            });
+
+            if (toggleToolsBtn) {
+                toggleToolsBtn.addEventListener('click', () => {
+                    sideBar.classList.toggle('mobile-hidden');
+                    toggleToolsBtn.classList.toggle('active');
+                });
+            }
 
             function adjustZoom(factor, x, y) {
                 const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * factor)); if (newZoom === zoom) return;
@@ -913,18 +938,24 @@
                 const imageWidth = backgroundImage.naturalWidth;
                 const imageHeight = backgroundImage.naturalHeight;
                 if (!imageWidth || !imageHeight) return;
-                
+
                 let sidebarWidth = 0;
-                if (window.innerWidth > 768) { // Considerar barra lateral solo en escritorio
+                let bottomBarHeight = 0;
+
+                if (window.innerWidth > 768) {
                     sidebarWidth = sideBar.classList.contains('collapsed') ? 88 : 256;
+                } else {
+                    bottomBarHeight = document.getElementById('bottom-controls').offsetHeight;
                 }
+
                 const availableWidth = containerWidth - sidebarWidth;
+                const availableHeight = containerHeight - bottomBarHeight;
 
                 const scaleX = availableWidth / imageWidth;
-                const scaleY = containerHeight / imageHeight;
+                const scaleY = availableHeight / imageHeight;
                 zoom = Math.min(scaleX, scaleY) * 0.95;
                 panX = sidebarWidth + (availableWidth - imageWidth * zoom) / 2;
-                panY = (containerHeight - imageHeight * zoom) / 2;
+                panY = (availableHeight - imageHeight * zoom) / 2;
                 applyTransform();
             }
 
@@ -938,11 +969,9 @@
             // --- Inicialización ---
             window.addEventListener('resize', fitAndCenter);
             document.querySelectorAll('.sidebar-item').forEach((item, index) => { item.style.animationDelay = `${index * 0.05}s`; });
-            sideBar.style.width = '256px'; sideBar.style.transform = 'translateY(-50%)';
             loadDrawingsFromStorage(); loadCustomColors(); loadPage(1); document.getElementById('pan').click();
         });
     </script>
 </body>
 
 </html>
-
