@@ -577,364 +577,75 @@
             line-height: 1.6;
         }
 
-        #viewer-wrapper {
+        #interactive-viewer .preview-container {
             position: relative;
-            width: 100%;
-            max-width: 1200px;
-            /* Aumentado de 1100px a 1200px */
+            max-width: 800px;
             margin: 0 auto;
-        }
-
-        #viewer-container {
-            position: relative;
-            width: 100%;
-            background: #000;
-            border-radius: 8px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid var(--border-color);
         }
 
-        #canvas-container {
-            position: relative;
-            width: 100%;
-            line-height: 0;
-            /* Prevents extra space below canvas */
+        #interactive-viewer .preview-container:hover .preview-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
         }
 
-        #image-viewer {
+        #interactive-viewer .preview-container:hover .preview-icon {
+            transform: scale(1.1);
+        }
+
+        #interactive-viewer .preview-image {
             display: block;
             width: 100%;
-            height: auto;
-            z-index: 1;
         }
 
-        #drawing-canvas {
+        #interactive-viewer .preview-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        #viewer-error-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            z-index: 10;
-            display: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 20px;
-            flex-direction: column;
+            transition: background-color 0.3s var(--ease-in-out-cubic);
         }
 
-        #toolbar {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);
-            background-color: rgba(25, 25, 40, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 12px;
-            width: auto;
-            padding: 10px;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color);
-            display: flex;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s var(--ease-in-out-cubic), transform 0.4s var(--ease-in-out-cubic);
-        }
-
-        #toolbar.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        #toolbar-content {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .toolbar-section {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-            width: 100%;
-        }
-
-        .toolbar-separator {
-            height: 1px;
-            width: 80%;
-            background-color: var(--border-color);
-            margin: 4px 0;
-        }
-
-        .tool-button-group {
+        #interactive-viewer .preview-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-red);
+            border-radius: 50%;
             display: flex;
             justify-content: center;
-            gap: 5px;
-            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s var(--ease-out-back);
         }
 
-        .tool-button {
-            background: transparent;
-            border: 2px solid transparent;
-            color: var(--light-text);
+        #interactive-viewer .preview-icon svg {
             width: 40px;
             height: 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s, border-color 0.2s;
-            padding: 0;
-        }
-
-        .tool-button svg {
-            width: 22px;
-            height: 22px;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-            transition: stroke 0.2s;
-            stroke: currentColor;
-            pointer-events: none;
-        }
-
-        .tool-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .tool-button.active {
-            border-color: var(--accent-gold);
-        }
-
-        #color-picker-container {
-            position: relative;
-        }
-
-        #color-picker-input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 40px;
-            height: 40px;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .color-palette {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 0 5px;
-        }
-
-        .color-swatch {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-
-        .color-swatch:hover {
-            transform: scale(1.15);
-        }
-
-        .color-swatch.active {
-            border-color: #fff;
-            transform: scale(1.15);
-        }
-
-        #toolbar-toggle {
-            position: absolute;
-            right: -20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 60px;
-            background-color: inherit;
-            border: 1px solid var(--border-color);
-            border-left: none;
-            border-radius: 0 10px 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        #toolbar-toggle svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--light-text);
-            transition: transform 0.3s var(--ease-in-out-cubic);
-        }
-
-        #toolbar.collapsed {
-            transform: translate(calc(-100% - 10px), -50%);
-        }
-
-        #toolbar.collapsed #toolbar-toggle svg {
-            transform: rotate(180deg);
-        }
-
-        .slider-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            width: 100%;
-            color: var(--light-text);
-            font-size: 0.8rem;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 5px;
-        }
-
-        input[type="range"] {
-            width: 120px;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 5px;
-            background: #555;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            background: var(--primary-red);
-            border-radius: 50%;
-        }
-
-        .opacity-container {
-            display: none;
-        }
-
-        .opacity-container.visible {
-            display: flex;
-        }
-
-        .viewer-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-
-        .viewer-nav-btn {
-            background: var(--primary-red);
-            border: none;
             color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
+        }
+
+        #interactive-viewer .preview-text {
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 1.2rem;
-            transition: background-color 0.2s, transform 0.2s var(--ease-out-back);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            text-shadow: 0 2px 10px black;
         }
 
-        .viewer-nav-btn:hover {
-            background-color: #d62828;
-            transform: scale(1.05);
-        }
-
-        .viewer-nav-btn:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        #page-indicator {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .viewer-nav-btn#download-btn {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s var(--ease-in-out-cubic);
-        }
-
-        .viewer-nav-btn#download-btn .spinner {
-            animation: rotate 2s linear infinite;
-            width: 24px;
-            height: 24px;
-        }
-
-        .viewer-nav-btn#download-btn .spinner .path {
-            stroke: #FFF;
-            stroke-linecap: round;
-            animation: dash 1.5s ease-in-out infinite;
-        }
-
-        @keyframes rotate {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes dash {
-            0% {
-                stroke-dasharray: 1, 150;
-                stroke-dashoffset: 0;
-            }
-
-            50% {
-                stroke-dasharray: 90, 150;
-                stroke-dashoffset: -35;
-            }
-
-            100% {
-                stroke-dasharray: 90, 150;
-                stroke-dashoffset: -124;
-            }
-        }
-
-        .viewer-nav-btn#download-btn.downloading {
-            background-color: #0077B6;
-            transform: scale(1.05);
-        }
-
-        .viewer-nav-btn#download-btn.success {
-            background-color: #00A878;
-        }
 
         /* --- Simulacro Section --- */
         #simulacro {
             text-align: center;
             background-color: var(--dark-bg-alt);
         }
+
         .simulacro-card {
             display: grid;
             grid-template-columns: 1fr;
@@ -943,7 +654,7 @@
             padding: 40px;
             border-radius: 15px;
             border: 1px solid transparent;
-            background: 
+            background:
                 linear-gradient(var(--dark-bg-alt), var(--dark-bg-alt)) padding-box,
                 linear-gradient(145deg, var(--accent-gold), var(--primary-red)) border-box;
             max-width: 800px;
@@ -952,36 +663,38 @@
         }
 
         .simulacro-icon {
-            display: none; /* Oculto en móviles para dar prioridad al texto */
+            display: none;
+            /* Oculto en móviles para dar prioridad al texto */
         }
 
         .simulacro-card h3 {
             text-align: left;
             margin-bottom: 15px;
         }
-        
+
         .simulacro-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             margin-top: 20px;
         }
-        
+
         .thank-you-button {
             background: #25D366;
         }
-        
+
         #simulacro p {
             max-width: 100%;
             margin: 0 auto 0 0;
             text-align: left;
         }
-        
+
         @media(min-width: 768px) {
             .simulacro-card {
                 grid-template-columns: auto 1fr;
                 gap: 40px;
             }
+
             .simulacro-icon {
                 display: block;
                 color: var(--accent-gold);
@@ -996,9 +709,11 @@
             background: var(--dark-bg-end);
             overflow: hidden;
         }
+
         #whatsapp .section-divider .shape-fill {
             fill: var(--dark-bg-end);
         }
+
         .whatsapp-card {
             display: flex;
             flex-direction: column;
@@ -1013,6 +728,7 @@
             margin: 40px auto 0 auto;
             box-shadow: 0 0 40px rgba(37, 211, 102, 0.1);
         }
+
         .whatsapp-icon {
             width: 80px;
             height: 80px;
@@ -1023,13 +739,16 @@
             padding: 5px;
             box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
         }
+
         .whatsapp-card h2 {
             margin-top: 50px;
         }
+
         .whatsapp-card p {
             max-width: 500px;
             margin-bottom: 30px;
         }
+
         .whatsapp-button {
             background: #25D366;
             color: white;
@@ -1038,10 +757,12 @@
             align-items: center;
             gap: 10px;
         }
+
         .whatsapp-button:hover {
             background: #128C7E;
             box-shadow: 0 0 30px rgba(18, 140, 126, 0.6);
         }
+
         .whatsapp-button img {
             width: 24px;
             height: 24px;
@@ -1553,7 +1274,8 @@
                 <span>S</span><span>e</span><span>a</span><span>m</span><span>o</span><span>s</span><span
                     class="logo-accent">G</span><span class="logo-accent">e</span><span
                     class="logo-accent">n</span><span class="logo-accent">i</span><span
-                    class="logo-accent">o</span><span class="logo-accent">s</span></h1>
+                    class="logo-accent">o</span><span class="logo-accent">s</span>
+            </h1>
             <div class="loading-dots">
                 <div></div>
                 <div></div>
@@ -1573,7 +1295,7 @@
             <div class="nav-links">
                 <a href="#hero">Inicio</a>
                 <a href="#benefits">Beneficios</a>
-                <a href="#interactive-viewer">Material</a>
+                <a href="#interactive-viewer">Plataforma</a>
                 <a href="#simulacro">Simulacro</a>
                 <a href="#whatsapp">WhatsApp</a>
                 <a href="#testimonials">Testimonios</a>
@@ -1648,168 +1370,65 @@
                 </div>
             </section>
 
+            <!-- SECCIÓN DEL VISOR INTERACTIVO ACTUALIZADA -->
             <section id="interactive-viewer" class="animate-on-scroll">
                 <div class="container">
-                    <h2>Prueba Nuestro <span>Material</span> Interactivo</h2>
+                    <h2>Plataforma de Estudio <span>Profesional</span></h2>
                     <div class="instructions">
-                        <p><strong>Material Gratuito:</strong><br>
-                            Interactúa con una muestra de nuestro material. Usa los botones de navegación para cambiar
-                            de página y activa el modo de dibujo para tomar apuntes.</p>
+                        <p><strong>Haz clic para explorar el material.</strong><br>
+                            Abre nuestra plataforma interactiva para tomar apuntes, hacer zoom y descargar las páginas
+                            con tus anotaciones. ¡Una experiencia de estudio completa a tu alcance!</p>
                     </div>
                     <div id="viewer-wrapper">
-                        <div id="viewer-container">
-                            <div id="canvas-container">
-                                <img id="image-viewer" alt="Material de estudio página 1">
-                                <canvas id="drawing-canvas"></canvas>
-                            </div>
-                            <div id="viewer-error-overlay">
-                                <h3 style="color: var(--primary-red);">Error al Cargar Material</h3>
-                                <p>No pudimos cargar la imagen. Asegúrate de que los archivos (1.svg, 2.svg, etc.) se
-                                    encuentren en la carpeta `img`.</p>
+                        <div class="preview-container" id="open-drawing-platform-preview">
+                            <img src="https://images.prismic.io/seamosgenios2026/aMSyKmGNHVfTPKQv_SEAMOSGENIOS2025.png?auto=format,compress"
+                                alt="Vista previa de la plataforma de dibujo" class="preview-image">
+                            <div class="preview-overlay">
+                                <div class="preview-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 19l7-7-7-7m-5 14l7-7-7-7" />
+                                    </svg>
+                                </div>
+                                <div class="preview-text">Abrir Material Interactivo</div>
                             </div>
                         </div>
-                        <div id="toolbar">
-                            <div id="toolbar-content">
-                                <div class="toolbar-section">
-                                    <div class="tool-button-group">
-                                        <button class="tool-button" id="fountainpen-btn" title="Pluma"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M20.7,5.2a1.7,1.7,0,0,0-2.4,0L9.6,13.9,7.1,11.4a1.7,1.7,0,0,0-2.4,0,1.7,1.7,0,0,0,0,2.4L9.6,18.7,2,22l3.3-7.6,12-12A1.7,1.7,0,0,0,20.7,5.2Z"
-                                                    fill="currentColor"></path>
-                                                <path
-                                                    d="M18.3,2.8a1.7,1.7,0,0,0-2.4,0L15,3.7l4.9,4.9,1-1a1.7,1.7,0,0,0,0-2.4Z"
-                                                    fill="currentColor"></path>
-                                            </svg></button>
-                                        <button class="tool-button" id="pen-btn" title="Lápiz"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
-                                                </path>
-                                            </svg></button>
-                                        <button class="tool-button" id="highlighter-btn" title="Resaltador"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M21,11.5,12.5,3h0a1.7,1.7,0,0,0-2.4,0L3,10.1a1.7,1.7,0,0,0,0,2.4l8.5,8.5h0a1.7,1.7,0,0,0,2.4,0L21,13.9a1.7,1.7,0,0,0,0-2.4Z"
-                                                    fill="currentColor"></path>
-                                                <path d="M7.1,15.8l-4,4" stroke="currentColor" stroke-width="1.5">
-                                                </path>
-                                            </svg></button>
-                                        <button class="tool-button" id="line-btn" title="Línea Recta"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <line x1="5" y1="19" x2="19" y2="5"></line>
-                                            </svg></button>
-                                        <button class="tool-button" id="eraser-btn" title="Borrador"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M2.929 17.071 16.5 3.5a2.121 2.121 0 0 1 3 3L5.929 20.071a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414zM15 4l5 5">
-                                                </path>
-                                            </svg></button>
-                                    </div>
-                                </div>
-                                <div class="toolbar-separator"></div>
-                                <div class="toolbar-section" id="color-picker-container">
-                                    <div class="tool-button-group">
-                                        <label for="color-picker-input" class="tool-button" title="Elegir color">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"></path>
-                                            </svg>
-                                        </label>
-                                        <input type="color" id="color-picker-input" value="#FE3A2D">
-                                    </div>
-                                    <div class="color-palette">
-                                        <div class="color-swatch active" style="background-color: #FE3A2D;"
-                                            data-color="#FE3A2D"></div>
-                                        <div class="color-swatch" style="background-color: #FFC300;"
-                                            data-color="#FFC300"></div>
-                                        <div class="color-swatch" style="background-color: #00A878;"
-                                            data-color="#00A878"></div>
-                                        <div class="color-swatch" style="background-color: #0077B6;"
-                                            data-color="#0077B6"></div>
-                                        <div class="color-swatch" style="background-color: #9B5DE5;"
-                                            data-color="#9B5DE5"></div>
-                                        <div class="color-swatch" style="background-color: #FFFFFF;"
-                                            data-color="#FFFFFF"></div>
-                                    </div>
-                                </div>
-                                <div class="toolbar-separator"></div>
-                                <div class="toolbar-section">
-                                    <div class="slider-container">
-                                        <div class="slider-label"><span>1</span><span>50</span></div><input type="range"
-                                            id="thickness-slider" min="1" max="50" value="5" title="Grosor">
-                                    </div>
-                                    <div class="slider-container opacity-container">
-                                        <div class="slider-label"><span>10%</span><span>100%</span></div><input
-                                            type="range" id="opacity-slider" min="0.1" max="1" value="0.5" step="0.1"
-                                            title="Opacidad">
-                                    </div>
-                                </div>
-                                <div class="toolbar-separator"></div>
-                                <div class="toolbar-section">
-                                    <div class="tool-button-group">
-                                        <button class="tool-button" id="undo-btn" title="Deshacer"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M3 7v6h6" />
-                                                <path d="M21 17a9 9 0 0 0-9-15 9 9 0 0 0-6 2.3L3 13" />
-                                            </svg></button>
-                                        <button class="tool-button" id="clear-btn" title="Limpiar"><svg
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M3 6h18" />
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                                <line x1="10" x2="10" y1="11" y2="17" />
-                                                <line x1="14" x2="14" y1="11" y2="17" />
-                                            </svg></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="toolbar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg></div>
-                        </div>
-                    </div>
-                    <div class="viewer-nav">
-                        <button id="prev-btn" class="viewer-nav-btn">&lt; Anterior</button>
-                        <span id="page-indicator">Página 1 / 15</span>
-                        <button id="next-btn" class="viewer-nav-btn">Siguiente &gt;</button>
-                        <button id="download-btn" class="viewer-nav-btn" title="Descargar Página con Apuntes">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                <polyline points="7 10 12 15 17 10" />
-                                <line x1="12" y1="15" x2="12" y2="3" />
-                            </svg>
-                            <span>Descargar</span>
-                        </button>
                     </div>
                 </div>
             </section>
 
             <section id="simulacro" class="animate-on-scroll">
                 <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path
-                        d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-                        class="shape-fill"></path>
-                </svg></div>
+                        viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path
+                            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+                            class="shape-fill"></path>
+                    </svg></div>
                 <div class="container">
                     <h2>¿Listo para el <span>Reto</span>?</h2>
                     <div class="simulacro-card">
                         <div class="simulacro-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2">
+                                </path>
                                 <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                                 <path d="m9 14 2 2 4-4"></path>
                             </svg>
                         </div>
                         <div class="simulacro-text">
                             <h3>Envía tus Respuestas de la primera sesión</h3>
-                            <p>Ahora que has interactuado con nuestro material, utiliza la hoja de respuestas para resolver las preguntas. ¡Es una excelente forma de medir tus conocimientos iniciales!</p>
-                             <div class="simulacro-buttons">
-                                 <!-- Recuerda cambiar este enlace por el de tu formulario de Google -->
-                                <a href="https://forms.gle/NQwmDp4gfmyfNpAZ8" class="cta-button" target="_blank">Ir a Hoja de Respuestas</a>
-                                <a href="https://wa.me/573042359048" class="cta-button thank-you-button" target="_blank">Agradecer</a>
-                             </div>
+                            <p>Ahora que has interactuado con nuestro material, utiliza la hoja de respuestas para
+                                resolver las preguntas. ¡Es una excelente forma de medir tus conocimientos iniciales!
+                            </p>
+                            <div class="simulacro-buttons">
+                                <!-- Recuerda cambiar este enlace por el de tu formulario de Google -->
+                                <a href="https://forms.gle/NQwmDp4gfmyfNpAZ8" class="cta-button" target="_blank">Ir a
+                                    Hoja de Respuestas</a>
+                                <a href="https://wa.me/573042359048" class="cta-button thank-you-button"
+                                    target="_blank">Agradecer</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1818,11 +1437,15 @@
             <section id="whatsapp" class="animate-on-scroll">
                 <div class="container">
                     <div class="whatsapp-card">
-                        <img src="https://images.prismic.io/scopegenius/aJ_53KTt2nPbaYCg_wpp.png?auto=format,compress" alt="WhatsApp Icon" class="whatsapp-icon">
+                        <img src="https://images.prismic.io/scopegenius/aJ_53KTt2nPbaYCg_wpp.png?auto=format,compress"
+                            alt="WhatsApp Icon" class="whatsapp-icon">
                         <h2>Únete al Canal de <span>WhatsApp</span></h2>
-                        <p>Recibe notificaciones, material exclusivo, y resuelve tus dudas directamente con nuestros tutores. ¡No te quedes por fuera!</p>
-                        <a href="https://whatsapp.com/channel/0029Va4PUxRFHWpywWL6Tw3F" class="cta-button whatsapp-button" target="_blank">
-                            <img src="https://images.prismic.io/scopegenius/aJ_53KTt2nPbaYCg_wpp.png?auto=format,compress" alt="WhatsApp Icon">
+                        <p>Recibe notificaciones, material exclusivo, y resuelve tus dudas directamente con nuestros
+                            tutores. ¡No te quedes por fuera!</p>
+                        <a href="https://whatsapp.com/channel/0029Va4PUxRFHWpywWL6Tw3F"
+                            class="cta-button whatsapp-button" target="_blank">
+                            <img src="https://images.prismic.io/scopegenius/aJ_53KTt2nPbaYCg_wpp.png?auto=format,compress"
+                                alt="WhatsApp Icon">
                             <span>Unirme al Canal</span>
                         </a>
                     </div>
@@ -1900,7 +1523,7 @@
             </section>
 
             <section id="pricing" class="animate-on-scroll">
-                 <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                <div class="section-divider"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 1200 120" preserveAspectRatio="none">
                         <path
                             d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
@@ -1936,7 +1559,8 @@
                         <div class="faq-question-card" data-question="¿Cuáles son los métodos de pago?">
                             ¿Cuáles son los métodos de pago?
                             <div style="display: none;" class="faq-answer-content">
-                                <p>Aceptamos pagos a través de Nequi, Daviplata, Bancolombia o cualquier billetera virtual vigente. Una vez
+                                <p>Aceptamos pagos a través de Nequi, Daviplata, Bancolombia o cualquier billetera
+                                    virtual vigente. Una vez
                                     te pongas en contacto, te daremos toda la información detallada para que elijas el
                                     método que más te convenga.</p>
                             </div>
@@ -1978,16 +1602,42 @@
             </div>
 
         </main>
+
+        <!-- MODAL PARA LA PLATAFORMA DE DIBUJO FLOTANTE -->
+        <div id="drawing-modal-overlay"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);">
+            <div id="drawing-modal-content"
+                style="position: relative; width: 100%; height: 100%; background-color: #f0f2f5; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;">
+                <button id="drawing-modal-close"
+                    style="position: absolute; top: 15px; right: 15px; z-index: 10001; background: rgba(255,255,255,0.8); color: #333; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s, transform 0.2s; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">&times;</button>
+                <iframe src="plataforma_dibujo.html" style="width: 100%; height: 100%; border: none;"
+                    title="Plataforma de Dibujo Profesional"></iframe>
+            </div>
+        </div>
+        
+        <!-- Modal de Confirmación de Cierre -->
+        <div id="confirm-close-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+            <div style="background: #111; color: white; padding: 2rem; border-radius: 1rem; text-align: center; max-width: 90%; width: 400px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="margin-top: 0; font-size: 1.5rem;">¿Seguro que quieres salir?</h3>
+                <p style="margin-bottom: 1.5rem;">El progreso no guardado se perderá.</p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <button id="confirm-close-cancel" class="cta-button" style="background: #444;">Cancelar</button>
+                    <button id="confirm-close-confirm" class="cta-button">Salir</button>
+                </div>
+            </div>
+        </div>
+
+
         <div class="fab-container">
             <div class="fab-actions">
-                <button id="fab-draw-mode" class="fab-action" title="Anotar / Navegar"><svg class="icon-draw"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                <a href="https://wa.me/573042797630?text=Hola,%20estoy%20interesado%20en%20el%20Calendario%20de%20Genios."
+                    class="fab-action" target="_blank" title="WhatsApp" style="background-color: #25D366;"><svg
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
-                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                    </svg><svg class="icon-navigate" style="display: none;" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
-                    </svg></button>
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                        </path>
+                    </svg></a>
                 <a href="#pricing" class="fab-action" title="Inscribirse"><svg viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
@@ -2014,405 +1664,83 @@
     <script async src="https://www.tiktok.com/embed.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Security Measures to prevent inspection and printing ---
+            // --- Medidas de Seguridad ---
             document.addEventListener('contextmenu', event => event.preventDefault());
             document.addEventListener('keydown', e => {
-                // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
                 if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
                     e.preventDefault();
                     showToast('Función deshabilitada por seguridad.');
                 }
-                // Block Ctrl+P
                 if (e.ctrlKey && e.keyCode === 80) {
                     e.preventDefault();
                     showToast('La impresión está deshabilitada.');
                 }
             });
 
+            // --- Lógica General de la Página ---
             const preloader = document.getElementById('preloader');
-            const fabContainer = document.querySelector('.fab-container');
-            const fabDrawBtn = document.getElementById('fab-draw-mode');
-            const imageViewer = document.getElementById('image-viewer');
-            const drawingCanvas = document.getElementById('drawing-canvas');
-            const drawCtx = drawingCanvas.getContext('2d');
-            const toolbar = document.getElementById('toolbar');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const pageIndicator = document.getElementById('page-indicator');
-            const viewerContainer = document.getElementById('viewer-container');
-            const canvasContainer = document.getElementById('canvas-container');
-            const viewerErrorOverlay = document.getElementById('viewer-error-overlay');
-            const thicknessSlider = document.getElementById('thickness-slider');
-            const opacitySlider = document.getElementById('opacity-slider');
-            const opacityContainer = document.querySelector('.opacity-container');
-            const downloadBtn = document.getElementById('download-btn');
-            const colorPickerInput = document.getElementById('color-picker-input');
-
-            // --- Configuration for Image Viewer ---
-            const totalImagePages = 43; // Set the total number of images you have
-            const imagePathPrefix = 'img/';
-            const imageExtension = '.svg';
-            let currentPage = 1;
-
-            let isDrawingMode = false, isDrawing = false, currentTool = 'pen';
-            let historyPerPage = {}, drawingsData = {}, lastPos = { x: 0, y: 0 };
-            let lastTimestamp = 0, lastLineWidth = 0;
-            let lineStartX = 0, lineStartY = 0, canvasSnapshot = null;
-
-            function loadImagePage(pageNum) {
-                pageIndicator.textContent = `Cargando...`;
-                prevBtn.disabled = true;
-                nextBtn.disabled = true;
-
-                const img = new Image();
-                img.src = `${imagePathPrefix}${pageNum}${imageExtension}`;
-
-                img.onload = () => {
-                    imageViewer.src = img.src;
-                    // Resize canvas to match the image's natural dimensions for high-quality drawing
-                    drawingCanvas.width = img.naturalWidth;
-                    drawingCanvas.height = img.naturalHeight;
-
-                    loadDrawingForPage(pageNum);
-                    updateNav();
-                    viewerErrorOverlay.style.display = 'none';
-                };
-
-                img.onerror = () => {
-                    console.error(`Error loading image: ${img.src}`);
-                    viewerErrorOverlay.style.display = 'flex';
-                    pageIndicator.textContent = "Error";
-                };
-            }
-
-            function updateNav() {
-                pageIndicator.textContent = `Página ${currentPage} / ${totalImagePages}`;
-                prevBtn.disabled = currentPage <= 1;
-                nextBtn.disabled = currentPage >= totalImagePages;
-            }
-
-            function changePage(offset) {
-                const newPage = currentPage + offset;
-                if (newPage > 0 && newPage <= totalImagePages) {
-                    saveCurrentDrawing();
-                    currentPage = newPage;
-                    loadImagePage(currentPage);
-                }
-            }
-
-            prevBtn.addEventListener('click', () => changePage(-1));
-            nextBtn.addEventListener('click', () => changePage(1));
-
-            // --- Drawing and Annotation Logic (Adapted for Image Viewer) ---
-
-            function loadDrawingsFromStorage() {
-                try {
-                    const saved = localStorage.getItem('seamosGeniosDrawings');
-                    drawingsData = saved ? JSON.parse(saved) : {};
-                } catch (e) { console.error("Error loading drawings:", e); }
-            }
-
-            function loadDrawingForPage(pageNum) {
-                drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-                const savedDrawingSrc = drawingsData[pageNum];
-                if (savedDrawingSrc) {
-                    const img = new Image();
-                    img.src = savedDrawingSrc;
-                    img.onload = () => {
-                        drawCtx.drawImage(img, 0, 0, drawingCanvas.width, drawingCanvas.height);
-                    }
-                }
-                historyPerPage[pageNum] = historyPerPage[pageNum] || [];
-                saveState();
-            }
-
-            function saveCurrentDrawing() {
-                try {
-                    if (!isCanvasBlank(drawingCanvas)) {
-                        drawingsData[currentPage] = drawingCanvas.toDataURL();
-                    } else {
-                        delete drawingsData[currentPage];
-                    }
-                    localStorage.setItem('seamosGeniosDrawings', JSON.stringify(drawingsData));
-                } catch (e) { console.error("Error saving drawing:", e); }
-            }
-
-            function isCanvasBlank(canvas) {
-                if (!canvas || canvas.width === 0 || canvas.height === 0) return true;
-                return !canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
-            }
-
-            function getPos(e) {
-                const rect = drawingCanvas.getBoundingClientRect();
-                const touch = e.touches ? e.touches[0] : e;
-                // Adjust coordinates based on the displayed image size vs the canvas's natural size
-                const scaleX = drawingCanvas.width / rect.width;
-                const scaleY = drawingCanvas.height / rect.height;
-                return {
-                    x: (touch.clientX - rect.left) * scaleX,
-                    y: (touch.clientY - rect.top) * scaleY
-                };
-            }
-
-            function startDrawing(e) {
-                if (!isDrawingMode) return;
-                e.preventDefault();
-                isDrawing = true;
-                saveState();
-                lastPos = getPos(e);
-
-                if (currentTool === 'line') {
-                    lineStartX = lastPos.x;
-                    lineStartY = lastPos.y;
-                    canvasSnapshot = drawCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
-                } else {
-                    lastTimestamp = performance.now();
-                    lastLineWidth = drawCtx.lineWidth;
-                    drawCtx.beginPath();
-                    drawCtx.moveTo(lastPos.x, lastPos.y);
-                }
-            }
-
-            function draw(e) {
-                if (!isDrawing || !isDrawingMode) return;
-                e.preventDefault();
-                const currentPos = getPos(e);
-
-                if (currentTool === 'line') {
-                    if (canvasSnapshot) drawCtx.putImageData(canvasSnapshot, 0, 0);
-                    drawCtx.beginPath();
-                    drawCtx.moveTo(lineStartX, lineStartY);
-                    drawCtx.lineTo(currentPos.x, currentPos.y);
-                    drawCtx.stroke();
-                    drawCtx.closePath();
-                } else {
-                    const now = performance.now();
-                    if (currentTool === 'fountainpen') {
-                        const time = now - lastTimestamp;
-                        const distance = Math.hypot(currentPos.x - lastPos.x, currentPos.y - lastPos.y);
-                        const speed = time > 10 ? distance / time : 0;
-                        const baseWidth = parseFloat(thicknessSlider.value), minWidth = baseWidth / 4;
-                        const newLineWidth = Math.max(minWidth, baseWidth - (speed * 1.5));
-                        drawCtx.lineWidth = lastLineWidth * 0.7 + newLineWidth * 0.3;
-                        lastLineWidth = drawCtx.lineWidth;
-                    }
-                    drawCtx.lineTo(currentPos.x, currentPos.y);
-                    drawCtx.stroke();
-                    lastPos = currentPos;
-                    lastTimestamp = now;
-                }
-            }
-
-            function stopDrawing(e) {
-                if (!isDrawing) return;
-                isDrawing = false;
-
-                if (currentTool === 'line') {
-                    if (canvasSnapshot) drawCtx.putImageData(canvasSnapshot, 0, 0);
-                    const endPos = (e && (e.type === 'touchend' || e.type === 'mouseup')) ? getPos(e.changedTouches ? e.changedTouches[0] : e) : lastPos;
-                    drawCtx.beginPath();
-                    drawCtx.moveTo(lineStartX, lineStartY);
-                    drawCtx.lineTo(endPos.x, endPos.y);
-                    drawCtx.stroke();
-                    drawCtx.closePath();
-                    canvasSnapshot = null;
-                } else {
-                    drawCtx.closePath();
-                }
-                saveCurrentDrawing();
-            }
-
-            drawingCanvas.addEventListener('mousedown', startDrawing);
-            drawingCanvas.addEventListener('mousemove', draw);
-            window.addEventListener('mouseup', stopDrawing);
-            drawingCanvas.addEventListener('touchstart', startDrawing, { passive: false });
-            drawingCanvas.addEventListener('touchmove', draw, { passive: false });
-            window.addEventListener('touchend', stopDrawing);
-
-            function saveState() {
-                const pageHistory = historyPerPage[currentPage] || [];
-                if (pageHistory.length > 20) pageHistory.shift();
-                pageHistory.push(drawCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height));
-                historyPerPage[currentPage] = pageHistory;
-            }
-
-            function undoLast() {
-                const pageHistory = historyPerPage[currentPage];
-                if (pageHistory && pageHistory.length > 1) {
-                    pageHistory.pop();
-                    drawCtx.putImageData(pageHistory[pageHistory.length - 1], 0, 0);
-                    saveCurrentDrawing();
-                } else { clearCanvas(); }
-            }
-
-            function clearCanvas() {
-                drawCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-                historyPerPage[currentPage] = [];
-                delete drawingsData[currentPage];
-                saveCurrentDrawing(); saveState();
-            }
-
-            function setTool(toolId) {
-                currentTool = toolId.replace('-btn', '');
-                let color = colorPickerInput.value;
-                drawCtx.lineWidth = thicknessSlider.value;
-                drawCtx.globalCompositeOperation = 'source-over';
-                drawCtx.lineJoin = 'round'; drawCtx.lineCap = 'round';
-
-                opacityContainer.classList.toggle('visible', currentTool === 'highlighter');
-
-                if (currentTool === 'highlighter') {
-                    drawCtx.globalCompositeOperation = 'multiply';
-                    drawCtx.strokeStyle = hexToRgba(color, opacitySlider.value);
-                } else if (currentTool === 'eraser') {
-                    drawCtx.globalCompositeOperation = 'destination-out';
-                    drawCtx.strokeStyle = 'rgba(0,0,0,1)';
-                } else {
-                    drawCtx.strokeStyle = color;
-                }
-                activateToolButton(document.getElementById(toolId));
-            }
-
-            document.querySelectorAll('.tool-button').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const id = btn.id;
-                    if (id === 'undo-btn') undoLast();
-                    else if (id === 'clear-btn') clearCanvas();
-                    else setTool(id);
-                });
-            });
-
-            colorPickerInput.addEventListener('input', () => {
-                document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-                setTool(currentTool + '-btn');
-            });
-
-            document.querySelectorAll('.color-swatch').forEach(swatch => {
-                swatch.addEventListener('click', (e) => {
-                    const color = e.currentTarget.dataset.color;
-                    colorPickerInput.value = color;
-                    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-                    e.currentTarget.classList.add('active');
-                    setTool(currentTool + '-btn');
-                });
-            });
-
-            thicknessSlider.addEventListener('input', () => setTool(currentTool + '-btn'));
-            opacitySlider.addEventListener('input', () => setTool(currentTool + '-btn'));
-
-            document.getElementById('toolbar-toggle').addEventListener('click', () => toolbar.classList.toggle('collapsed'));
-
-            function toggleDrawingMode() {
-                isDrawingMode = !isDrawingMode;
-                drawingCanvas.style.pointerEvents = isDrawingMode ? 'auto' : 'none';
-                toolbar.classList.toggle('visible', isDrawingMode);
-                const iconDraw = fabDrawBtn.querySelector('.icon-draw');
-                const iconNavigate = fabDrawBtn.querySelector('.icon-navigate');
-                if (isDrawingMode) {
-                    setTool('pen-btn');
-                    document.getElementById('interactive-viewer').scrollIntoView({ behavior: 'smooth' });
-                    showToast('Modo Anotación Activado');
-                    iconDraw.style.display = 'none'; iconNavigate.style.display = 'block';
-                } else {
-                    showToast('Modo Navegación Activado');
-                    iconDraw.style.display = 'block'; iconNavigate.style.display = 'none';
-                }
-            }
-            fabDrawBtn.addEventListener('click', toggleDrawingMode);
-
-            async function downloadPageAsPNG() {
-                if (downloadBtn.classList.contains('downloading')) return;
-                const originalContent = downloadBtn.innerHTML;
-
-                try {
-                    downloadBtn.classList.add('downloading');
-                    downloadBtn.innerHTML = `<svg class="spinner" viewBox="0 0 50 50"><circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle></svg><span>Generando...</span>`;
-                    downloadBtn.disabled = true;
-                    await new Promise(resolve => setTimeout(resolve, 50));
-
-                    const offscreenCanvas = document.createElement('canvas');
-                    offscreenCanvas.width = drawingCanvas.width;
-                    offscreenCanvas.height = drawingCanvas.height;
-                    const offscreenCtx = offscreenCanvas.getContext('2d');
-                    offscreenCtx.fillStyle = '#FFFFFF';
-                    offscreenCtx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
-                    offscreenCtx.drawImage(imageViewer, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
-                    offscreenCtx.drawImage(drawingCanvas, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
-
-                    offscreenCanvas.toBlob(blob => {
-                        const link = document.createElement('a');
-                        link.download = `SeamosGenios-Pagina-${currentPage}.png`;
-                        link.href = URL.createObjectURL(blob);
-                        link.click();
-                        URL.revokeObjectURL(link.href);
-
-                        downloadBtn.classList.remove('downloading');
-                        downloadBtn.classList.add('success');
-                        downloadBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>¡Listo!</span>`;
-                        showToast(`Página ${currentPage} descargada.`);
-                    }, 'image/png');
-
-                } catch (error) {
-                    console.error("Failed to generate download:", error);
-                    showToast("Error al generar la descarga.");
-                    downloadBtn.classList.remove('downloading');
-                    downloadBtn.innerHTML = originalContent;
-                } finally {
-                    setTimeout(() => {
-                        downloadBtn.classList.remove('success');
-                        downloadBtn.disabled = false;
-                        downloadBtn.innerHTML = originalContent;
-                    }, 2500);
-                }
-            }
-            downloadBtn.addEventListener('click', downloadPageAsPNG);
-
-            const hexToRgba = (hex, alpha) => `rgba(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`;
-            function activateToolButton(selectedTool) {
-                if (!selectedTool) return;
-                document.querySelectorAll('#toolbar .tool-button').forEach(btn => {
-                    if (btn.parentElement.classList.contains('tool-button-group') && !btn.parentElement.id) {
-                        btn.classList.remove('active');
-                    }
-                });
-                selectedTool.classList.add('active');
-            }
-
-            function initializeToolbar() { setTool('pen-btn'); }
-            initializeToolbar();
-
-            // --- General Page Logic ---
             const minPreloaderTime = 2500;
             const preloaderStartTime = Date.now();
-            function hidePreloader() { const elapsedTime = Date.now() - preloaderStartTime; const remainingTime = Math.max(0, minPreloaderTime - elapsedTime); setTimeout(() => { preloader.classList.add('loaded'); document.body.classList.remove('loading'); }, remainingTime); }
-            window.addEventListener('load', () => {
-                hidePreloader();
-                loadImagePage(1); // Load the first image page once everything else is ready
-                loadDrawingsFromStorage();
-            });
-            setTimeout(hidePreloader, 10000); // Failsafe
 
-            function showToast(message) { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className = 'toast-notification'; t.textContent = message; c.appendChild(t); setTimeout(() => t.classList.add('show'), 10); setTimeout(() => { t.classList.remove('show'); setTimeout(() => c.removeChild(t), 300); }, 4000); }
-            const fabObserver = new IntersectionObserver(e => { e.forEach(en => fabContainer.classList.toggle('visible', en.isIntersecting)); }, { threshold: 0.1 });
-            fabObserver.observe(document.getElementById('interactive-viewer'));
+            function hidePreloader() {
+                const elapsedTime = Date.now() - preloaderStartTime;
+                const remainingTime = Math.max(0, minPreloaderTime - elapsedTime);
+                setTimeout(() => {
+                    preloader.classList.add('loaded');
+                    document.body.classList.remove('loading');
+                }, remainingTime);
+            }
 
-            const faqModal = document.getElementById('faq-modal'), faqModalQuestion = document.getElementById('faq-modal-question'), faqModalAnswer = document.getElementById('faq-modal-answer'), faqModalClose = document.getElementById('faq-modal-close');
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 10000); // Failsafe para ocultar el preloader
+
+            function showToast(message) {
+                const c = document.getElementById('toast-container');
+                const t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.textContent = message;
+                c.appendChild(t);
+                setTimeout(() => t.classList.add('show'), 10);
+                setTimeout(() => {
+                    t.classList.remove('show');
+                    setTimeout(() => c.removeChild(t), 300);
+                }, 4000);
+            }
+
+            const fabContainer = document.querySelector('.fab-container');
+            const fabObserver = new IntersectionObserver(e => {
+                e.forEach(en => fabContainer.classList.toggle('visible', en.isIntersecting));
+            }, { threshold: 0.1 });
+            fabObserver.observe(document.getElementById('benefits'));
+
+            const faqModal = document.getElementById('faq-modal'),
+                faqModalQuestion = document.getElementById('faq-modal-question'),
+                faqModalAnswer = document.getElementById('faq-modal-answer'),
+                faqModalClose = document.getElementById('faq-modal-close');
+
             function openFaqModal(question, answerHTML) {
                 faqModalQuestion.textContent = question;
                 faqModalAnswer.innerHTML = answerHTML;
                 faqModal.classList.add('visible');
                 document.body.classList.add('modal-open');
             }
+
             function closeFaqModal() {
                 faqModal.classList.remove('visible');
                 document.body.classList.remove('modal-open');
             }
+
             document.querySelectorAll('.faq-question-card').forEach(card => card.addEventListener('click', () => openFaqModal(card.dataset.question, card.querySelector('.faq-answer-content').innerHTML)));
             faqModal.addEventListener('click', e => { if (e.target === faqModal) closeFaqModal(); });
             faqModalClose.addEventListener('click', closeFaqModal);
 
-            const navLinks = document.querySelectorAll('.nav-links a'), sections = document.querySelectorAll('main section'), hamburger = document.querySelector('.hamburger-menu'), navMenu = document.querySelector('.nav-links'), mainNav = document.querySelector('.main-nav'), menuOverlay = document.getElementById('menu-overlay');
+            const navLinks = document.querySelectorAll('.nav-links a'),
+                sections = document.querySelectorAll('main section'),
+                hamburger = document.querySelector('.hamburger-menu'),
+                navMenu = document.querySelector('.nav-links'),
+                mainNav = document.querySelector('.main-nav'),
+                menuOverlay = document.getElementById('menu-overlay');
+
             function closeMobileMenu() {
                 if (navMenu.classList.contains('nav-open')) {
                     hamburger.classList.remove('toggled');
@@ -2421,26 +1749,87 @@
                     menuOverlay.classList.remove('visible');
                 }
             }
+
             hamburger.addEventListener('click', e => { e.stopPropagation(); navMenu.classList.toggle('nav-open'); hamburger.classList.toggle('toggled'); document.body.classList.toggle('nav-open'); menuOverlay.classList.toggle('visible'); });
             navLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
             menuOverlay.addEventListener('click', closeMobileMenu);
 
-            window.addEventListener('scroll', () => { let c = ''; sections.forEach(s => { if (pageYOffset >= s.offsetTop - 120) c = s.id; }); navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href').substring(1) === c)); mainNav.classList.toggle('scrolled', window.scrollY > 50); });
-            const fabMain = document.querySelector('.fab-main'); fabMain.addEventListener('click', e => { e.stopPropagation(); fabContainer.classList.toggle('active'); });
-            document.addEventListener('click', e => { if (fabContainer.classList.contains('active') && !fabContainer.contains(e.target)) fabContainer.classList.remove('active'); if (navMenu.classList.contains('nav-open') && !navMenu.contains(e.target) && !hamburger.contains(e.target)) closeMobileMenu(); });
-            document.querySelectorAll('.info-card, .simulacro-card').forEach(c => { c.onmousemove = e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mouse-x', `${e.clientX - r.left}px`); c.style.setProperty('--mouse-y', `${e.clientY - r.top}px`); }; });
-            const animObserver = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); animObserver.unobserve(en.target); } }); }, { threshold: 0.1 });
+            window.addEventListener('scroll', () => {
+                let c = '';
+                sections.forEach(s => { if (pageYOffset >= s.offsetTop - 120) c = s.id; });
+                navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href').substring(1) === c));
+                mainNav.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            const fabMain = document.querySelector('.fab-main');
+            fabMain.addEventListener('click', e => { e.stopPropagation(); fabContainer.classList.toggle('active'); });
+
+            document.addEventListener('click', e => {
+                if (fabContainer.classList.contains('active') && !fabContainer.contains(e.target)) fabContainer.classList.remove('active');
+                if (navMenu.classList.contains('nav-open') && !navMenu.contains(e.target) && !hamburger.contains(e.target)) closeMobileMenu();
+            });
+
+            document.querySelectorAll('.info-card, .simulacro-card').forEach(c => {
+                c.onmousemove = e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mouse-x', `${e.clientX - r.left}px`); c.style.setProperty('--mouse-y', `${e.clientY - r.top}px`); };
+            });
+
+            const animObserver = new IntersectionObserver(e => {
+                e.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); animObserver.unobserve(en.target); } });
+            }, { threshold: 0.1 });
             document.querySelectorAll('.animate-on-scroll').forEach(el => animObserver.observe(el));
 
-            const countdownDate = new Date("Octo 10, 2025 00:00:00").getTime();
-            const countdownFunc = setInterval(() => { const d = countdownDate - new Date().getTime(); const daysEl = document.getElementById("days"); if (daysEl) { daysEl.innerText = Math.floor(d / 864e5).toString().padStart(2, '0'); document.getElementById("hours").innerText = Math.floor((d % 864e5) / 36e5).toString().padStart(2, '0'); document.getElementById("minutes").innerText = Math.floor((d % 36e5) / 6e4).toString().padStart(2, '0'); document.getElementById("seconds").innerText = Math.floor((d % 6e4) / 1e3).toString().padStart(2, '0'); } if (d < 0) { clearInterval(countdownFunc); const timerEl = document.getElementById("countdown-timer"); if (timerEl) timerEl.innerHTML = "<p class='countdown-title'>¡La oferta ha terminado!</p>"; } }, 1000);
+            const countdownDate = new Date("Oct 10, 2025 00:00:00").getTime();
+            const countdownFunc = setInterval(() => {
+                const d = countdownDate - new Date().getTime();
+                const daysEl = document.getElementById("days");
+                if (daysEl) {
+                    daysEl.innerText = Math.floor(d / 864e5).toString().padStart(2, '0');
+                    document.getElementById("hours").innerText = Math.floor((d % 864e5) / 36e5).toString().padStart(2, '0');
+                    document.getElementById("minutes").innerText = Math.floor((d % 36e5) / 6e4).toString().padStart(2, '0');
+                    document.getElementById("seconds").innerText = Math.floor((d % 6e4) / 1e3).toString().padStart(2, '0');
+                }
+                if (d < 0) {
+                    clearInterval(countdownFunc);
+                    const timerEl = document.getElementById("countdown-timer");
+                    if (timerEl) timerEl.innerHTML = "<p class='countdown-title'>¡La oferta ha terminado!</p>";
+                }
+            }, 1000);
+
+            // --- Lógica del Modal de Dibujo (MEJORADA) ---
+            const openModalBtn = document.getElementById('open-drawing-platform-preview');
+            const closeModalBtn = document.getElementById('drawing-modal-close');
+            const modalOverlay = document.getElementById('drawing-modal-overlay');
+            const confirmModal = document.getElementById('confirm-close-modal');
+            const confirmBtn = document.getElementById('confirm-close-confirm');
+            const cancelBtn = document.getElementById('confirm-close-cancel');
+
+            openModalBtn.addEventListener('click', () => {
+                modalOverlay.style.display = 'flex';
+                document.body.classList.add('modal-open');
+            });
+
+            const closeModal = () => {
+                modalOverlay.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            };
+
+            const requestClose = () => {
+                confirmModal.style.display = 'flex';
+            };
+
+            closeModalBtn.addEventListener('click', requestClose);
+
+            cancelBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+            });
+
+            confirmBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+                closeModal();
+            });
+
         });
     </script>
 </body>
 
 </html>
-
-
-
-
-
