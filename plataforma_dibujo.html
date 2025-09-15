@@ -42,8 +42,11 @@
         .canvas-wrapper {
             position: absolute;
             top: 0;
+            /* Controlado por JS */
             left: 0;
+            /* Controlado por JS */
             transform-origin: 0 0;
+            /* Origen de la transformación para cálculos precisos */
         }
 
         canvas {
@@ -256,8 +259,10 @@
             padding: 0.25rem;
         }
 
+        /* Estilos de la Galería de Páginas */
         #page-gallery-modal {
             display: none;
+            /* Oculto por defecto */
             position: fixed;
             top: 0;
             left: 0;
@@ -313,6 +318,7 @@
             border-color: #3b82f6;
         }
 
+        /* Contenedor para la navegación y controles de vista */
         #bottom-controls {
             position: fixed;
             bottom: 1rem;
@@ -338,18 +344,21 @@
 
         /* --- ESTILOS PARA MÓVILES --- */
         @media (max-width: 768px) {
-            
+
+            /* Controles de Página y Zoom (Barra inferior principal) */
             #bottom-controls {
                 bottom: 0;
                 left: 0;
                 width: 100%;
                 transform: translateX(0);
+                /* Anular centrado de escritorio */
                 padding: 0.5rem;
                 background-color: rgba(255, 255, 255, 0.9);
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
                 box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
                 justify-content: space-between;
+                /* Distribuir controles de página y zoom */
                 border-top: 1px solid #e5e7eb;
                 border-radius: 0;
                 gap: 0.5rem;
@@ -362,37 +371,47 @@
                 gap: 0.25rem;
                 flex-shrink: 1;
             }
-             .control-panel .action-btn {
+
+            .control-panel .action-btn {
                 padding: 0.5rem;
             }
-             .control-panel .action-btn i {
+
+            .control-panel .action-btn i {
                 font-size: 1.5rem;
             }
+
             #page-indicator-input {
                 width: 50px;
                 font-size: 1rem;
             }
+
             #page-navigation {
                 flex-grow: 1;
                 justify-content: center;
             }
-             #view-controls {
+
+            #view-controls {
                 flex-grow: 1;
                 justify-content: center;
             }
 
+
+            /* Barra de Herramientas y Propiedades (Barra flotante secundaria) */
             #side-bar {
                 top: auto;
                 bottom: 70px;
+                /* Posicionada sobre la barra de controles inferior */
                 left: 50%;
                 transform: translateX(-50%);
                 width: calc(100% - 2rem);
                 max-width: 500px;
                 height: auto;
                 max-height: 45vh;
+                /* Limita la altura para no cubrir toda la pantalla */
                 overflow-y: auto;
+                /* Desplazamiento vertical para propiedades */
                 padding: 0.75rem;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             }
 
             #side-bar.mobile-hidden {
@@ -407,6 +426,7 @@
                 gap: 0.75rem;
             }
 
+            /* Hacer que los grupos de herramientas se desplacen horizontalmente */
             #tool-selection,
             #app-actions {
                 display: flex;
@@ -415,46 +435,62 @@
                 padding-bottom: 0.5rem;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-            }
-             #tool-selection::-webkit-scrollbar,
-             #app-actions::-webkit-scrollbar {
-                display: none;
+                /* Ocultar barra de scroll */
             }
 
+            #tool-selection::-webkit-scrollbar,
+            #app-actions::-webkit-scrollbar {
+                display: none;
+                /* Ocultar barra de scroll en Chrome/Safari */
+            }
+
+
+            /* Ocultar etiquetas de texto para ahorrar espacio */
             .sidebar-hidable {
                 display: none;
             }
 
             .action-btn {
                 flex-shrink: 0;
+                /* Evitar que los botones se encojan */
                 padding: 0.75rem;
                 justify-content: center;
             }
+
             .action-btn i {
                 font-size: 1.5rem;
             }
-            
-            #tool-selection .action-btn, #app-actions .action-btn {
+
+            #tool-selection .action-btn,
+            #app-actions .action-btn {
                 width: 50px;
                 height: 50px;
             }
 
+            /* Propiedades de Herramienta (Color, Grosor, etc.) */
             #tool-properties {
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
                 align-items: stretch;
             }
-            #color-controls, #custom-colors-container {
+
+            #color-controls,
+            #custom-colors-container {
                 align-items: center;
             }
-            #color-palette, #custom-colors-palette {
+
+            #color-palette,
+            #custom-colors-palette {
                 justify-content: center;
             }
 
-            #size-control, #opacity-control {
-               padding: 0 0.5rem;
+            #size-control,
+            #opacity-control {
+                padding: 0 0.5rem;
             }
+
+            /* Hacer los selectores deslizables más fáciles de tocar */
             .custom-slider::-webkit-slider-thumb {
                 width: 24px;
                 height: 24px;
@@ -465,6 +501,7 @@
                 height: 24px;
             }
 
+            /* Ocultar elementos de UI exclusivos de escritorio */
             #menu-toggle-container,
             #focus-mode {
                 display: none !important;
@@ -602,7 +639,8 @@
                     class="ph ph-grid-four text-2xl"></i></button>
         </div>
         <div class="control-panel md:hidden">
-             <button id="toggle-tools-btn" class="action-btn p-3 rounded-lg tool-btn active" title="Herramientas"><i class="ph ph-paint-brush-broad text-2xl"></i></button>
+            <button id="toggle-tools-btn" class="action-btn p-3 rounded-lg tool-btn active" title="Herramientas"><i
+                    class="ph ph-paint-brush-broad text-2xl"></i></button>
         </div>
         <div id="view-controls" class="control-panel">
             <button id="zoom-out-btn" class="action-btn p-3 rounded-lg" title="Alejar"><i
@@ -623,6 +661,7 @@
         <i class="ph ph-corners-in text-2xl"></i>
     </button>
 
+    <!-- Modal de la Galería de Páginas -->
     <div id="page-gallery-modal">
         <div class="gallery-content">
             <h2 class="text-2xl font-bold text-center mb-4">Galería de Páginas</h2>
@@ -633,6 +672,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Referencias a elementos del DOM ---
             const container = document.getElementById('canvasContainer');
             const canvasWrapper = document.querySelector('.canvas-wrapper');
             const mainCanvas = document.getElementById('drawingCanvas');
@@ -640,6 +680,7 @@
             const mainCtx = mainCanvas.getContext('2d');
             const tempCtx = tempCanvas.getContext('2d');
             const backgroundImage = document.getElementById('backgroundImage');
+
             const sideBar = document.getElementById('side-bar');
             const menuToggle = document.getElementById('menu-toggle');
             const toggleIcon = document.getElementById('toggle-icon');
@@ -675,16 +716,19 @@
             const zoomResetBtn = document.getElementById('zoom-reset-btn');
             const toggleToolsBtn = document.getElementById('toggle-tools-btn');
 
+
+            // --- Estado de la aplicación ---
             let isDrawing = false, currentTool = 'pan', currentStroke = [], startPos = {};
             const totalPages = 43, imagePath = 'img/';
             let currentPage = 1, drawingsData = {}, historyPerPage = {}, history = [], historyStep = -1;
             let customColors = [];
             const MAX_CUSTOM_COLORS = 12;
 
+            // --- Estado de Zoom y Desplazamiento ---
             let zoom = 1, panX = 0, panY = 0;
             let isPanning = false, panStart = { x: 0, y: 0 };
             const MAX_ZOOM = 5, MIN_ZOOM = 0.2;
-            let lastTouchDistance = null, touchCenter = null; 
+            let lastTouchDistance = null, touchCenter = null; // Para gestos táctiles
 
             const toolSettings = {
                 pan: {},
@@ -695,10 +739,22 @@
                 eraser: { size: 20, opacity: 1.0 }
             };
 
+            // --- Funciones de UI ---
+            function expandMenu() { sideBar.classList.remove('collapsed'); sideBar.style.width = '256px'; toggleIcon.classList.replace('ph-caret-circle-right', 'ph-caret-circle-left'); toggleText.textContent = 'Contraer'; }
+            function collapseMenu() { sideBar.classList.add('collapsed'); sideBar.style.width = '88px'; toggleIcon.classList.replace('ph-caret-circle-left', 'ph-caret-circle-right'); toggleText.textContent = 'Expandir'; }
+            function enterFocusMode() { sideBar.style.transform = 'translateY(-50%) translateX(-120%)'; exitFocusModeBtn.classList.remove('hidden'); }
+            function exitFocusMode() { sideBar.style.transform = 'translateY(-50%)'; exitFocusModeBtn.classList.add('hidden'); }
             function hexToRgbaString(hex, alpha) { if (!/^#[0-9A-F]{6}$/i.test(hex)) return `rgba(0,0,0,${alpha})`; const r = parseInt(hex.slice(1, 3), 16); const g = parseInt(hex.slice(3, 5), 16); const b = parseInt(hex.slice(5, 7), 16); return `rgba(${r}, ${g}, ${b}, ${alpha})`; }
-            
+
+            function updateActiveColorSwatch(color) {
+                document.querySelectorAll('.color-swatch').forEach(swatch => {
+                    swatch.classList.toggle('active', swatch.dataset.color.toLowerCase() === color.toLowerCase());
+                });
+            }
+
             function updateUIForTool(tool) {
                 container.classList.toggle('pan-tool-active', tool === 'pan');
+                if (tool !== 'pan') { updateCustomCursor(); } else { customCursor.style.display = 'none'; }
                 if (tool === 'pan') { return; }
                 const settings = toolSettings[tool];
                 brushSizeSlider.value = settings.size;
@@ -710,15 +766,30 @@
                     opacitySlider.value = settings.opacity; opacityValue.textContent = `${Math.round(settings.opacity * 100)}%`;
                     colorControls.style.display = 'flex'; opacityControl.style.display = 'block';
                     sizeControl.style.display = 'block'; colorPickerInput.value = settings.color;
-                    document.querySelectorAll('.color-swatch').forEach(swatch => {
-                       swatch.classList.toggle('active', swatch.dataset.color.toLowerCase() === settings.color.toLowerCase());
-                    });
+                    updateActiveColorSwatch(settings.color);
                 }
             }
 
+            function updateCustomCursor() {
+                if (currentTool === 'pan') { customCursor.style.display = 'none'; return; }
+                const settings = toolSettings[currentTool];
+                const size = settings.size * zoom;
+                const isPrecisionTool = ['line', 'rectangle'].includes(currentTool);
+                if (isPrecisionTool) {
+                    customCursor.style.display = 'none'; container.classList.add('cursor-precision');
+                } else {
+                    customCursor.style.display = 'block'; container.classList.remove('cursor-precision');
+                    customCursor.style.width = `${size}px`; customCursor.style.height = `${size}px`;
+                    if (currentTool === 'pencil' || currentTool === 'eraser') customCursor.style.borderRadius = '50%';
+                    else if (currentTool === 'marker') customCursor.style.borderRadius = '4px';
+                    if (currentTool === 'eraser') { customCursor.style.backgroundColor = 'rgba(255, 255, 255, 0.5)'; customCursor.style.borderColor = '#ef4444'; }
+                    else { const previewOpacity = currentTool === 'marker' ? 0.7 : 0.5; customCursor.style.backgroundColor = hexToRgbaString(settings.color, previewOpacity); customCursor.style.borderColor = hexToRgbaString(settings.color, 1); }
+                }
+            }
+
+            // --- Lógica de Páginas y Almacenamiento ---
             function loadDrawingsFromStorage() { try { const saved = localStorage.getItem('geniusDrawings'); if (saved) drawingsData = JSON.parse(saved); } catch (e) { console.error("Error al cargar dibujos:", e); drawingsData = {}; } }
             function saveCurrentPageDrawing() { if (!isCanvasBlank(mainCanvas)) { drawingsData[currentPage] = mainCanvas.toDataURL(); } else { delete drawingsData[currentPage]; } try { localStorage.setItem('geniusDrawings', JSON.stringify(drawingsData)); } catch (e) { console.error("Error al guardar dibujos:", e); } }
-            
             function loadPage(pageNumber) {
                 const num = parseInt(pageNumber, 10);
                 if (isNaN(num) || num < 1 || num > totalPages) { pageInput.value = currentPage; return; }
@@ -729,16 +800,10 @@
                 img.onload = () => {
                     backgroundImage.src = img.src;
                     const canvasWidth = img.naturalWidth; const canvasHeight = img.naturalHeight;
-                    [mainCanvas, tempCanvas].forEach(el => { el.width = canvasWidth; el.height = canvasHeight; });
-                    [mainCanvas, tempCanvas, backgroundImage].forEach(el => { el.style.width = `${canvasWidth}px`; el.style.height = `${canvasHeight}px`; });
+                    [mainCanvas, tempCanvas, backgroundImage].forEach(el => { el.width = canvasWidth; el.height = canvasHeight; el.style.width = `${canvasWidth}px`; el.style.height = `${canvasHeight}px`; });
                     mainCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-                     if (drawingsData[currentPage]) {
-                        const drawingImg = new Image();
-                        drawingImg.src = drawingsData[currentPage];
-                        drawingImg.onload = () => { mainCtx.drawImage(drawingImg, 0, 0); loadHistoryForCurrentPage(); };
-                    } else {
-                        loadHistoryForCurrentPage();
-                    }
+                    if (drawingsData[currentPage]) { const drawingImg = new Image(); drawingImg.src = drawingsData[currentPage]; drawingImg.onload = () => { mainCtx.drawImage(drawingImg, 0, 0); loadHistoryForCurrentPage(); }; }
+                    else { loadHistoryForCurrentPage(); }
                     fitAndCenter();
                 }
                 img.onerror = () => { console.error(`No se pudo cargar: ${imagePath}${currentPage}.svg`); backgroundImage.src = ""; };
@@ -746,6 +811,7 @@
             }
             function updateNavUI() { pageInput.value = currentPage; prevBtn.disabled = currentPage === 1; nextBtn.disabled = currentPage === totalPages; }
 
+            // --- Lógica del Historial ---
             function loadHistoryForCurrentPage() { if (historyPerPage[currentPage]) { history = historyPerPage[currentPage].history; historyStep = historyPerPage[currentPage].step; } else { history = [mainCanvas.toDataURL()]; historyStep = 0; } updateHistoryButtons(); }
             function saveHistoryForCurrentPage() { historyPerPage[currentPage] = { history: history, step: historyStep }; }
             function updateHistoryButtons() { undoBtn.disabled = historyStep <= 0; redoBtn.disabled = historyStep >= history.length - 1; }
@@ -755,28 +821,18 @@
             function undoState() { if (historyStep > 0) { historyStep--; restoreState(); saveHistoryForCurrentPage(); updateHistoryButtons(); } }
             function redoState() { if (historyStep < history.length - 1) { historyStep++; restoreState(); saveHistoryForCurrentPage(); updateHistoryButtons(); } }
 
-            function getPointerPos(e) {
-                const rect = container.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return { x: clientX - rect.left, y: clientY - rect.top };
-            }
-
-            function screenToCanvas(pos) { return { x: (pos.x - panX) / zoom, y: (pos.y - panY) / zoom }; }
+            // --- Lógica del Lienzo (Canvas) y Transformaciones ---
+            function getTransformedPointerPos(e) { const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; const rect = canvasWrapper.getBoundingClientRect(); return { x: (clientX - rect.left) / zoom, y: (clientY - rect.top) / zoom }; }
             function applyTransform() { canvasWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`; }
             function getTouchDistance(touches) { const dx = touches[0].clientX - touches[1].clientX; const dy = touches[0].clientY - touches[1].clientY; return Math.sqrt(dx * dx + dy * dy); }
             function getTouchCenter(touches) { return { x: (touches[0].clientX + touches[1].clientX) / 2, y: (touches[0].clientY + touches[1].clientY) / 2 }; }
 
             function startDrawing(e) {
-                 if (window.innerWidth <= 768 && !sideBar.classList.contains('mobile-hidden') && e.target === tempCanvas) {
-                    sideBar.classList.add('mobile-hidden');
-                    toggleToolsBtn.classList.remove('active');
-                }
                 if (e.touches && e.touches.length === 2) {
-                    e.preventDefault();
-                    isDrawing = false; isPanning = true;
+                    e.preventDefault(); isDrawing = false; isPanning = true;
                     lastTouchDistance = getTouchDistance(e.touches);
                     touchCenter = getTouchCenter(e.touches);
+                    panStart = { x: touchCenter.x - panX, y: touchCenter.y - panY };
                     return;
                 }
                 if (currentTool === 'pan') {
@@ -787,29 +843,21 @@
                     container.classList.add('is-panning');
                     return;
                 }
-                isDrawing = true; 
-                startPos = screenToCanvas(getPointerPos(e));
-                currentStroke = [startPos];
+                isDrawing = true; startPos = getTransformedPointerPos(e); currentStroke = [startPos];
             }
 
-             function draw(e) {
+            function draw(e) {
                 if (e.touches && e.touches.length === 2) {
-                    e.preventDefault();
-                    if (lastTouchDistance === null) { lastTouchDistance = getTouchDistance(e.touches); touchCenter = getTouchCenter(e.touches); return; }
-                    
-                    const newTouchDistance = getTouchDistance(e.touches);
+                    e.preventDefault(); if (lastTouchDistance == null) return;
                     const newTouchCenter = getTouchCenter(e.touches);
+                    const newTouchDistance = getTouchDistance(e.touches);
                     const zoomFactor = newTouchDistance / lastTouchDistance;
-                    const smoothedZoomFactor = 1 + (zoomFactor - 1) * 0.25; // Suavizado más fino
-                    
-                    adjustZoom(smoothedZoomFactor, newTouchCenter.x, newTouchCenter.y);
-
-                    panX += newTouchCenter.x - touchCenter.x;
-                    panY += newTouchCenter.y - touchCenter.y;
-                    
+                    adjustZoom(zoomFactor, newTouchCenter.x, newTouchCenter.y);
+                    panX = newTouchCenter.x - panStart.x;
+                    panY = newTouchCenter.y - panStart.y;
                     applyTransform();
                     lastTouchDistance = newTouchDistance;
-                    touchCenter = newTouchCenter;
+                    panStart = { x: newTouchCenter.x - panX, y: newTouchCenter.y - panY };
                     return;
                 }
                 if (isPanning) {
@@ -817,84 +865,61 @@
                     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                     panX = clientX - panStart.x;
                     panY = clientY - panStart.y;
-                    applyTransform(); 
-                    return;
+                    applyTransform(); return;
                 }
-                if (!isDrawing) return; 
-                e.preventDefault(); 
-                const currentPos = screenToCanvas(getPointerPos(e));
-                currentStroke.push(currentPos); 
-
-                tempCtx.save();
-                tempCtx.setTransform(1, 0, 0, 1, 0, 0);
-                tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-                tempCtx.restore();
-                 
-                switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(tempCtx, currentStroke); break; case 'line': drawLine(tempCtx, startPos, currentPos); break; case 'rectangle': drawRectangle(tempCtx, startPos, currentPos); break; case 'eraser': drawSmoothedLine(tempCtx, currentStroke); break; } 
+                if (!isDrawing) return; e.preventDefault(); const currentPos = getTransformedPointerPos(e); if (currentTool === 'eraser') { const lastPos = currentStroke[currentStroke.length - 1]; applyToolStyles(mainCtx); mainCtx.beginPath(); mainCtx.moveTo(lastPos.x, lastPos.y); mainCtx.lineTo(currentPos.x, currentPos.y); mainCtx.stroke(); currentStroke.push(currentPos); } else { currentStroke.push(currentPos); tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(tempCtx, currentStroke); break; case 'line': drawLine(tempCtx, startPos, currentPos); break; case 'rectangle': drawRectangle(tempCtx, startPos, currentPos); break; } }
             }
-            function stopDrawing() { 
-                lastTouchDistance = null; touchCenter = null; 
-                if (isPanning) { isPanning = false; container.classList.remove('is-panning'); return; } 
-                if (!isDrawing) return; 
-                isDrawing = false; 
+            function stopDrawing() { lastTouchDistance = null; touchCenter = null; if (isPanning) { isPanning = false; container.classList.remove('is-panning'); return; } if (!isDrawing) return; isDrawing = false; tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height); if (currentStroke.length < 3 && ['pencil', 'marker', 'eraser'].includes(currentTool)) { drawDot(mainCtx, startPos); } else if (currentTool !== 'eraser') { switch (currentTool) { case 'pencil': case 'marker': drawSmoothedLine(mainCtx, currentStroke); break; case 'line': drawLine(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; case 'rectangle': drawRectangle(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; } } saveState(); saveCurrentPageDrawing(); }
+            function drawDot(ctx, pos) { applyToolStyles(ctx); ctx.beginPath(); ctx.arc(pos.x, pos.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fill(); }
 
-                tempCtx.save();
-                tempCtx.setTransform(1, 0, 0, 1, 0, 0);
-                tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-                tempCtx.restore();
-                
-                if (currentStroke.length < 2 && currentTool !== 'pan') { drawDot(mainCtx, startPos); } 
-                else { switch (currentTool) { case 'pencil': case 'marker': case 'eraser': drawSmoothedLine(mainCtx, currentStroke); break; case 'line': drawLine(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; case 'rectangle': drawRectangle(mainCtx, startPos, currentStroke[currentStroke.length - 1]); break; } } 
-                saveState(); saveCurrentPageDrawing(); 
-            }
-
-            function drawDot(ctx, pos) { applyToolStyles(ctx); ctx.beginPath(); const radius = (toolSettings[currentTool].size / 2) / zoom; ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2); ctx.fill(); }
-            
-            function applyToolStyles(ctx) { 
-                const toolConfig = toolSettings[currentTool]; 
-                ctx.lineWidth = toolConfig.size / zoom;
-                if (currentTool === 'eraser') { ctx.globalCompositeOperation = 'destination-out'; } 
-                else { const color = hexToRgbaString(toolConfig.color, toolConfig.opacity); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.globalCompositeOperation = (currentTool === 'marker') ? 'multiply' : 'source-over'; } 
-                ctx.lineCap = (currentTool === 'marker') ? 'butt' : 'round'; ctx.lineJoin = 'round'; 
+            function applyToolStyles(ctx) {
+                const toolConfig = toolSettings[currentTool];
+                ctx.lineWidth = toolConfig.size;
+                if (currentTool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                } else {
+                    const color = hexToRgbaString(toolConfig.color, toolConfig.opacity);
+                    ctx.strokeStyle = color;
+                    ctx.fillStyle = color;
+                    ctx.globalCompositeOperation = (currentTool === 'marker') ? 'multiply' : 'source-over';
+                }
+                ctx.lineCap = (currentTool === 'marker') ? 'butt' : 'round';
+                ctx.lineJoin = 'round';
             }
 
             function drawSmoothedLine(ctx, points) { if (points.length < 2) return; applyToolStyles(ctx); ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y); for (let i = 1; i < points.length - 2; i++) { const c = (points[i].x + points[i + 1].x) / 2; const d = (points[i].y + points[i + 1].y) / 2; ctx.quadraticCurveTo(points[i].x, points[i].y, c, d); } if (points.length > 1) { ctx.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, points[points.length - 1].x, points[points.length - 1].y); } ctx.stroke(); }
             function drawLine(ctx, start, end) { applyToolStyles(ctx); ctx.beginPath(); ctx.moveTo(start.x, start.y); ctx.lineTo(end.x, end.y); ctx.stroke(); }
             function drawRectangle(ctx, start, end) { applyToolStyles(ctx); ctx.beginPath(); ctx.rect(start.x, start.y, end.x - start.x, end.y - start.y); ctx.stroke(); }
 
+            // --- Event Listeners ---
             container.addEventListener('mousedown', startDrawing); container.addEventListener('mousemove', draw); window.addEventListener('mouseup', stopDrawing); container.addEventListener('touchstart', startDrawing, { passive: false }); container.addEventListener('touchmove', draw, { passive: false }); window.addEventListener('touchend', stopDrawing);
-            
+            document.addEventListener('mousemove', e => { customCursor.style.left = `${e.clientX}px`; customCursor.style.top = `${e.clientY}px`; });
+            sideBar.addEventListener('mouseenter', () => document.body.classList.add('sidebar-hover')); sideBar.addEventListener('mouseleave', () => document.body.classList.remove('sidebar-hover'));
             toolButtons.forEach(button => { button.addEventListener('click', () => { currentTool = button.id; toolButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); updateUIForTool(currentTool); }); });
             colorPickerTrigger.addEventListener('click', () => colorPickerInput.click());
-            colorPickerInput.addEventListener('input', e => { const newColor = e.target.value; if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = newColor; updateUIForTool(currentTool); });
-            function selectColor(color) { if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = color; updateUIForTool(currentTool); }
+            colorPickerInput.addEventListener('input', e => { const newColor = e.target.value; if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = newColor; updateActiveColorSwatch(newColor); updateCustomCursor(); });
+            function selectColor(color) { if (toolSettings[currentTool].color !== undefined) toolSettings[currentTool].color = color; colorPickerInput.value = color; updateActiveColorSwatch(color); updateCustomCursor(); }
             colorSwatches.forEach(swatch => swatch.addEventListener('click', () => selectColor(swatch.dataset.color)));
             addCustomColorBtn.addEventListener('click', () => { const newColor = colorPickerInput.value; if (!customColors.includes(newColor)) { if (customColors.length >= MAX_CUSTOM_COLORS) { customColors.shift(); } customColors.push(newColor); saveCustomColors(); renderCustomColors(); selectColor(newColor); } });
             function renderCustomColors() { customColorsPalette.innerHTML = ''; customColors.forEach(color => { const swatch = document.createElement('button'); swatch.className = 'color-swatch'; swatch.style.backgroundColor = color; swatch.dataset.color = color; swatch.addEventListener('click', () => selectColor(color)); customColorsPalette.appendChild(swatch); }); }
             function saveCustomColors() { localStorage.setItem('geniusCustomColors', JSON.stringify(customColors)); }
             function loadCustomColors() { const saved = localStorage.getItem('geniusCustomColors'); if (saved) { customColors = JSON.parse(saved); renderCustomColors(); } }
-            function handleSliderInput(slider, valueSpan, isOpacity) { const value = parseFloat(slider.value); toolSettings[currentTool][isOpacity ? 'opacity' : 'size'] = value; valueSpan.textContent = isOpacity ? `${Math.round(value * 100)}%` : `${Math.round(value)}px`; }
+            function handleSliderInput(slider, valueSpan, isOpacity) { const value = parseFloat(slider.value); toolSettings[currentTool][isOpacity ? 'opacity' : 'size'] = value; valueSpan.textContent = isOpacity ? `${Math.round(value * 100)}%` : `${Math.round(value)}px`; updateCustomCursor(); }
             brushSizeSlider.addEventListener('input', () => handleSliderInput(brushSizeSlider, brushSizeValue, false)); opacitySlider.addEventListener('input', () => handleSliderInput(opacitySlider, opacityValue, true));
-            clearBtn.addEventListener('click', () => { mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height); saveState(); saveCurrentPageDrawing(); });
+            clearBtn.addEventListener('click', () => { mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height); history = [mainCanvas.toDataURL()]; historyStep = 0; saveHistoryForCurrentPage(); delete drawingsData[currentPage]; saveCurrentPageDrawing(); });
             downloadBtn.addEventListener('click', () => { const link = document.createElement('a'); link.download = `apuntes-pagina-${currentPage}.png`; const tempC = document.createElement('canvas'); tempC.width = backgroundImage.naturalWidth; tempC.height = backgroundImage.naturalHeight; const temp_ctx = tempC.getContext('2d'); temp_ctx.drawImage(backgroundImage, 0, 0); temp_ctx.drawImage(mainCanvas, 0, 0); link.href = tempC.toDataURL(); link.click(); });
-            undoBtn.addEventListener('click', undoState); redoBtn.addEventListener('click', redoState);
-            
-            const pageNavHandler = (e) => { e.preventDefault(); loadPage(currentPage + (e.currentTarget.id === 'next-btn' ? 1 : -1)); };
-            prevBtn.addEventListener('click', pageNavHandler); nextBtn.addEventListener('click', pageNavHandler);
-            prevBtn.addEventListener('touchstart', pageNavHandler, {passive: false}); nextBtn.addEventListener('touchstart', pageNavHandler, {passive: false});
-            
-            pageInput.addEventListener('change', () => loadPage(pageInput.value));
-            galleryBtn.addEventListener('click', () => { galleryModal.style.display = 'flex'; }); 
-            galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) galleryModal.style.display = 'none'; });
+            undoBtn.addEventListener('click', undoState); redoBtn.addEventListener('click', redoState); menuToggle.addEventListener('click', () => { sideBar.classList.contains('collapsed') ? expandMenu() : collapseMenu(); }); focusModeBtn.addEventListener('click', enterFocusMode); exitFocusModeBtn.addEventListener('click', exitFocusMode);
+            prevBtn.addEventListener('click', () => loadPage(currentPage - 1)); nextBtn.addEventListener('click', () => loadPage(currentPage + 1)); pageInput.addEventListener('change', () => loadPage(pageInput.value));
+            galleryBtn.addEventListener('click', openGallery); galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) closeGallery(); });
+            zoomInBtn.addEventListener('click', () => adjustZoom(1.2)); zoomOutBtn.addEventListener('click', () => adjustZoom(0.8)); zoomResetBtn.addEventListener('click', fitAndCenter);
+            container.addEventListener('wheel', (e) => { e.preventDefault(); if (e.ctrlKey) { const zoomFactor = e.deltaY > 0 ? 0.95 : 1.05; adjustZoom(zoomFactor, e.clientX, e.clientY); } else { panY -= e.deltaY; panX -= e.deltaX; applyTransform(); } }, { passive: false });
 
-            const zoomHandler = (e) => { e.preventDefault(); adjustZoom(e.currentTarget.id === 'zoom-in-btn' ? 1.1 : 1 / 1.1); };
-            zoomInBtn.addEventListener('click', zoomHandler); zoomOutBtn.addEventListener('click', zoomHandler);
-            zoomInBtn.addEventListener('touchstart', zoomHandler, {passive: false}); zoomOutBtn.addEventListener('touchstart', zoomHandler, {passive: false});
-
-            zoomResetBtn.addEventListener('click', fitAndCenter);
-            container.addEventListener('wheel', (e) => { e.preventDefault(); if (e.ctrlKey) { const zoomFactor = e.deltaY > 0 ? 0.95 : 1.05; adjustZoom(zoomFactor, e.clientX, e.clientY); } else { panX -= e.deltaX; panY -= e.deltaY; applyTransform(); } }, { passive: false });
-            
-            if(toggleToolsBtn) { toggleToolsBtn.addEventListener('click', () => { sideBar.classList.toggle('mobile-hidden'); toggleToolsBtn.classList.toggle('active'); }); }
+            if (toggleToolsBtn) {
+                toggleToolsBtn.addEventListener('click', () => {
+                    sideBar.classList.toggle('mobile-hidden');
+                    toggleToolsBtn.classList.toggle('active');
+                });
+            }
 
             function adjustZoom(factor, x, y) {
                 const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * factor)); if (newZoom === zoom) return;
@@ -904,7 +929,7 @@
                 panX = mouseX - (mouseX - panX) * (newZoom / zoom);
                 panY = mouseY - (mouseY - panY) * (newZoom / zoom);
                 zoom = newZoom;
-                applyTransform();
+                updateCustomCursor(); applyTransform();
             }
 
             function fitAndCenter() {
@@ -913,25 +938,37 @@
                 const imageWidth = backgroundImage.naturalWidth;
                 const imageHeight = backgroundImage.naturalHeight;
                 if (!imageWidth || !imageHeight) return;
-                
-                let availableWidth = containerWidth, availableHeight = containerHeight, offsetX = 0;
-                
+
+                let sidebarWidth = 0;
+                let bottomBarHeight = 0;
+
                 if (window.innerWidth > 768) {
-                    const sidebarWidth = sideBar.offsetWidth;
-                    availableWidth -= sidebarWidth;
-                    offsetX = sidebarWidth;
+                    sidebarWidth = sideBar.classList.contains('collapsed') ? 88 : 256;
                 } else {
-                    availableHeight -= document.getElementById('bottom-controls').offsetHeight;
+                    bottomBarHeight = document.getElementById('bottom-controls').offsetHeight;
                 }
-                
-                const scale = Math.min(availableWidth / imageWidth, availableHeight / imageHeight) * 0.95;
-                zoom = scale;
-                panX = offsetX + (availableWidth - imageWidth * scale) / 2;
-                panY = (availableHeight - imageHeight * scale) / 2;
+
+                const availableWidth = containerWidth - sidebarWidth;
+                const availableHeight = containerHeight - bottomBarHeight;
+
+                const scaleX = availableWidth / imageWidth;
+                const scaleY = availableHeight / imageHeight;
+                zoom = Math.min(scaleX, scaleY) * 0.95;
+                panX = sidebarWidth + (availableWidth - imageWidth * zoom) / 2;
+                panY = (availableHeight - imageHeight * zoom) / 2;
                 applyTransform();
             }
 
+            function openGallery() {
+                galleryGrid.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) { const item = document.createElement('div'); item.className = 'gallery-item'; item.textContent = i; if (i === currentPage) item.classList.add('active'); item.addEventListener('click', () => { loadPage(i); closeGallery(); }); galleryGrid.appendChild(item); }
+                galleryModal.style.display = 'flex';
+            }
+            function closeGallery() { galleryModal.style.display = 'none'; }
+
+            // --- Inicialización ---
             window.addEventListener('resize', fitAndCenter);
+            document.querySelectorAll('.sidebar-item').forEach((item, index) => { item.style.animationDelay = `${index * 0.05}s`; });
             loadDrawingsFromStorage(); loadCustomColors(); loadPage(1); document.getElementById('pan').click();
         });
     </script>
